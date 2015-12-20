@@ -1,0 +1,6 @@
+# Ignore all dynamic files
+*.nja
+*.csv
+*.dat
+*.pyc
+__init__.py
