@@ -30,7 +30,7 @@ class USBprocess:
                 # get messages from USB interface and append to MQueue
                 MQueue.put(self.ser.readline())
             except serial.SerialException:
-                MQueue.put("USB disturbance! \r\n")
+                MQueue.put(b'USB disturbance! \r\n')
                 # initiation USB after connection  was lost
                 while True:
                     try:
@@ -46,13 +46,13 @@ class USBprocess:
                         break
             else:
                 # get command from CQueue
-                command = CQueue.get()
-                if command is not None:
+                if not MQueue.empty():
                     try:
+                        command = CQueue.get()
                         # Send command to USB interface
-                        self.ser.write(b'command')
+                        self.ser.write(command)
                     except serial.SerialException:
-                        MQueue.put("USB disturbance! \r\n")
+                        MQueue.put(b'USB disturbance! \r\n')
                         # initiation USB after connection  was lost
                         while True:
                             try:
