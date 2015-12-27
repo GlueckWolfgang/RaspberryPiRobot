@@ -21,7 +21,7 @@ class USBprocess:
             self.device = "/dev/ttyUSB0"  # Linux
         else:
             self.device = "COM3"         # Windows
-        self.baud = 250000
+        self.baud = 38400
         self.ser = serial.Serial(self.device, self.baud)
         time.sleep(4)
 
