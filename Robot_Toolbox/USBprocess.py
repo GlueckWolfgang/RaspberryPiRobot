@@ -68,6 +68,7 @@ class USBprocess:
                                 break
                     else:
                         continue
-
+                else:
+                    continue
         # never executed
         return
