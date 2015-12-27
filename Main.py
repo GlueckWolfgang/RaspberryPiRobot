@@ -24,7 +24,6 @@ if __name__ == '__main__':
     ###########################################################################
     # starting child processes
     process.start()
-#    process.join()
     ###########################################################################
     # Create instance of measured value list
     MeasuredValueList = MeasuredValueL()
@@ -43,6 +42,7 @@ if __name__ == '__main__':
     while True:
         if not MQueue.empty():
             result = MQueue.get()
+            result = result.decode("utf-8")
             print(result)
 
 

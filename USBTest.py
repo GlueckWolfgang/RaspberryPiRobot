@@ -12,10 +12,11 @@ if platform.system() == "Linux":
     device = "dev/ttyUSB0"  # Linux
 else:
     device = "COM3"         # Windows
-baud = 250000
+baud = 38400
 ser = serial.Serial(device, baud)
-# wait for the Arduino reset
-time.sleep(4)
+# clear buffer
+ser.close()
+ser.open()
 
 while True:
     try:
@@ -38,8 +39,9 @@ while True:
                 time.sleep(1)
                 continue
             else:
-                # wait for the Arduino reset
-                time.sleep(4)
+                # clear buffer
+                ser.close()
+                ser.open()
                 break
     else:
         continue

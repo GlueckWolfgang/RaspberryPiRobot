@@ -20,10 +20,12 @@ class USBprocess:
         if platform.system() == "Linux":
             self.device = "/dev/ttyUSB0"  # Linux
         else:
-            self.device = "COM3"         # Windows
+            self.device = "COM3"          # Windows
         self.baud = 38400
         self.ser = serial.Serial(self.device, self.baud)
-        time.sleep(4)
+        # clear buffer
+        self.ser.close()
+        self.ser.open()
 
         while True:
             try:
@@ -41,14 +43,15 @@ class USBprocess:
                         time.sleep(1)
                         continue
                     else:
-                        # wait for the Arduino reset
-                        time.sleep(4)
+                        # clear buffer
+                        self.ser.close()
+                        self.ser.open()
                         break
             else:
                 # get command from CQueue
                 if not MQueue.empty():
                     try:
-                        command = CQueue.get()
+                        command = bytes(CQueue.get(), encoding="UTF-8")
                         # Send command to USB interface
                         self.ser.write(command)
                     except serial.SerialException:
@@ -63,8 +66,9 @@ class USBprocess:
                                 time.sleep(1)
                                 continue
                             else:
-                                # wait for the Arduino reset
-                                time.sleep(4)
+                                # clear buffer
+                                self.ser.close()
+                                self.ser.open()
                                 break
                     else:
                         continue
