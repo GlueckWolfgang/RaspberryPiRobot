@@ -22,6 +22,7 @@ while True:
         MQueue = ser.readline()
         if MQueue is not None:
             print(MQueue)
+            continue
     except serial.SerialException:
         MQueue = ("USB disturbance! \r\n")
         print(MQueue)

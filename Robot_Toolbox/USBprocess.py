@@ -21,8 +21,6 @@ class USBprocess:
             self.device = "dev/ttyUSB0"  # Linux
         else:
             self.device = "COM3"         # Windows
-        #self.device = [/dev/ttyUSB0"  # Linux
-        self.device = "COM3"           # Windows
         self.baud = 250000
         self.ser = serial.Serial(self.device, self.baud)
         time.sleep(4)
@@ -32,7 +30,7 @@ class USBprocess:
                 # get messages from USB interface and append to MQueue
                 MQueue.put(self.ser.readline())
             except serial.SerialException:
-                MQueue.put("USB disturbance! ")
+                MQueue.put("USB disturbance! \r\n")
                 # initiation USB after connection  was lost
                 while True:
                     try:
@@ -47,14 +45,14 @@ class USBprocess:
                         time.sleep(4)
                         break
             else:
-                # get comman from CQueue
+                # get command from CQueue
                 command = CQueue.get()
                 if command is not None:
                     try:
                         # Send command to USB interface
                         self.ser.write(b'command')
                     except serial.SerialException:
-                        MQueue.put("USB disturbance! ")
+                        MQueue.put("USB disturbance! \r\n")
                         # initiation USB after connection  was lost
                         while True:
                             try:
