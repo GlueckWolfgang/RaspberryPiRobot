@@ -11,7 +11,8 @@ import time
 device = "COM3"               # Windows
 baud = 250000
 ser = serial.Serial(device, baud)
-time.sleep (4)
+# wait for the Arduino reset
+time.sleep(4)
 
 while True:
     try:

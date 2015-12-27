@@ -34,13 +34,14 @@ processlist = [mp.Process(target=USBProcess.USBrun, args=(MQueue, CQueue)) for x
 for p in processlist:
     p.start()
 
+for p in processlist:
+    p.join()
+
 ###############################################################################
 # Endles loop of main program
 while True:
-    for p in processlist:
-        p.join()
 
-    result = MQueue.get()
+    result = [MQueue.get() for p in processlist]
     if result is not None: print(result)
 
     time.sleep(0.01)

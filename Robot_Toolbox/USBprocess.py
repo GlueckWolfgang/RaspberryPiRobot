@@ -20,6 +20,7 @@ class USBprocess:
         self.device = "COM3"           # Windows
         self.baud = 250000
         self.ser = serial.Serial(self.device, self.baud)
+        time.sleep(4)
 
         while True:
             try:
