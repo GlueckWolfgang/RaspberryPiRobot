@@ -30,19 +30,20 @@ MQueue = mp.Queue
 CQueue = mp.Queue
 
 USBProcess = USBprocess()
-processlist = [mp.Process(target=USBProcess.USBrun, args=(MQueue, CQueue)) for x in range (1)]
-for p in processlist:
-    p.start()
+process = mp.Process(target=USBProcess.USBrun, args=(MQueue, CQueue))
 
-for p in processlist:
-    p.join()
+if __name__ == '__main__':
+    process.start()
 
-###############################################################################
-# Endles loop of main program
-while True:
+    process.join()
 
-    result = [MQueue.get() for p in processlist]
-    if result is not None: print(result)
+    ###########################################################################
+    # Endles loop of main program
+    while True:
 
-    time.sleep(0.01)
-###############################################################################
+        result = MQueue.get()
+        if result is not None:
+            print(result)
+
+        time.sleep(0.01)
+    ###########################################################################
