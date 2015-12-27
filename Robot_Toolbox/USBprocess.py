@@ -18,7 +18,7 @@ class USBprocess:
     def USBrun(self, MQueue, CQueue):
         # continuous process
         if platform.system() == "Linux":
-            self.device = "dev/ttyUSB0"  # Linux
+            self.device = "/dev/ttyUSB0"  # Linux
         else:
             self.device = "COM3"         # Windows
         self.baud = 250000
