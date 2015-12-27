@@ -6,9 +6,12 @@
 ###############################################################################
 import serial
 import time
+import platform
 
-#self.device = [/dev/ttyUSB0"  # Linux
-device = "COM3"               # Windows
+if platform.system() == "Linux":
+    device = "dev/ttyUSB0"  # Linux
+else:
+    device = "COM3"         # Windows
 baud = 250000
 ser = serial.Serial(device, baud)
 # wait for the Arduino reset
