@@ -12,36 +12,40 @@ from Robot_Toolbox.StatusL import *
 from Robot_Toolbox.CommandL import *
 from Robot_Toolbox.USBprocess import *
 
-# Create instance of measured value list
-MeasuredValueList = MeasuredValueL()
-MeasuredValueList.generateMeasuredValueList()
 
-# Create instance of status list
-StatusList = StatusL()
-StatusList.generateStatusList()
-
-# Create instance of command list
-CommandList = CommandL()
-CommandList.generateCommandList()
 
 ###############################################################################
-# Create instance of USB process and start it
-MQueue = mp.Queue
-CQueue = mp.Queue
-
-USBProcess = USBprocess()
-process = mp.Process(target=USBProcess.USBrun, args=(MQueue, CQueue))
-
+# Main process
 if __name__ == '__main__':
-    process.start()
+    ###########################################################################
+    # Create instance of USB process
+    MQueue = mp.Queue
+    CQueue = mp.Queue
+    USBProcess = USBprocess()
+    processList = [mp.Process(target=USBProcess.USBrun, args=(MQueue, CQueue))]
+    ###########################################################################
+    # starting child processes
+    for p in processList:
+        p.start()
+    for p in processList:
+        p.join()
+    ###########################################################################
+    # Create instance of measured value list
+    MeasuredValueList = MeasuredValueL()
+    MeasuredValueList.generateMeasuredValueList()
 
-    process.join()
+    # Create instance of status list
+    StatusList = StatusL()
+    StatusList.generateStatusList()
+
+    # Create instance of command list
+    CommandList = CommandL()
+    CommandList.generateCommandList()
 
     ###########################################################################
     # Endles loop of main program
     while True:
-
-        result = MQueue.get()
+        result = [MQueue.get() for p in processList]
         if result is not None:
             print(result)
 
