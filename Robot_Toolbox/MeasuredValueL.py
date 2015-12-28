@@ -19,6 +19,40 @@ class MeasuredValueL:
         self.list.append(measuredValue)     # index = mvNumber
         return
 
+    def putValue(self, string):
+        separatedString = string.split(":")   # MV name, value
+        MV = self.getMeasuredValueByName(separatedString[0])
+        if MV is not None:
+            separatedStringP = separatedString[1].split(" ")  # keyword, value
+            separatedStringP[1] = separatedStringP[1].strip(" ")
+            if separatedStringP[0] == "V":
+                if MV.mvDtype == "Integer":
+                    MV.value = int(separatedStringP[1])
+                elif MV.mvDtype == "Float":
+                    MV.value = float(separatedStringP[1])
+
+                elif separatedStringP[0] == "LL":
+                    if MV.mvDtype == "Integer":
+                        MV.Ll = int(separatedStringP[1])
+                    elif MV.mvDtype == "Float":
+                        MV.Ll = float(separatedStringP[1])
+
+                elif separatedStringP[0] == "UL":
+                    if MV.mvDtype == "Integer":
+                        MV.Ul = int(separatedStringP[1])
+                    elif MV.mvDtype == "Float":
+                        MV.Ul = float(separatedStringP[1])
+
+                elif separatedStringP[0] == "LL_Exceeded":
+                    MV.LlBelow = int(separatedStringP[1])
+
+                elif separatedStringP[0] == "UL_Exceeded":
+                    MV.UlAbove = int(separatedStringP[1])
+
+        else:
+            print("Measured value not found: ", separatedString[0], "\n")
+        return
+
     def getMeasuredValueByNumber(self, mvNumber):
         if mvNumber < len(self.list):       # list must not be empty
             return self.list[mvNumber]
@@ -34,51 +68,51 @@ class MeasuredValueL:
         return None
 
     def generateMeasuredValueList(self):
-        MValue = MeasuredValue(0, "Actual value", "", "Version: ", False, False)
+        MValue = MeasuredValue(0, "Actual value", "Integer", "", "Version", False, False)
         self.putMeasuredValue(MValue)
-        MValue = MeasuredValue(1, "Actual value", "cm", "EncLt: ", False, False)
+        MValue = MeasuredValue(1, "Actual value", "Integer", "cm", "EncLt", False, False)
         self.putMeasuredValue(MValue)
-        MValue = MeasuredValue(2, "Actual value", "cm", "EncRt: ", False, False)
+        MValue = MeasuredValue(2, "Actual value", "Integer", "cm", "EncRt", False, False)
         self.putMeasuredValue(MValue)
-        MValue = MeasuredValue(3, "Actual value", "V", "Battery 9V: ", False, True)
+        MValue = MeasuredValue(3, "Actual value", "Float", "V", "Battery 9V", False, True)
         self.putMeasuredValue(MValue)
-        MValue = MeasuredValue(4, "Actual value", "V", "Battery 7V: ", False, True)
+        MValue = MeasuredValue(4, "Actual value", "Float", "V", "Battery 7V", False, True)
         self.putMeasuredValue(MValue)
-        MValue = MeasuredValue(5, "Actual value", "V", "Battery 5V: ", False, True)
+        MValue = MeasuredValue(5, "Actual value", "Float", "V", "Battery 5V", False, True)
         self.putMeasuredValue(MValue)
-        MValue = MeasuredValue(6, "Actual value", "V", "Arduino 5V: ", False, True)
+        MValue = MeasuredValue(6, "Actual value", "Float", "V", "Arduino 5V", False, True)
         self.putMeasuredValue(MValue)
-        MValue = MeasuredValue(7, "Actual value", "A", "Motor1 current: ", True, False)
+        MValue = MeasuredValue(7, "Actual value", "Float", "A", "Motor1 current", True, False)
         self.putMeasuredValue(MValue)
-        MValue = MeasuredValue(8, "Actual value", "A", "Motor2 current: ", True, False)
+        MValue = MeasuredValue(8, "Actual value", "Float", "A", "Motor2 current", True, False)
         self.putMeasuredValue(MValue)
-        MValue = MeasuredValue(9, "Actual value", "A", "Motor3 current: ", True, False)
+        MValue = MeasuredValue(9, "Actual value", "Float", "A", "Motor3 current", True, False)
         self.putMeasuredValue(MValue)
-        MValue = MeasuredValue(10, "Actual value", "A", "Motor4 current: ", True, False)
+        MValue = MeasuredValue(10, "Actual value", "Float", "A", "Motor4 current", True, False)
         self.putMeasuredValue(MValue)
-        MValue = MeasuredValue(11, "Actual value", "Degrees", "Roll: ", True, False)
+        MValue = MeasuredValue(11, "Actual value", "Integer", "Degrees", "Roll", True, False)
         self.putMeasuredValue(MValue)
-        MValue = MeasuredValue(12, "Actual value", "Degrees", "Pitch: ", True, False)
+        MValue = MeasuredValue(12, "Actual value", "Integer", "Degrees", "Pitch", True, False)
         self.putMeasuredValue(MValue)
-        MValue = MeasuredValue(13, "Actual value", "Degrees", "Actual angle: ", False, False)
+        MValue = MeasuredValue(13, "Actual value", "Float", "Degrees", "Actual angle", False, False)
         self.putMeasuredValue(MValue)
-        MValue = MeasuredValue(14, "Actual value", "Degrees", "Turned angle: ", False, False)
+        MValue = MeasuredValue(14, "Actual value", "Float", "Degrees", "Turned angle", False, False)
         self.putMeasuredValue(MValue)
-        MValue = MeasuredValue(15, "Smoothed value", "Degrees", "Smoothed angle: ", False, False)
+        MValue = MeasuredValue(15, "Smoothed value", "Float", "Degrees", "Smoothed angle", False, False)
         self.putMeasuredValue(MValue)
-        MValue = MeasuredValue(16, "Actual value", "cm", "Distance fleft: ", False, True)
+        MValue = MeasuredValue(16, "Actual value", "Integer", "cm", "Distance fleft", False, True)
         self.putMeasuredValue(MValue)
-        MValue = MeasuredValue(17, "Actual value", "cm", "Distance fright: ", False, True)
+        MValue = MeasuredValue(17, "Actual value", "Integer", "cm", "Distance fright", False, True)
         self.putMeasuredValue(MValue)
-        MValue = MeasuredValue(18, "Actual value", "cm", "Distance bleft: ", False, True)
+        MValue = MeasuredValue(18, "Actual value", "Integer", "cm", "Distance bleft", False, True)
         self.putMeasuredValue(MValue)
-        MValue = MeasuredValue(19, "Actual value", "cm", "Distance bright: ", False, True)
+        MValue = MeasuredValue(19, "Actual value", "Integer", "cm", "Distance bright", False, True)
         self.putMeasuredValue(MValue)
-        MValue = MeasuredValue(20, "Actual value", "cm", "Distance front: ", False, True)
+        MValue = MeasuredValue(20, "Actual value", "Integer", "cm", "Distance front", False, True)
         self.putMeasuredValue(MValue)
-        MValue = MeasuredValue(21, "Actual value", "cm", "Distance up: ", False, False)
+        MValue = MeasuredValue(21, "Actual value", "Integer", "cm", "Distance up", False, False)
         self.putMeasuredValue(MValue)
-        MValue = MeasuredValue(22, "Actual value", "cm", "Distance down: ", False, True)
+        MValue = MeasuredValue(22, "Actual value", "Integer", "cm", "Distance down", False, True)
         self.putMeasuredValue(MValue)
 
         return

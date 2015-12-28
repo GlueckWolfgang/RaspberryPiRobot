@@ -25,7 +25,7 @@ class USBprocess:
         # clear buffer
         self.ser.close()
         self.ser.open()
-        MQueue.put(b'USB disturbance! 0\r\n')
+        MQueue.put(b'S-USB disturbance: 0\r\n')
 
         # continuous process
         while True:
@@ -42,14 +42,14 @@ class USBprocess:
                     self.ser.write(command)
 
             except serial.SerialException:
-                MQueue.put(b'USB disturbance! 1\r\n')
+                MQueue.put(b'S-USB disturbance: 1\r\n')
                 # initiation USB after connection  was lost
                 while True:
                     try:
                         self.ser.close()
                         self.ser.open()
                         MQueue.put(b'USB open! \r\n')
-                        MQueue.put(b'USB disturbance! 0\r\n')
+                        MQueue.put(b'S-USB disturbance: 0\r\n')
                     except serial.SerialException:
                         # wait for the next trial
                         MQueue.put(b'USB Open failed! \r\n')

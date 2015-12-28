@@ -43,7 +43,18 @@ if __name__ == '__main__':
         if not MQueue.empty():
             result = MQueue.get()
             result = result.decode("utf-8")
-            print(result)
+            result = result.strip()
+            # Check if line is a status or a measured value
+            if result.find("S-") == 0:
+                result = result.replace("S-", "")
+                StatusList.putValue(result)
+
+            elif result.find("MV-") == 0:
+                result = result.replace("MV-", "")
+                MeasuredValueList.putValue(result)
+            #print(result)
+
+
 
 
     ###########################################################################

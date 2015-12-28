@@ -1,10 +1,11 @@
 # -*- coding: utf-8 -*-
 ###############################################################################
 # Class of MeasuredValue
-# Version: 2015.12.22
+# Version: 2015.12.28
 #
 # mvNumber      = 1..n
 # mvType        = ("Actual value", "Smoothed value")
+# mvDtype       = (Integer, Float)
 # mvDimension   = ("V", "A", "Degrees", cm, m)
 # mvDescription = ("Battery 7.2V:", "Arduino 5V:", "Motor 1 current:"...)
 # mvUlAlert     = (True, False) True if Message is an alert for alert list
@@ -15,10 +16,11 @@
 
 class MeasuredValue:
 
-    def __init__(self, mvNumber, mvType, mvDimension, mvDescription, mvUlAlert, mvLlAlert):
+    def __init__(self, mvNumber, mvType, mvDtype, mvDimension, mvDescription, mvUlAlert, mvLlAlert):
         self.mvNumber = mvNumber
         self.mvDescription = mvDescription
         self.mvType = mvType
+        self.mvDtype = mvDtype
         self.mvDimension = mvDimension
         self.value = 0
         self.Ul = 0
