@@ -21,7 +21,7 @@ ser.open()
 while True:
     try:
         result = ser.readline()
-        if result is not None and result is not "b'\r\n'":
+        if result is not None and result is not "":
             MQueue = result
             print(MQueue)
             continue

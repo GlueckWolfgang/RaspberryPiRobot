@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ###############################################################################
 # Class USBprocess
-# Version: 2015_12_27
+# Version: 2015_12_28
 # Creator: Wolfgang Glück
 ###############################################################################
 import serial
@@ -25,13 +25,14 @@ class USBprocess:
         # clear buffer
         self.ser.close()
         self.ser.open()
+        MQueue.put(b'USB disturbance! 0\r\n')
 
         # continuous process
         while True:
             try:
                 # get messages from USB interface and append to MQueue
                 result = (self.ser.readline())
-                if result is not None and result is not "b'\r\n'":
+                if result is not None and result is not "":
                     MQueue.put(result)
 
                 # get command from CQueue
@@ -41,13 +42,14 @@ class USBprocess:
                     self.ser.write(command)
 
             except serial.SerialException:
-                MQueue.put(b'USB disturbance! \r\n')
+                MQueue.put(b'USB disturbance! 1\r\n')
                 # initiation USB after connection  was lost
                 while True:
                     try:
                         self.ser.close()
                         self.ser.open()
                         MQueue.put(b'USB open! \r\n')
+                        MQueue.put(b'USB disturbance! 0\r\n')
                     except serial.SerialException:
                         # wait for the next trial
                         MQueue.put(b'USB Open failed! \r\n')
