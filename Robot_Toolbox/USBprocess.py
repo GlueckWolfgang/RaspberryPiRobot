@@ -16,7 +16,6 @@ class USBprocess:
         return nachricht
 
     def USBrun(self, MQueue, CQueue):
-        # continuous process
         if platform.system() == "Linux":
             self.device = "/dev/ttyUSB0"  # Linux
         else:
@@ -27,10 +26,13 @@ class USBprocess:
         self.ser.close()
         self.ser.open()
 
+        # continuous process
         while True:
             try:
                 # get messages from USB interface and append to MQueue
-                MQueue.put(self.ser.readline())
+                result = (self.ser.readline())
+                if result is not None and result is not "b'\r\n'":
+                    MQueue.put(result)
             except serial.SerialException:
                 MQueue.put(b'USB disturbance! \r\n')
                 # initiation USB after connection  was lost
@@ -38,8 +40,10 @@ class USBprocess:
                     try:
                         self.ser.close()
                         self.ser.open()
+                        MQueue.put(b'USB open! \r\n')
                     except serial.SerialException:
                         # wait for the next trial
+                        MQueue.put(b'USB Open failed! \r\n')
                         time.sleep(1)
                         continue
                     else:
@@ -49,7 +53,7 @@ class USBprocess:
                         break
             else:
                 # get command from CQueue
-                if not MQueue.empty():
+                if not CQueue.empty():
                     try:
                         command = bytes(CQueue.get(), encoding="UTF-8")
                         # Send command to USB interface
@@ -61,8 +65,10 @@ class USBprocess:
                             try:
                                 self.ser.close()
                                 self.ser.open()
+                                MQueue.put(b'USB open! \r\n')
                             except serial.SerialException:
                                 # wait for the next trial
+                                MQueue.put(b'USB Open failed! \r\n')
                                 time.sleep(1)
                                 continue
                             else:
@@ -74,5 +80,6 @@ class USBprocess:
                         continue
                 else:
                     continue
+                continue
         # never executed
         return

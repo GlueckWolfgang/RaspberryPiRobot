@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ###############################################################################
 # Class USBprocess
-# Version: 2015_12_27
+# Version: 2015_12_28
 # Creator: Wolfgang Glück
 ###############################################################################
 import serial
@@ -20,8 +20,9 @@ ser.open()
 
 while True:
     try:
-        MQueue = ser.readline()
-        if MQueue is not None:
+        result = ser.readline()
+        if result is not None and result is not "b'\r\n'":
+            MQueue = result
             print(MQueue)
             continue
     except serial.SerialException:
