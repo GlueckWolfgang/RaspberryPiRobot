@@ -41,9 +41,7 @@ if __name__ == '__main__':
     # Endless loop of main program
     while True:
         if not MQueue.empty():
-            result = MQueue.get()
-            result = result.decode("utf-8")
-            result = result.strip()
+            result = MQueue.get().strip().decode("utf-8")
             # Check if line is a status or a measured value
             if result.find("S-") == 0:
                 result = result.replace("S-", "")
