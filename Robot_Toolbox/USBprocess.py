@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 ###############################################################################
 # Class USBprocess
-# Version: 2015_12_28
-# Creator: Wolfgang Glück
+# Version: 2015_12_29
 ###############################################################################
 import serial
 import time
@@ -12,7 +11,7 @@ import platform
 class USBprocess:
 
     def __str__(self):
-        nachricht = "USBprocess"
+        nachricht = "USB process"
         return nachricht
 
     def USBrun(self, MQueue, CQueue):
@@ -25,7 +24,7 @@ class USBprocess:
         # clear buffer
         self.ser.close()
         self.ser.open()
-        MQueue.put(b'S-USB disturbance: 0\r\n')
+        MQueue.put("S@USB disturbance: 0\n")
 
         # continuous process
         while True:
@@ -42,14 +41,14 @@ class USBprocess:
                     self.ser.write(command)
 
             except serial.SerialException:
-                MQueue.put("S-USB disturbance: 1\n")
+                MQueue.put("S@USB disturbance: 1\n")
                 # initiation USB after connection  was lost
                 while True:
                     try:
                         self.ser.close()
                         self.ser.open()
                         MQueue.put("USB open! \n")
-                        MQueue.put("S-USB disturbance: 0\n")
+                        MQueue.put("S@USB disturbance: 0\n")
                     except serial.SerialException:
                         # wait for the next trial
                         MQueue.put("USB Open failed! \n")
