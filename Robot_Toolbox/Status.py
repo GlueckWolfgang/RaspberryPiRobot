@@ -12,12 +12,12 @@
 
 
 class Status:
-    def __init__(self, stNumber, stDescription, stAlert, stKg):
+    def __init__(self, stNumber, stDescription, stAlert, stCg):
         self.stNumber = stNumber
         self.stDescription = stDescription
         self.stStatus = False
         self.stAlert = stAlert
-        self.stKg = stKg
+        self.stCg = stCg
 
     def __str__(self):
         nachricht = "Parameters for a status"
