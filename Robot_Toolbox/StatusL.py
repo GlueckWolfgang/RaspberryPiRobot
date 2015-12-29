@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ###############################################################################
 # Class of status list
-# Version:  2015.12.28
+# Version:  2015.12.29
 ###############################################################################
 from Robot_Toolbox.Status import *
 
@@ -44,33 +44,33 @@ class StatusL:
         return None
 
     def generateStatusList(self):
-        StatusO = Status(0, "Turn finished", False)
+        StatusO = Status(0, "Turn finished", False, True)
         self.putStatus(StatusO)
-        StatusO = Status(1, "W-LAN disturbance", True)
+        StatusO = Status(1, "W-LAN disturbance", True, True)
         self.putStatus(StatusO)
-        StatusO = Status(2, "USB disturbance", True)
+        StatusO = Status(2, "USB disturbance", True, True)
         self.putStatus(StatusO)
-        StatusO = Status(3, "Emergency stop", True)
+        StatusO = Status(3, "Stop", False, True)
         self.putStatus(StatusO)
-        StatusO = Status(4, "Forward slow", False)
+        StatusO = Status(4, "Emergency stop", True, False)
         self.putStatus(StatusO)
-        StatusO = Status(5, "Forward half", False)
+        StatusO = Status(5, "Forward slow", False, True)
         self.putStatus(StatusO)
-        StatusO = Status(6, "Forward full", False)
+        StatusO = Status(6, "Forward half", False, True)
         self.putStatus(StatusO)
-        StatusO = Status(7, "Steering left", False)
+        StatusO = Status(7, "Forward full", False, True)
         self.putStatus(StatusO)
-        StatusO = Status(8, "Steering right", False)
+        StatusO = Status(8, "Steering left", False, True)
         self.putStatus(StatusO)
-        StatusO = Status(9, "Emergency stop", True)
+        StatusO = Status(9, "Steering right", False, True)
         self.putStatus(StatusO)
-        StatusO = Status(10, "Turn slow 45 left", False)
+        StatusO = Status(10, "Turn slow 45 left", False, True)
         self.putStatus(StatusO)
-        StatusO = Status(11, "Turn slow 45 right", False)
+        StatusO = Status(11, "Turn slow 45 right", False, True)
         self.putStatus(StatusO)
-        StatusO = Status(12, "Turn slow 90 left", False)
+        StatusO = Status(12, "Turn slow 90 left", False, True)
         self.putStatus(StatusO)
-        StatusO = Status(13, "Turn slow 90 right", False)
+        StatusO = Status(13, "Turn slow 90 right", False, True)
         self.putStatus(StatusO)
 
         return
