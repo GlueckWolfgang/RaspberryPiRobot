@@ -20,14 +20,22 @@ class StatusL:
         return
 
     def putValue(self, string):
-        separatedString = string.split(":")   # Status name, value
+        audioMessage = None
+        separatedString = string.split(":")                # Status name, value
+        value = int(separatedString[1].strip(" "))         # value
         Status = self.getStatusByName(separatedString[0])
+
         if Status is not None:
-            separatedString[1] = separatedString[1].strip(" ")
-            Status.stStatus = int(separatedString[1])
+            if (Status.stStatus == 0 and value == 1)\
+            or (Status.stStatus == 1 and value == 0):
+                # edge 0 to 1 or edge 1 to 0
+                Status.stStatus = value
+                if Status.stAlert is True:
+                    audioMessage = ["ST", str(Status.stNumber), str(Status.stAlert), str(Status.stCg), str(value), ""]
+
         else:
             print("Status not found: ", separatedString[0], "\n")
-        return
+        return audioMessage
 
     def getStatusByNumber(self, stNumber):
         if stNumber < len(self.list):       # list must not be empty
