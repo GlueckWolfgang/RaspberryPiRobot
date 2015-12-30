@@ -51,14 +51,18 @@ if __name__ == '__main__':
             # Check if line contains  a status or a measured value
             if result.find("S@") == 0:
                 result = result.replace("S@", "")
-                # Put Value and get audio back
+                # Put status and get audio back
                 audio = StatusList.putValue(result)
-                if audio is not None:
-                    print("Audio Message: ", audio, "\n")
-                    # AQueue.put(audio)
 
             elif result.find("MV@") == 0:
                 result = result.replace("MV@", "")
-                MeasuredValueList.putValue(result)
+                # Put measured value and get audio back
+                audio = MeasuredValueList.putValue(result)
+
+            if audio is not None:
+                # Audio output
+                print("Audio Message: ", audio, "\n")
+                AQueue.put(audio)
+
             #print(result)
     ###########################################################################

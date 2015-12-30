@@ -31,10 +31,15 @@ class StatusL:
                 # edge 0 to 1 or edge 1 to 0
                 Status.stStatus = value
                 if Status.stAlert is True:
-                    audioMessage = ["ST", str(Status.stNumber), str(Status.stAlert), str(Status.stCg), str(value), ""]
+                    audioMessage = ["ST", str(Status.stNumber),
+                                          Status.stAlert,
+                                          Status.stCg,
+                                          str(value),
+                                          "0"]
 
         else:
             print("Status not found: ", separatedString[0], "\n")
+
         return audioMessage
 
     def getStatusByNumber(self, stNumber):
@@ -52,6 +57,7 @@ class StatusL:
         return None
 
     def generateStatusList(self):
+        # structure = number, description text, stAlert, stCg
         StatusO = Status(0, "Turn finished", False, True)
         self.putStatus(StatusO)
         StatusO = Status(1, "W-LAN disturbance", True, True)

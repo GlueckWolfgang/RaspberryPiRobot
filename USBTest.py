@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 ###############################################################################
-# Class USBprocess
-# Version: 2015_12_28
-# Creator: Wolfgang Glück
+# USB test
+# Version: 2015_12_30
 ###############################################################################
 import serial
 import time
@@ -26,7 +25,7 @@ while True:
             print(MQueue)
             continue
     except serial.SerialException:
-        MQueue = ("USB disturbance! \r\n")
+        MQueue = ("S@USB disturbance! \r\n")
         print(MQueue)
         # initiation USB after connection  was lost
         while True:

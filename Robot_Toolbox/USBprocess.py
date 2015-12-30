@@ -1,7 +1,11 @@
 # -*- coding: utf-8 -*-
 ###############################################################################
 # Class USBprocess
-# Version: 2015_12_29
+# Version: 2015_12_30
+#
+# Please note, that the CQueue will only operate after a message has been
+# received from MQueue. (Arduino sends every 250 ms a message block)
+# If this is not what you expect, separate the whole command process!
 ###############################################################################
 import serial
 import time
@@ -47,11 +51,9 @@ class USBprocess:
                     try:
                         self.ser.close()
                         self.ser.open()
-                        MQueue.put("USB open! \n")
                         MQueue.put("S@USB disturbance: 0\n")
                     except serial.SerialException:
                         # wait for the next trial
-                        MQueue.put("USB Open failed! \n")
                         time.sleep(1)
                         continue
                     else:

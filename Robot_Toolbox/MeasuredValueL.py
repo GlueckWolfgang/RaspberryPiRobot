@@ -20,6 +20,7 @@ class MeasuredValueL:
         return
 
     def putValue(self, string):
+        audioMessage = None
         separatedString = string.split(":")   # MV name, value
         MV = self.getMeasuredValueByName(separatedString[0])
         if MV is not None:
@@ -51,7 +52,7 @@ class MeasuredValueL:
 
         else:
             print("Measured value not found: ", separatedString[0], "\n")
-        return
+        return audioMessage
 
     def getMeasuredValueByNumber(self, mvNumber):
         if mvNumber < len(self.list):       # list must not be empty
@@ -68,6 +69,7 @@ class MeasuredValueL:
         return None
 
     def generateMeasuredValueList(self):
+        # structure = Number, type, datatype, dimension, description text, ULAlert, LLAlert
         MValue = MeasuredValue(0, "Actual value", "Integer", "", "Version", False, False)
         self.putMeasuredValue(MValue)
         MValue = MeasuredValue(1, "Actual value", "Integer", "cm", "EncLt", False, False)

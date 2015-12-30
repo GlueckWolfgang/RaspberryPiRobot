@@ -2,9 +2,11 @@
 ###############################################################################
 # Class Audio process
 # Version:  2015.12.30
+# MQueue    Could be used for fault messages (related status must exist)
+# AQueue    order queue for audio output, structure see below
 ###############################################################################
 import pyglet
-
+import time
 
 class Audioprocess:
 
@@ -13,6 +15,8 @@ class Audioprocess:
         return nachricht
 
     def Audiorun(self, MQueue, AQueue):
+        # configuration of a player
+        player = pyglet.media.Player()
 
         # get order from AQueue(block by default)
         # structure:
@@ -22,53 +26,42 @@ class Audioprocess:
 
             # play pieep (0)
             url = "data/CG/0.mp3"
-            clip = pyglet.resource.media(url)
-            clip.play()
-            pyglet.app.run
+            clip0 = pyglet.media.load(url, streaming = False)
+            player.queue(clip0)
 
             if Audio[0] == "MV":
                 # play description text for measured value according to no
-                url = "data/MV/" + str(Audio[1]) + ".mp3"
-                clip = pyglet.resource.media(url)
-                clip.play()
-                pyglet.app.run
+                url = "data/MV/" + int(Audio[1]) + ".mp3"
+                clip1 = pyglet.media.load(url, streaming = False)
+                player.queue(clip1)
 
-                if Audio[4] == 1:
+                if int(Audio[4]) == 1:
                     # play comming text according to status == 1 and cTextNo
-                    url = "data/CG/" + str(Audio[5]) + ".mp3"
+                    url = "data/CG/" + int(Audio[5]) + ".mp3"
                 else:
                     # play going text (4) according to status == 0
                     url = "data/CG/4.mp3"
-                clip = pyglet.resource.media(url)
-                clip.play()
-                pyglet.app.run
+                clip2 = pyglet.media.load(url, streaming = False)
+                player.queue(clip2)
+                player.play()
+                time.sleep(4)  # pause between 2 messages
 
             elif Audio[0] == "ST":
                 # play description text for status according to no
-                url = "data/ST/" + str(Audio[1]) + ".mp3"
-                clip = pyglet.resource.media(url)
-                clip.play()
-                pyglet.app.run
-
+                url = "data/ST/" + Audio[1] + ".mp3"
+                clip1 = pyglet.media.load(url, streaming = False)
+                player.queue(clip1)
+                # check if status has Cg character
                 if Audio[3] is True:
-                    if Audio[4] == 1:
+                    if int(Audio[4]) == 1:
                         # play comming text (3) according to status == 1
-                        url = "data/ST/3.mp3"
+                        url = "data/CG/3.mp3"
                     else:
                         # play going text (4) according to status == 0
-                        url = "data/ST/4.mp3"
-                    clip = pyglet.resource.media(url)
-                    clip.play()
-                    pyglet.app.run
+                        url = "data/CG/5.mp3"
+                clip2 = pyglet.media.load(url, streaming = False)
+                player.queue(clip2)
+                player.play()
+                time.sleep(4)  # pause between 2 messages
         # never executed
         return
-
-
-
-
-
-
-
-
-
-
