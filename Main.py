@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ###############################################################################
 # Raspberry Robot Program
-# Version: 2015_12_27
+# Version: 2015_12_30
 # Creator: Wolfgang Glück
 ###############################################################################
 import multiprocessing as mp
@@ -10,20 +10,26 @@ from Robot_Toolbox.MeasuredValueL import *
 from Robot_Toolbox.StatusL import *
 from Robot_Toolbox.CommandL import *
 from Robot_Toolbox.USBprocess import *
+from Robot_Toolbox.Audioprocess import *
 
 
 ###############################################################################
 # Main process
 if __name__ == '__main__':
     ###########################################################################
-    # Create instance of USB process
+    # Create instance of queues and processes
+    AQueue = mp.Queue()
     MQueue = mp.Queue()
     CQueue = mp.Queue()
+
     USBProcess = USBprocess()
-    process = mp.Process(target=USBProcess.USBrun, args=(MQueue, CQueue))
-    ###########################################################################
+    AudioProcess = Audioprocess()
+    processList = [mp.Process(target=USBProcess.USBrun, args=(MQueue, CQueue)),
+                   mp.Process(target=AudioProcess.Audiorun, args=(MQueue, AQueue))]
+
     # starting child processes
-    process.start()
+    for i in range(0, len(processList)):
+        processList[i].start()
     ###########################################################################
     # Create instance of measured value list
     MeasuredValueList = MeasuredValueL()
@@ -42,8 +48,7 @@ if __name__ == '__main__':
     while True:
         if not MQueue.empty():
             result = MQueue.get().strip()
-            result = result.decode("utf-8")
-            # Check if line is a status or a measured value
+            # Check if line contains  a status or a measured value
             if result.find("S@") == 0:
                 result = result.replace("S@", "")
                 StatusList.putValue(result)
@@ -52,8 +57,4 @@ if __name__ == '__main__':
                 result = result.replace("MV@", "")
                 MeasuredValueList.putValue(result)
             #print(result)
-
-
-
-
     ###########################################################################
