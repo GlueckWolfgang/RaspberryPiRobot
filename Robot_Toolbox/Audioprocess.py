@@ -17,16 +17,17 @@ class Audioprocess:
     def Audiorun(self, MQueue, AQueue):
         # configuration of a player
         player = pyglet.media.Player()
+        url = "data/CG/0.mp3"
+        clip0 = pyglet.media.load(url, streaming = False)
 
         # get order from AQueue(block by default)
         # structure:
         # [type, no, stAlert, stCg, status , cTextNo]
+
         while True:
             Audio = AQueue.get()
 
             # play pieep (0)
-            url = "data/CG/0.mp3"
-            clip0 = pyglet.media.load(url, streaming = False)
             player.queue(clip0)
 
             if Audio[0] == "MV":
@@ -38,30 +39,33 @@ class Audioprocess:
                 if int(Audio[4]) == 1:
                     # play comming text according to status == 1 and cTextNo
                     url = "data/CG/" + int(Audio[5]) + ".mp3"
+
                 else:
                     # play going text (4) according to status == 0
                     url = "data/CG/4.mp3"
+
                 clip2 = pyglet.media.load(url, streaming = False)
                 player.queue(clip2)
-                player.play()
-                time.sleep(4)  # pause between 2 messages
 
             elif Audio[0] == "ST":
                 # play description text for status according to no
                 url = "data/ST/" + Audio[1] + ".mp3"
                 clip1 = pyglet.media.load(url, streaming = False)
                 player.queue(clip1)
+
                 # check if status has Cg character
                 if Audio[3] is True:
                     if int(Audio[4]) == 1:
                         # play comming text (3) according to status == 1
                         url = "data/CG/3.mp3"
+
                     else:
                         # play going text (4) according to status == 0
                         url = "data/CG/5.mp3"
-                clip2 = pyglet.media.load(url, streaming = False)
-                player.queue(clip2)
-                player.play()
-                time.sleep(4)  # pause between 2 messages
+
+                    clip2 = pyglet.media.load(url, streaming = False)
+                    player.queue(clip2)
+            player.play()
+            time.sleep(4)  # pause between 2 messages
         # never executed
         return

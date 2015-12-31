@@ -26,8 +26,10 @@ class StatusL:
         Status = self.getStatusByName(separatedString[0])
 
         if Status is not None:
-            if (Status.stStatus == 0 and value == 1)\
-            or (Status.stStatus == 1 and value == 0):
+            if (Status.stStatus != value                   # comming / going
+            and Status.stCg is True)\
+            or(Status.stStatus != value and value == 1     # comming only
+            and Status.stCg is False):
                 # edge 0 to 1 or edge 1 to 0
                 Status.stStatus = value
                 if Status.stAlert is True:
@@ -36,7 +38,8 @@ class StatusL:
                                           Status.stCg,
                                           str(value),
                                           "0"]
-
+            else:
+                Status.stStatus = value
         else:
             print("Status not found: ", separatedString[0], "\n")
 

@@ -45,10 +45,29 @@ class MeasuredValueL:
                         MV.Ul = float(separatedStringP[1])
 
                 elif separatedStringP[0] == "LL_Exceeded":
-                    MV.LlBelow = int(separatedStringP[1])
+
+                    if (MV.LlBelow == 0 and int(separatedStringP[1]) == 1)\
+                    or (MV.LlBelow == 1 and int(separatedStringP[1]) == 0):
+                        # edge 0 to 1 or edge 1 to 0
+                        MV.LlBelow = int(separatedStringP[1])
+                        if MV.mvAlert is True:
+                            audioMessage = ["MV", str(MV.mvNumber),
+                                                  MV.LlBelowAlert,
+                                                  "",
+                                                  str(MV.LlBelow),
+                                                  "2"]
 
                 elif separatedStringP[0] == "UL_Exceeded":
-                    MV.UlAbove = int(separatedStringP[1])
+                    if (MV.UlAbove == 0 and int(separatedStringP[1]) == 1)\
+                    or (MV.UlAbove == 1 and int(separatedStringP[1]) == 0):
+                        # edge 0 to 1 or edge 1 to 0
+                        MV.UlAbove = int(separatedStringP[1])
+                        if MV.UlAboveAlert is True:
+                            audioMessage = ["MV", str(MV.mvNumber),
+                                                  MV.LlAboveAlert,
+                                                  "",
+                                                  str(MV.LlAbove),
+                                                  "1"]
 
         else:
             print("Measured value not found: ", separatedString[0], "\n")
