@@ -34,8 +34,9 @@ class USBprocess:
         while True:
             try:
                 # get messages from USB interface and append to MQueue
-                result = (self.ser.readline()).decode("utf-8")
-                if result is not None and result is not "":
+                result = (self.ser.readline())
+                result = result.decode("utf-8")
+                if result is not None:
                     MQueue.put(result)
 
                 # get command from CQueue
@@ -54,6 +55,7 @@ class USBprocess:
                         MQueue.put("S@USB disturbance: 0\n")
                     except serial.SerialException:
                         # wait for the next trial
+                        MQueue.put("I@USB open failed")
                         time.sleep(1)
                         continue
                     else:

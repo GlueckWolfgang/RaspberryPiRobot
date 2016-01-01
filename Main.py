@@ -59,6 +59,12 @@ if __name__ == '__main__':
                 # Put measured value and get audio back
                 audio = MeasuredValueList.putValue(result)
 
+            elif result.find("I@") == 0:
+                # internal message
+                result = result.replace("I@", "")
+                print (result)
+                audio = None
+
             if audio is not None:
                 # Audio output
                 print("Audio Message: ", audio, "\n")

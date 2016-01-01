@@ -20,7 +20,10 @@ ser.open()
 while True:
     try:
         result = ser.readline()
-        if result is not None and result is not "":
+        print(result)
+        # protect from broken strings
+        result = result.decode("utf-8")
+        if result is not None:
             MQueue = result
             print(MQueue)
             continue
