@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ###############################################################################
 # Class of MeasuredValue
-# Version: 2015.12.28
+# Version: 2016.01.02
 #
 # mvNumber      = 1..n
 # mvType        = ("Actual value", "Smoothed value")
@@ -25,10 +25,10 @@ class MeasuredValue:
         self.value = 0
         self.Ul = 0
         self.Ll = 0
-        self.UlAbove = False
+        self.UlAbove = 0
         self.UlAboveDescription = "Upper limit exceeded"
         self.UlAboveAlert = mvUlAlert
-        self.LlBelow = False
+        self.LlBelow = 0
         self.LlBelowDescription = "Lower limit exceeded"
         self.LlBelowAlert = mvLlAlert
 

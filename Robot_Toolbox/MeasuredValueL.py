@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ###############################################################################
 # Class of Measured Value List
-# Version:  2015.12.29
+# Version:  2016.01.02
 ###############################################################################
 from Robot_Toolbox.MeasuredValue import *
 
@@ -24,50 +24,50 @@ class MeasuredValueL:
         separatedString = string.split(":")   # MV name, value
         MV = self.getMeasuredValueByName(separatedString[0])
         if MV is not None:
-            separatedStringP = separatedString[1].split(" ")  # keyword, value
-            separatedStringP[1] = separatedStringP[1].strip(" ")
-            if separatedStringP[0] == "V":
+            separatedStringP = separatedString[1].split(" ")  # "", keyword, value
+            separatedStringP[2] = separatedStringP[2].strip(" ")
+            # print(separatedString, separatedStringP)
+            if separatedStringP[1] == "V":
                 if MV.mvDtype == "Integer":
-                    MV.value = int(separatedStringP[1])
+                    MV.value = int(separatedStringP[2])
                 elif MV.mvDtype == "Float":
-                    MV.value = float(separatedStringP[1])
+                    MV.value = float(separatedStringP[2])
 
-                elif separatedStringP[0] == "LL":
-                    if MV.mvDtype == "Integer":
-                        MV.Ll = int(separatedStringP[1])
-                    elif MV.mvDtype == "Float":
-                        MV.Ll = float(separatedStringP[1])
+            elif separatedStringP[1] == "LL":
+                if MV.mvDtype == "Integer":
+                    MV.Ll = int(separatedStringP[2])
+                elif MV.mvDtype == "Float":
+                    MV.Ll = float(separatedStringP[2])
 
-                elif separatedStringP[0] == "UL":
-                    if MV.mvDtype == "Integer":
-                        MV.Ul = int(separatedStringP[1])
-                    elif MV.mvDtype == "Float":
-                        MV.Ul = float(separatedStringP[1])
+            elif separatedStringP[1] == "UL":
+                if MV.mvDtype == "Integer":
+                    MV.Ul = int(separatedStringP[2])
+                elif MV.mvDtype == "Float":
+                    MV.Ul = float(separatedStringP[2])
 
-                elif separatedStringP[0] == "LL_Exceeded":
+            elif separatedStringP[1] == "LL_Exceeded":
+                if MV.LlBelow != int(separatedStringP[2]):
+                    print(separatedString[0], MV.LlBelow, separatedStringP[2])
+                    # edge 0 to 1 or edge 1 to 0
+                    MV.LlBelow = int(separatedStringP[2])
+                    if MV.LlBelowAlert is True:
+                        audioMessage = ["MV", str(MV.mvNumber),
+                                              MV.LlBelowAlert,
+                                              True,
+                                              str(MV.LlBelow),
+                                              "2"]
 
-                    if (MV.LlBelow == 0 and int(separatedStringP[1]) == 1)\
-                    or (MV.LlBelow == 1 and int(separatedStringP[1]) == 0):
-                        # edge 0 to 1 or edge 1 to 0
-                        MV.LlBelow = int(separatedStringP[1])
-                        if MV.mvAlert is True:
-                            audioMessage = ["MV", str(MV.mvNumber),
-                                                  MV.LlBelowAlert,
-                                                  "",
-                                                  str(MV.LlBelow),
-                                                  "2"]
-
-                elif separatedStringP[0] == "UL_Exceeded":
-                    if (MV.UlAbove == 0 and int(separatedStringP[1]) == 1)\
-                    or (MV.UlAbove == 1 and int(separatedStringP[1]) == 0):
-                        # edge 0 to 1 or edge 1 to 0
-                        MV.UlAbove = int(separatedStringP[1])
-                        if MV.UlAboveAlert is True:
-                            audioMessage = ["MV", str(MV.mvNumber),
-                                                  MV.LlAboveAlert,
-                                                  "",
-                                                  str(MV.LlAbove),
-                                                  "1"]
+            elif separatedStringP[0] == "UL_Exceeded":
+                if MV.UlAbove != int(separatedStringP[2]):
+                    print(separatedString[0], MV.LlBelow, separatedStringP[2])
+                    # edge 0 to 1 or edge 1 to 0
+                    MV.UlAbove = int(separatedStringP[2])
+                    if MV.UlAboveAlert is True:
+                        audioMessage = ["MV", str(MV.mvNumber),
+                                              MV.UlAboveAlert,
+                                              True,
+                                              str(MV.UlAbove),
+                                              "1"]
 
         else:
             print("Measured value not found: ", separatedString[0], "\n")
