@@ -12,7 +12,7 @@ if platform.system() == "Linux":
 else:
     device = "COM3"         # Windows
 baud = 38400
-ser = serial.Serial(device, baud)
+ser = serial.Serial(device, baud, timeout = 0.1)
 # clear buffer
 ser.close()
 ser.open()
@@ -20,13 +20,17 @@ ser.open()
 while True:
     try:
         result = ser.readline()
-        print(result)
+
         # protect from broken strings
+        print(result)
         result = result.decode("utf-8")
-        if result is not None:
+        if result is not None\
+        and result.rfind("\n") != -1:
             MQueue = result
-            print(MQueue)
-            continue
+            #print(MQueue)
+        else:
+            print("Fehlerhafter datensatz: ", result)
+
     except serial.SerialException:
         MQueue = ("S@USB disturbance! \r\n")
         print(MQueue)
@@ -40,11 +44,13 @@ while True:
                 print("USB Open failed! \r\n")
                 # wait for the next trial
                 time.sleep(1)
-                continue
             else:
                 # clear buffer
                 ser.close()
                 ser.open()
                 break
+
+    except UnicodeDecodeError:
+        pass
     else:
         continue

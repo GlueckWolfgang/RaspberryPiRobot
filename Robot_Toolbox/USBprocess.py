@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ###############################################################################
 # Class USBprocess
-# Version: 2015_12_30
+# Version: 2015_01_02
 #
 # Please note, that the CQueue will only operate after a message has been
 # received from MQueue. (Arduino sends every 250 ms a message block)
@@ -35,8 +35,9 @@ class USBprocess:
             try:
                 # get messages from USB interface and append to MQueue
                 result = (self.ser.readline())
-                result = result.decode("utf-8")
-                if result is not None:
+                result = result.decode("utf-8")  # see except UnicodeDecodeError
+                if result is not None\
+                and result.rfind("\n") != -1:
                     MQueue.put(result)
 
                 # get command from CQueue
@@ -63,7 +64,9 @@ class USBprocess:
                         self.ser.close()
                         self.ser.open()
                         break
-
+            except UnicodeDecodeError:
+                # put the rubbish (corrupted data) to the bin
+                pass
             else:
                 continue
         # never executed
