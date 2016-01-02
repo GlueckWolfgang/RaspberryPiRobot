@@ -11,8 +11,7 @@ if platform.system() == "Linux":
     device = "dev/ttyUSB0"  # Linux
 else:
     device = "COM3"         # Windows
-baud = 38400
-ser = serial.Serial(device, baud, timeout = 0.1)
+ser = serial.Serial(device, 38400, timeout=0.1)
 # clear buffer
 ser.close()
 ser.open()

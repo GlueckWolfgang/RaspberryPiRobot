@@ -23,8 +23,7 @@ class USBprocess:
             self.device = "/dev/ttyUSB0"  # Linux
         else:
             self.device = "COM3"          # Windows
-        self.baud = 38400
-        self.ser = serial.Serial(self.device, self.baud)
+        self.ser = serial.Serial(self.device, 38400, timeout=0.1)
         # clear buffer
         self.ser.close()
         self.ser.open()
@@ -51,6 +50,7 @@ class USBprocess:
                 # initiation USB after connection  was lost
                 while True:
                     try:
+                        # clear buffer
                         self.ser.close()
                         self.ser.open()
                         MQueue.put("S@USB disturbance: 0\n")
