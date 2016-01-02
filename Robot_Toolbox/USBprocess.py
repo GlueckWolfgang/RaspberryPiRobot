@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ###############################################################################
 # Class USBprocess
-# Version: 2015_01_02
+# Version: 2016_01_02
 #
 # Please note, that the CQueue will only operate after a message has been
 # received from MQueue. (Arduino sends every 250 ms a message block)
