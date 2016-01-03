@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 ###############################################################################
 # Class USBprocess
-# Version: 2016_01_02
+# Version: 2016_01_03
 #
 # Please note, that the CQueue will only operate after a message has been
-# received from MQueue. (Arduino sends every 250 ms a message block)
+# received from MQueue or at least after timeout (100ms).
 # If this is not what you expect, separate the whole command process!
 ###############################################################################
 import serial

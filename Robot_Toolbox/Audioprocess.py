@@ -29,7 +29,7 @@ class Audioprocess:
                 if Audio[0] == "MV":
                     # play description text for measured value according to no
                     url = "data/MV/" + Audio[1] + ".mp3"
-                    MQueue.put("I@Clip1URL: " + url)
+                    # MQueue.put("I@Clip1URL: " + url)
                     clip1 = pyglet.media.load(url, streaming=False)
                     player.queue(clip1)
 
@@ -40,14 +40,14 @@ class Audioprocess:
                     else:
                         # play going text (4) according to status == 0
                         url = "data/CG/4.mp3"
-                    MQueue.put("I@Clip2URL: " + url)
+                    # MQueue.put("I@Clip2URL: " + url)
                     clip2 = pyglet.media.load(url, streaming=False)
                     player.queue(clip2)
 
                 elif Audio[0] == "ST":
                     # play description text for status according to no
                     url = "data/ST/" + Audio[1] + ".mp3"
-                    MQueue.put("I@Clip1URL: " + url)
+                    # MQueue.put("I@Clip1URL: " + url)
                     clip1 = pyglet.media.load(url, streaming=False)
                     player.queue(clip1)
 
@@ -60,7 +60,7 @@ class Audioprocess:
                             # play going text (4) according to status == 0
                             url = "data/CG/5.mp3"
 
-                        MQueue.put("I@Clip2URL: " + url)
+                        # MQueue.put("I@Clip2URL: " + url)
                         clip2 = pyglet.media.load(url, streaming=False)
                         player.queue(clip2)
 
