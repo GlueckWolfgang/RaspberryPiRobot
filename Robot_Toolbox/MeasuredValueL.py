@@ -47,7 +47,7 @@ class MeasuredValueL:
 
             elif separatedStringP[1] == "LL_Exceeded":
                 if MV.LlBelow != int(separatedStringP[2]):
-                    print(separatedString[0], MV.LlBelow, separatedStringP[2])
+                    # print(separatedString[0], MV.LlBelow, separatedStringP[2])
                     # edge 0 to 1 or edge 1 to 0
                     MV.LlBelow = int(separatedStringP[2])
                     if MV.LlBelowAlert is True:
@@ -59,7 +59,7 @@ class MeasuredValueL:
 
             elif separatedStringP[0] == "UL_Exceeded":
                 if MV.UlAbove != int(separatedStringP[2]):
-                    print(separatedString[0], MV.LlBelow, separatedStringP[2])
+                    # print(separatedString[0], MV.LlBelow, separatedStringP[2])
                     # edge 0 to 1 or edge 1 to 0
                     MV.UlAbove = int(separatedStringP[2])
                     if MV.UlAboveAlert is True:
