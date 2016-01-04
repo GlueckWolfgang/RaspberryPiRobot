@@ -65,6 +65,11 @@ if __name__ == '__main__':
                 print (result)
                 audio = None
 
+            elif result.find("C@") == 0:
+                result = result.replace("C@", "")
+                audio = None
+                CQueue.put(result)
+
             if audio is not None:
                 # Audio output
                 print("Audio Message: ", audio, "\n")

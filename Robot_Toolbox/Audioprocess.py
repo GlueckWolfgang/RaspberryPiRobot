@@ -26,7 +26,7 @@ class Audioprocess:
             if not AQueue.empty():
                 # switch on amplifier
                 if amplifier is False:
-                    MQueue.put("S@Amplifier: 1")
+                    MQueue.put("C@Amplifier: 1")
                     amplifier = True
 
                 # get order from AQueue
@@ -84,7 +84,7 @@ class Audioprocess:
             if not player.playing\
             and amplifier is True:
                 # switch off amplifier and save energy
-                MQueue.put("S@Amplifier: 0")
+                MQueue.put("C@Amplifier: 0")
                 amplifier = False
 
             return
