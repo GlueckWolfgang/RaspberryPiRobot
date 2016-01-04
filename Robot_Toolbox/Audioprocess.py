@@ -1,10 +1,11 @@
 # -*- coding: utf-8 -*-
 ###############################################################################
 # Class Audio process
-# Version:  2016.01.03
-# MQueue    Can be used for fault messages
-#           (related status must exist for M@ or I@anyString can be sent)
+# Version:  2016.01.04
+# MQueue    Can be used for status messages
+#           (related status must exist for S@ or I@anyString can be sent)
 # AQueue    order queue for audio output, structure see below
+# Amplifier will be switched on and off by energy saving reason, it takes 500 mA
 ###############################################################################
 import pyglet
 
@@ -16,14 +17,25 @@ class Audioprocess:
         return nachricht
 
     def Audiorun(self, MQueue, AQueue):
+        global amplifier
+        amplifier = False
 
         def play_next(*args):
+            global amplifier
+
             if not AQueue.empty():
+                # switch on amplifier
+                if amplifier is False:
+                    MQueue.put("S@Amplifier: 1")
+                    amplifier = True
+
                 # get order from AQueue
                 # structure:
                 # [type, no, stAlert, stCg, status , cTextNo]
                 Audio = AQueue.get()
                 # play pieep (0)
+                url = "data/CG/0.mp3"
+                clip0 = pyglet.media.load(url, streaming=False)
                 player.queue(clip0)
 
                 if Audio[0] == "MV":
@@ -63,19 +75,24 @@ class Audioprocess:
                         # MQueue.put("I@Clip2URL: " + url)
                         clip2 = pyglet.media.load(url, streaming=False)
                         player.queue(clip2)
+                else:
+                    # peep only, just for understanding
+                    pass
+                if not player.playing:
+                    player.play()
 
-            if not player.playing:
-                player.play()
+            if not player.playing\
+            and amplifier is True:
+                # switch off amplifier and save energy
+                MQueue.put("S@Amplifier: 0")
+                amplifier = False
+
             return
 
         # configuration of a player
         player = pyglet.media.Player()
-
-        # Play peep after startup
-        url = "data/CG/0.mp3"
-        clip0 = pyglet.media.load(url, streaming=False)
-        player.queue(clip0)
-        player.play()
+        # play peep after startup
+        AQueue.put(["peep only", "", "", "", "", ""])
 
         # call pyglet process and timer
         pyglet.clock.schedule_interval(play_next, 1.0)

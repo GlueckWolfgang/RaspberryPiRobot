@@ -89,5 +89,9 @@ class StatusL:
         self.putStatus(StatusO)
         StatusO = Status(13, "Turn slow 90 right", False, True)
         self.putStatus(StatusO)
+        StatusO = Status(14, "Compass", False, True)
+        self.putStatus(StatusO)
+        StatusO = Status(15, "Amplifier", False, True)
+        self.putStatus(StatusO)
 
         return
