@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ###############################################################################
 # Class of command list
-# Version:  2015.12.21
+# Version:  2016.01.05
 ###############################################################################
 from Robot_Toolbox.Command import *
 
@@ -19,9 +19,17 @@ class CommandL:
         self.list.append(Command)            # index = coNumber
         return
 
+    def sendCommandByNumber(self,coNumber, coValue):
+        if int(coNumber) < len(self.list):        # list must not be empty
+            CommandO = self.getCommandByNumber(coNumber)
+            Command = CommandO.coDescription + coValue
+            return Command
+        else:
+            return None
+
     def getCommandByNumber(self, coNumber):
-        if coNumber < len(self.list):        # list must not be empty
-            return self.list[coNumber]
+        if int(coNumber) < len(self.list):        # list must not be empty
+            return self.list[int(coNumber)]
         else:
             return None
 
@@ -34,7 +42,7 @@ class CommandL:
         return None
 
     def generateCommandList(self):
-        CommandO = Command(0, "Stop: ")
+        CommandO = Command(0, "Stop")
         self.putCommand(CommandO)
         CommandO = Command(1, "ForwardSlow")
         self.putCommand(CommandO)
@@ -60,7 +68,7 @@ class CommandL:
         self.putCommand(CommandO)
         CommandO = Command(12, "EncoderReset")
         self.putCommand(CommandO)
-        CommandO = Command(13, "Amplifier")
+        CommandO = Command(13, "Amplifier: ")
         self.putCommand(CommandO)
 
 

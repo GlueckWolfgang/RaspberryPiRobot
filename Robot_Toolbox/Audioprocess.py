@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ###############################################################################
 # Class Audio process
-# Version:  2016.01.04
+# Version:  2016.01.05
 # MQueue    Can be used for status messages
 #           (related status must exist for S@ or I@anyString can be sent)
 # AQueue    order queue for audio output, structure see below
@@ -26,7 +26,7 @@ class Audioprocess:
             if not AQueue.empty():
                 # switch on amplifier
                 if amplifier is False:
-                    MQueue.put("C@Amplifier: 1")
+                    MQueue.put("C@13 1")
                     amplifier = True
 
                 # get order from AQueue
@@ -84,7 +84,7 @@ class Audioprocess:
             if not player.playing\
             and amplifier is True:
                 # switch off amplifier and save energy
-                MQueue.put("C@Amplifier: 0")
+                MQueue.put("C@13 0")
                 amplifier = False
 
             return

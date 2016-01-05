@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ###############################################################################
 # Raspberry Robot Program
-# Version: 2015_12_30
+# Version: 2016_01_05
 # Creator: Wolfgang Glück
 ###############################################################################
 import multiprocessing as mp
@@ -67,13 +67,15 @@ if __name__ == '__main__':
 
             elif result.find("C@") == 0:
                 result = result.replace("C@", "")
+                split = result.split(" ")
+                CQueue.put(CommandList.sendCommandByNumber(split[0], split[1]))
                 audio = None
-                CQueue.put(result)
+
 
             if audio is not None:
                 # Audio output
                 print("Audio Message: ", audio, "\n")
                 AQueue.put(audio)
 
-            #print(result)
+            # print(result)
     ###########################################################################
