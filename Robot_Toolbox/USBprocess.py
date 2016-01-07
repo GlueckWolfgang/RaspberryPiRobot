@@ -27,12 +27,12 @@ class USBprocess:
         self.disturbance = True
         while self.disturbance is True:
             try:
-                self.ser = serial.Serial(self.device, 38400, timeout=0.1)
+                self.ser = serial.Serial(self.device, 115200, timeout=0.1)
                 self.disturbance = False
                 MQueue.put("S@USB disturbance: 0\n")
             except serial.SerialException:
                 # wait for the next trial
-                MQueue.put("I@USB open failed")
+                # MQueue.put("I@USB open failed")
                 MQueue.put("S@USB disturbance: 1\n")
                 time.sleep(1)
                 continue
@@ -66,7 +66,7 @@ class USBprocess:
                         MQueue.put("S@USB disturbance: 0\n")
                     except serial.SerialException:
                         # wait for the next trial
-                        MQueue.put("I@USB open failed")
+                        # MQueue.put("I@USB open failed")
                         time.sleep(1)
                         continue
                     else:

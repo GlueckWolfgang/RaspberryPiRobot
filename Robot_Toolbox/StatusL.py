@@ -93,5 +93,11 @@ class StatusL:
         self.putStatus(StatusO)
         StatusO = Status(15, "Amplifier", False, True)
         self.putStatus(StatusO)
+        StatusO = Status(16, "TestPoint1", False, True)
+        self.putStatus(StatusO)
+        StatusO = Status(17, "TestPoint2", False, True)
+        self.putStatus(StatusO)
+        StatusO = Status(18, "TestPoint3", False, True)
+        self.putStatus(StatusO)
 
         return
