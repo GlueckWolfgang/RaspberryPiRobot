@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ###############################################################################
 # Class of status list
-# Version:  2015.12.29
+# Version:  2016.01.07
 ###############################################################################
 from Robot_Toolbox.Status import *
 
@@ -19,7 +19,7 @@ class StatusL:
         self.list.append(Status)            # index = stNumber
         return
 
-    def putValue(self, string):
+    def putValue(self, string, AlarmList):
         audioMessage = None
         separatedString = string.split(":")                # Status name, value
         value = int(separatedString[1].strip(" "))         # value

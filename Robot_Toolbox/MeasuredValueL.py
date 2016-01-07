@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ###############################################################################
 # Class of Measured Value List
-# Version:  2016.01.02
+# Version:  2016.01.07
 ###############################################################################
 from Robot_Toolbox.MeasuredValue import *
 
@@ -19,7 +19,7 @@ class MeasuredValueL:
         self.list.append(measuredValue)     # index = mvNumber
         return
 
-    def putValue(self, string):
+    def putValue(self, string, AlarmList):
         audioMessage = None
         separatedString = string.split(":")   # MV name, value
         MV = self.getMeasuredValueByName(separatedString[0])

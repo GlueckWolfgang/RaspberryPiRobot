@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ###############################################################################
 # Class USBprocess
-# Version: 2016_01_03
+# Version: 2016_01_07
 #
 # Please note, that the CQueue will only operate after a message has been
 # received from MQueue or at least after timeout (100ms).
@@ -23,11 +23,21 @@ class USBprocess:
             self.device = "/dev/ttyUSB0"  # Linux
         else:
             self.device = "COM3"          # Windows
-        self.ser = serial.Serial(self.device, 38400, timeout=0.1)
-        # clear buffer
-        self.ser.close()
-        self.ser.open()
-        MQueue.put("S@USB disturbance: 0\n")
+
+        self.disturbance = True
+        while self.disturbance is True:
+            try:
+                self.ser = serial.Serial(self.device, 38400, timeout=0.1)
+                self.disturbance = False
+                MQueue.put("S@USB disturbance: 0\n")
+            except serial.SerialException:
+                # wait for the next trial
+                MQueue.put("I@USB open failed")
+                MQueue.put("S@USB disturbance: 1\n")
+                time.sleep(1)
+                continue
+            else:
+                break
 
         # continuous process
         while True:

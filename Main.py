@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ###############################################################################
 # Raspberry Robot Program
-# Version: 2016_01_05
+# Version: 2016_01_07
 # Creator: Wolfgang Glück
 ###############################################################################
 import multiprocessing as mp
@@ -9,6 +9,7 @@ import multiprocessing as mp
 from Robot_Toolbox.MeasuredValueL import *
 from Robot_Toolbox.StatusL import *
 from Robot_Toolbox.CommandL import *
+from Robot_Toolbox.AlarmL import *
 from Robot_Toolbox.USBprocess import *
 from Robot_Toolbox.Audioprocess import *
 
@@ -43,6 +44,9 @@ if __name__ == '__main__':
     CommandList = CommandL()
     CommandList.generateCommandList()
 
+    # Create instance of alarm list
+    AlarmList = AlarmL()
+
     ###########################################################################
     # Endless loop of main program
     while True:
@@ -52,12 +56,12 @@ if __name__ == '__main__':
             if result.find("S@") == 0:
                 result = result.replace("S@", "")
                 # Put status and get audio back
-                audio = StatusList.putValue(result)
+                audio = StatusList.putValue(result, AlarmList)
 
             elif result.find("MV@") == 0:
                 result = result.replace("MV@", "")
                 # Put measured value and get audio back
-                audio = MeasuredValueList.putValue(result)
+                audio = MeasuredValueList.putValue(result, AlarmList)
 
             elif result.find("I@") == 0:
                 # internal message
@@ -70,7 +74,6 @@ if __name__ == '__main__':
                 split = result.split(" ")
                 CQueue.put(CommandList.sendCommandByNumber(split[0], split[1]))
                 audio = None
-
 
             if audio is not None:
                 # Audio output
