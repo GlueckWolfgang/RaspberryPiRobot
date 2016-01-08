@@ -1,9 +1,11 @@
 # -*- coding: utf-8 -*-
 ###############################################################################
 # Class of status list
-# Version:  2016.01.07
+# Version:  2016.01.08
 ###############################################################################
 from Robot_Toolbox.Status import *
+from Robot_Toolbox.Alarm import *
+import datetime
 
 
 class StatusL:
@@ -19,7 +21,7 @@ class StatusL:
         self.list.append(Status)            # index = stNumber
         return
 
-    def putValue(self, string, AlarmList):
+    def putValue(self, string, AlarmList, AQueue):
         audioMessage = None
         separatedString = string.split(":")                # Status name, value
         value = int(separatedString[1].strip(" "))         # value
@@ -27,23 +29,41 @@ class StatusL:
 
         if Status is not None:
             if (Status.stStatus != value                   # comming / going
-            and Status.stCg is True)\
-            or(Status.stStatus != value and value == 1     # comming only
-            and Status.stCg is False):
+            and Status.stAlert is True):
                 # edge 0 to 1 or edge 1 to 0
-                Status.stStatus = value
+                # generate alarm for alarm list
+                AlarmO = Alarm(datetime.datetime.now(),
+                               Status.stDescription,
+                               "ST",
+                               Status.stNumber,       # int 0..n
+                               "",                    # for measured value only
+                               value,                 # int 0/1
+                               "",                    # for measured value only
+                               0)                     # for measured value only
+
+                AlarmList.putAlarm(AlarmO)
+
+            if (Status.stStatus != value                   # comming / going
+            and Status.stCg is True
+            and Status.stAlert is True)\
+            or(Status.stStatus != value and value == 1     # comming only
+            and Status.stCg is False
+            and Status.stAlert is True):
+                # edge 0 to 1 or edge 1 to 0
+                # generate audio message
                 if Status.stAlert is True:
                     audioMessage = ["ST", str(Status.stNumber),
                                           Status.stAlert,
                                           Status.stCg,
                                           str(value),
                                           "0"]
-            else:
-                Status.stStatus = value
+            Status.stStatus = value
+
         else:
             print("Status not found: ", separatedString[0], "\n")
-
-        return audioMessage
+        if audioMessage is not None:
+            AQueue.put(audioMessage)
+        return
 
     def getStatusByNumber(self, stNumber):
         if stNumber < len(self.list):       # list must not be empty
@@ -93,11 +113,11 @@ class StatusL:
         self.putStatus(StatusO)
         StatusO = Status(15, "Amplifier", False, True)
         self.putStatus(StatusO)
-        StatusO = Status(16, "TestPoint1", False, False)
+        StatusO = Status(16, "TestPoint1", True, False)
         self.putStatus(StatusO)
-        StatusO = Status(17, "TestPoint2", False, False)
+        StatusO = Status(17, "TestPoint2", True, False)
         self.putStatus(StatusO)
-        StatusO = Status(18, "TestPoint3", False, False)
+        StatusO = Status(18, "TestPoint3", True, False)
         self.putStatus(StatusO)
 
         return

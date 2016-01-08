@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 ###############################################################################
 # Class of alarm list
-# Version:  2016.01.07
-# not yet tested!
+# Version:  2016.01.08
+# not yet fully tested!
 ###############################################################################
 import copy
 from Robot_Toolbox.Alarm import *
@@ -11,14 +11,11 @@ from Robot_Toolbox.Alarm import *
 class AlarmL:
 
     def __init__(self):
-        self.list = []                      # List of alarm objects
-                                            # in temporal sequence
-        self.actualPage = []                # alarms of actual visible page
-        self.actualPageNo = 1               # actual visible page number
-        self.maxPageNo = 1                  # maximum pagenumber depends on
-                                            # number of alarms in list
-        self.numberOfLines = 45             # Number of lines per page
-        self.fillActualPage()
+        self.list = []           # List of alarm objects in temporal sequence
+        self.actualPage = []     # alarms of actual visible page
+        self.actualPageNo = 1    # actual visible page number
+        self.maxPageNo = 1       # maximum pagenumber depends on number of alarms
+        self.numberOfLines = 45  # Number of lines per page
 
     def __str__(self):
         nachricht = " List of alarms"
@@ -30,13 +27,34 @@ class AlarmL:
         if len(self.list) % self.numberOfLines > 0:
             self.maxPageNo += 1
         self.fillActualPage()
+        # for test reasons only, until the web client works
+        #######################################################################
+        print("\nAlarmlist:")
+        for i in range(0, len(self.list)):
+            AlarmO = self.list[i]
+            Alarmtext = str(AlarmO.alDateTime) + " " + AlarmO.alDescription + " "
+            if AlarmO.alType == "ST":
+                Alarmtext = Alarmtext + "                       "
+            else:
+                Alarmtext = Alarmtext + str(AlarmO.alValue) + " "
+            if AlarmO.alStatus == 0:
+                Alarmtext = Alarmtext + AlarmO.alStatusTextG + " "
+            else:
+                Alarmtext = Alarmtext + AlarmO.alStatusTextC + " "
+            if AlarmO.alAcknowledged is True:
+                Alarmtext = Alarmtext + AlarmO.alAcknowledgeTextTrue
+            else:
+                Alarmtext = Alarmtext + AlarmO.alAcknowledgeTextFalse
+
+            print(Alarmtext, "\n")
+        #######################################################################
         return
 
     def fillActualPage(self):
         self.actualPage = []
         for i in range(0, len(self.list)):
             if i >= (self.actualPageNo - 1) * self.numberOfLines\
-            and i < self.actualPageno * self.numberOfLines:
+            and i < self.actualPageNo * self.numberOfLines:
                 self.actualPage.append(self.list[i])
         return self.actualPageNo
 
@@ -95,7 +113,7 @@ class AlarmL:
         self.listCopy = copy.copy(self.list)
         for i in range(0, len(self.listCopy)):
             if self.listCopy[i].alDelete is True:
-                del self.list[i]
+                self.list.remove(self.listCopy[i])
         self.listCopy = []
 
         # adapt maxPageNo after acknowledge execution

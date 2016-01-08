@@ -1,10 +1,11 @@
 # -*- coding: utf-8 -*-
 ###############################################################################
 # Class of Measured Value List
-# Version:  2016.01.07
+# Version:  2016.01.08
 ###############################################################################
 from Robot_Toolbox.MeasuredValue import *
-
+from Robot_Toolbox.Alarm import *
+import datetime
 
 class MeasuredValueL:
 
@@ -19,7 +20,7 @@ class MeasuredValueL:
         self.list.append(measuredValue)     # index = mvNumber
         return
 
-    def putValue(self, string, AlarmList):
+    def putValue(self, string, AlarmList, AQueue):
         audioMessage = None
         separatedString = string.split(":")   # MV name, value
         MV = self.getMeasuredValueByName(separatedString[0])
@@ -47,31 +48,59 @@ class MeasuredValueL:
 
             elif separatedStringP[1] == "LL_Exceeded":
                 if MV.LlBelow != int(separatedStringP[2]):
-                    # print(separatedString[0], MV.LlBelow, separatedStringP[2])
+                    print(separatedString[0], MV.LlBelow, separatedStringP[2])
                     # edge 0 to 1 or edge 1 to 0
                     MV.LlBelow = int(separatedStringP[2])
                     if MV.LlBelowAlert is True:
+                        # generate audio message
                         audioMessage = ["MV", str(MV.mvNumber),
                                               MV.LlBelowAlert,
                                               True,
                                               str(MV.LlBelow),
                                               "2"]
+                        # generate alarm for alarm list
+                        AlarmO = Alarm(datetime.datetime.now(),
+                        MV.mvDescription + " " + MV.LlBelowDescription,
+                        "MV",
+                        MV.mvNumber,           # int 0..n
+                        "LL",                  # Subtype
+                        MV.LlBelow,            # int 0/1
+                        MV.mvDtype,            # "Integer", "Float"
+                        MV.value)
+
+                        AlarmList.putAlarm(AlarmO)
 
             elif separatedStringP[0] == "UL_Exceeded":
                 if MV.UlAbove != int(separatedStringP[2]):
-                    # print(separatedString[0], MV.LlBelow, separatedStringP[2])
+                    print(separatedString[0], MV.UlAbove, separatedStringP[2])
                     # edge 0 to 1 or edge 1 to 0
                     MV.UlAbove = int(separatedStringP[2])
                     if MV.UlAboveAlert is True:
+                        # generate audio message
                         audioMessage = ["MV", str(MV.mvNumber),
                                               MV.UlAboveAlert,
                                               True,
                                               str(MV.UlAbove),
                                               "1"]
 
+                        # generate alarm for alarm list
+                        AlarmO = Alarm(datetime.datetime.now(),
+                        MV.mvDescription + " " + MV.UlAboveDescription,
+                        "MV",
+                        MV.mvNumber,           # int 0..n
+                        "UL",                  # Subtype
+                        MV.UlAbove,            # int 0/1
+                        MV.mvDtype,            # "Integer", "Float"
+                        MV.value)
+
+                        AlarmList.putAlarm(AlarmO)
+
         else:
             print("Measured value not found: ", separatedString[0], "\n")
-        return audioMessage
+
+        if audioMessage is not None:
+            AQueue.put(audioMessage)
+        return
 
     def getMeasuredValueByNumber(self, mvNumber):
         if mvNumber < len(self.list):       # list must not be empty
@@ -111,9 +140,9 @@ class MeasuredValueL:
         self.putMeasuredValue(MValue)
         MValue = MeasuredValue(10, "Actual value", "Float", "A", "Motor4 current", True, False)
         self.putMeasuredValue(MValue)
-        MValue = MeasuredValue(11, "Actual value", "Integer", "Degrees", "Roll", True, False)
+        MValue = MeasuredValue(11, "Actual value", "Integer", "Degrees", "Roll", True,True)
         self.putMeasuredValue(MValue)
-        MValue = MeasuredValue(12, "Actual value", "Integer", "Degrees", "Pitch", True, False)
+        MValue = MeasuredValue(12, "Actual value", "Integer", "Degrees", "Pitch", True, True)
         self.putMeasuredValue(MValue)
         MValue = MeasuredValue(13, "Actual value", "Float", "Degrees", "Actual angle", False, False)
         self.putMeasuredValue(MValue)
@@ -121,19 +150,19 @@ class MeasuredValueL:
         self.putMeasuredValue(MValue)
         MValue = MeasuredValue(15, "Smoothed value", "Float", "Degrees", "Smoothed angle", False, False)
         self.putMeasuredValue(MValue)
-        MValue = MeasuredValue(16, "Actual value", "Integer", "cm", "Distance fleft", False, True)
+        MValue = MeasuredValue(16, "Actual value", "Integer", "cm", "Distance fleft", True, True)
         self.putMeasuredValue(MValue)
-        MValue = MeasuredValue(17, "Actual value", "Integer", "cm", "Distance fright", False, True)
+        MValue = MeasuredValue(17, "Actual value", "Integer", "cm", "Distance fright", True, True)
         self.putMeasuredValue(MValue)
-        MValue = MeasuredValue(18, "Actual value", "Integer", "cm", "Distance bleft", False, True)
+        MValue = MeasuredValue(18, "Actual value", "Integer", "cm", "Distance bleft", True, True)
         self.putMeasuredValue(MValue)
-        MValue = MeasuredValue(19, "Actual value", "Integer", "cm", "Distance bright", False, True)
+        MValue = MeasuredValue(19, "Actual value", "Integer", "cm", "Distance bright", True, True)
         self.putMeasuredValue(MValue)
-        MValue = MeasuredValue(20, "Actual value", "Integer", "cm", "Distance front", False, True)
+        MValue = MeasuredValue(20, "Actual value", "Integer", "cm", "Distance front", True, True)
         self.putMeasuredValue(MValue)
         MValue = MeasuredValue(21, "Actual value", "Integer", "cm", "Distance up", False, False)
         self.putMeasuredValue(MValue)
-        MValue = MeasuredValue(22, "Actual value", "Integer", "cm", "Distance down", False, True)
+        MValue = MeasuredValue(22, "Actual value", "Integer", "cm", "Distance down", True, False)
         self.putMeasuredValue(MValue)
 
         return

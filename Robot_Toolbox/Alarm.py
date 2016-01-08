@@ -1,22 +1,23 @@
 # -*- coding: utf-8 -*-
 ###############################################################################
 # Class of Alarm
-# Version: 2016.01.07
-# not yet tested!
+# Version: 2016.01.08
 #
 # alDateTime        = Time stamp created in putValue
 # all other parameters according to MeasuredValueL respectively StatusL
 # alDescription     = Description text
 # alType            = "ST", "MV"
-# alNumber          = 0..n according to StatusL and MeasuredValueL
+# alNumber          = 0..n mvNumber or stNumber
 # alSubtype         = "UL", "LL", ""  for measured values only
 # alStatus          = 0, 1
+# alDtype           = "Integer", "Float"
+# alValue...........= measured value according to alDtype
 ###############################################################################
 
 
 class Alarm:
     def __init__(self, alDateTime, alDescription, alType, alNumber, alSubtype,
-                       alStatus):
+                       alStatus, alDtype, alValue):
 
         self.alDateTime = alDateTime
         self.alDescription = alDescription
@@ -28,6 +29,8 @@ class Alarm:
         self.alNumber = alNumber
         self.stSubType = alSubtype
         self.alStatus = alStatus
+        self.alDtype = alDtype
+        self.alValue = alValue
         self.alAcknowledged = False
         self.alDelete = False
 

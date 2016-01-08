@@ -56,29 +56,22 @@ if __name__ == '__main__':
             if result.find("S@") == 0:
                 result = result.replace("S@", "")
                 # Put status and get audio back
-                audio = StatusList.putValue(result, AlarmList)
+                StatusList.putValue(result, AlarmList, AQueue)
 
             elif result.find("MV@") == 0:
                 result = result.replace("MV@", "")
                 # Put measured value and get audio back
-                audio = MeasuredValueList.putValue(result, AlarmList)
+                MeasuredValueList.putValue(result, AlarmList, AQueue)
 
             elif result.find("I@") == 0:
                 # internal message
                 result = result.replace("I@", "")
                 print (result)
-                audio = None
 
             elif result.find("C@") == 0:
                 result = result.replace("C@", "")
                 split = result.split(" ")
                 CQueue.put(CommandList.sendCommandByNumber(split[0], split[1]))
-                audio = None
-
-            if audio is not None:
-                # Audio output
-                print("Audio Message: ", audio, "\n")
-                AQueue.put(audio)
 
             # print(result)
     ###########################################################################

@@ -26,10 +26,10 @@ class MeasuredValue:
         self.Ul = 0
         self.Ll = 0
         self.UlAbove = 0
-        self.UlAboveDescription = "Upper limit exceeded"
+        self.UlAboveDescription = "Upper limit exceeded "
         self.UlAboveAlert = mvUlAlert
         self.LlBelow = 0
-        self.LlBelowDescription = "Lower limit exceeded"
+        self.LlBelowDescription = "Lower limit exceeded "
         self.LlBelowAlert = mvLlAlert
 
     def __str__(self):
