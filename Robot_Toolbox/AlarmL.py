@@ -37,7 +37,7 @@ class AlarmL:
                 Alarmtext = Alarmtext + "                       "
             else:
                 Alarmtext = Alarmtext + AlarmO.alValue + " "
-            if AlarmO.alStatus == 0:
+            if AlarmO.alStatus == "0":
                 Alarmtext = Alarmtext + AlarmO.alStatusTextG + " "
             else:
                 Alarmtext = Alarmtext + AlarmO.alStatusTextC + " "
