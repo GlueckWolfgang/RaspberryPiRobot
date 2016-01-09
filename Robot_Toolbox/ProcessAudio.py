@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 ###############################################################################
-# Class Audio process
+# Class Process Audio
 # Version:  2016.01.09
 # CQueue    for sending commands like amplifier on/off
 # MQueue    Can be used for status messages
@@ -11,13 +11,13 @@
 import pyglet
 
 
-class Audioprocess:
+class ProcessAudio:
 
     def __str__(self):
         nachricht = "Audio process"
         return nachricht
 
-    def Audiorun(self, MQueue, AQueue, CQueue, CommandList):
+    def Run(self, MQueue, AQueue, CQueue, CommandList):
         global amplifier
         amplifier = False
 

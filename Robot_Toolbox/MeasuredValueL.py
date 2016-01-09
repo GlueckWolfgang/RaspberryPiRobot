@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ###############################################################################
 # Class of Measured Value List
-# Version:  2016.01.08
+# Version:  2016.01.09
 ###############################################################################
 from Robot_Toolbox.MeasuredValue import *
 from Robot_Toolbox.Alarm import *
@@ -20,7 +20,7 @@ class MeasuredValueL:
         self.list.append(measuredValue)     # index = mvNumber
         return
 
-    def putValue(self, string, AlarmList, AQueue):
+    def putValue(self, string, AQueue, LQueue, MQueue):
         audioMessage = None
         separatedString = string.split(":")   # MV name, value
         MV = self.getMeasuredValueByName(separatedString[0])
@@ -48,7 +48,7 @@ class MeasuredValueL:
 
             elif separatedStringP[1] == "LL_Exceeded":
                 if MV.LlBelow != int(separatedStringP[2]):
-                    print(separatedString[0], MV.LlBelow, separatedStringP[2])
+                    # print(separatedString[0], MV.LlBelow, separatedStringP[2])
                     # edge 0 to 1 or edge 1 to 0
                     MV.LlBelow = int(separatedStringP[2])
                     if MV.LlBelowAlert is True:
@@ -59,20 +59,20 @@ class MeasuredValueL:
                                               str(MV.LlBelow),
                                               "2"]
                         # generate alarm for alarm list
-                        AlarmO = Alarm(datetime.datetime.now(),
+                        AlarmO = Alarm(str(datetime.datetime.now()),
                         MV.mvDescription + " " + MV.LlBelowDescription,
                         "MV",
                         MV.mvNumber,           # int 0..n
                         "LL",                  # Subtype
-                        MV.LlBelow,            # int 0/1
+                        str(MV.LlBelow),       # int 0/1
                         MV.mvDtype,            # "Integer", "Float"
-                        MV.value)
+                        str(MV.value))
 
-                        AlarmList.putAlarm(AlarmO)
+                        LQueue.put(["L@", AlarmO])
 
             elif separatedStringP[1] == "UL_Exceeded":
                 if MV.UlAbove != int(separatedStringP[2]):
-                    print(separatedString[0], MV.UlAbove, separatedStringP[2])
+                    # print(separatedString[0], MV.UlAbove, separatedStringP[2])
                     # edge 0 to 1 or edge 1 to 0
                     MV.UlAbove = int(separatedStringP[2])
                     if MV.UlAboveAlert is True:
@@ -84,19 +84,20 @@ class MeasuredValueL:
                                               "1"]
 
                         # generate alarm for alarm list
-                        AlarmO = Alarm(datetime.datetime.now(),
+                        AlarmO = Alarm(str(datetime.datetime.now()),
                         MV.mvDescription + " " + MV.UlAboveDescription,
                         "MV",
                         MV.mvNumber,           # int 0..n
                         "UL",                  # Subtype
-                        MV.UlAbove,            # int 0/1
+                        str(MV.UlAbove),            # int 0/1
                         MV.mvDtype,            # "Integer", "Float"
-                        MV.value)
+                        str(MV.value))
 
-                        AlarmList.putAlarm(AlarmO)
+                        LQueue.put(["L@", AlarmO])
+                        # AlarmList.putAlarm(AlarmO, MQueue)
 
         else:
-            print("Measured value not found: ", separatedString[0], "\n")
+            MQueue.put("I@Process status and measured value: Measured value not found: " + separatedString[0])
 
         if audioMessage is not None:
             AQueue.put(audioMessage)

@@ -5,14 +5,16 @@
 # Creator: Wolfgang Glück
 ###############################################################################
 import multiprocessing as mp
+import time
 
 from Robot_Toolbox.MeasuredValueL import *
 from Robot_Toolbox.StatusL import *
 from Robot_Toolbox.CommandL import *
 from Robot_Toolbox.AlarmL import *
-from Robot_Toolbox.USBprocess import *
-from Robot_Toolbox.Audioprocess import *
-
+from Robot_Toolbox.ProcessUSB import *
+from Robot_Toolbox.ProcessAudio import *
+from Robot_Toolbox.ProcessStatusAndMeasuredValue import *
+from Robot_Toolbox.ProcessAlarmList import *
 
 
 ###############################################################################
@@ -41,13 +43,17 @@ if __name__ == '__main__':
     MQueue = mp.Queue()
     CQueue = mp.Queue()
     PQueue = mp.Queue()
+    LQueue = mp.Queue()
 
-    USBProcess = USBprocess()
-    AudioProcess = Audioprocess()
+    USBProcess = ProcessUSB()
+    AudioProcess = ProcessAudio()
+    STAndMVProcess = ProcessStatusAndMeasuredValue()
+    AlarmProcess = ProcessAlarmList()
 
-
-    processList = [mp.Process(target=USBProcess.USBrun, args=(MQueue, CQueue)),
-                   mp.Process(target=AudioProcess.Audiorun, args=(MQueue, AQueue, CQueue, CommandList))]
+    processList = [mp.Process(target=USBProcess.Run, args=(MQueue, CQueue, PQueue)),
+                   mp.Process(target=AudioProcess.Run, args=(MQueue, AQueue, CQueue, CommandList)),
+                   mp.Process(target=STAndMVProcess.Run, args=(PQueue, AQueue, LQueue, MQueue, StatusList, MeasuredValueList)),
+                   mp.Process(target=AlarmProcess.Run, args=(LQueue, MQueue, AlarmList))]
 
     # starting child processes
     for i in range(0, len(processList)):
@@ -57,21 +63,11 @@ if __name__ == '__main__':
     while True:
         if not MQueue.empty():
             result = MQueue.get().strip()
-            # Check if line contains  a status or a measured value
-            if result.find("S@") == 0:
-                result = result.replace("S@", "")
-                # Put status and get audio back
-                StatusList.putValue(result, AlarmList, AQueue)
 
-            elif result.find("MV@") == 0:
-                result = result.replace("MV@", "")
-                # Put measured value and get audio back
-                MeasuredValueList.putValue(result, AlarmList, AQueue)
-
-            elif result.find("I@") == 0:
+            if result.find("I@") == 0:
                 # internal message
                 result = result.replace("I@", "")
                 print (result)
+            time.sleep(1)
 
-            # print(result)
     ###########################################################################

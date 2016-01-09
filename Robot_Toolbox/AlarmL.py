@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ###############################################################################
 # Class of alarm list
-# Version:  2016.01.08
+# Version:  2016.01.09
 # not yet fully tested!
 ###############################################################################
 import copy
@@ -21,7 +21,7 @@ class AlarmL:
         nachricht = " List of alarms"
         return nachricht
 
-    def putAlarm(self, AlarmO):
+    def putAlarm(self, AlarmO, MQueue):
         self.list.append(AlarmO)
         self.maxPageNo = len(self.list) / self.numberOfLines
         if len(self.list) % self.numberOfLines > 0:
@@ -29,14 +29,14 @@ class AlarmL:
         self.fillActualPage()
         # for test reasons only, until the web client works
         #######################################################################
-        print("\nAlarmlist:")
+        MQueue.put("I@\nAlarmlist:")
         for i in range(0, len(self.list)):
             AlarmO = self.list[i]
-            Alarmtext = str(AlarmO.alDateTime) + " " + AlarmO.alDescription + " "
+            Alarmtext = AlarmO.alDateTime + " " + AlarmO.alDescription + " "
             if AlarmO.alType == "ST":
                 Alarmtext = Alarmtext + "                       "
             else:
-                Alarmtext = Alarmtext + str(AlarmO.alValue) + " "
+                Alarmtext = Alarmtext + AlarmO.alValue + " "
             if AlarmO.alStatus == 0:
                 Alarmtext = Alarmtext + AlarmO.alStatusTextG + " "
             else:
@@ -45,12 +45,14 @@ class AlarmL:
                 Alarmtext = Alarmtext + AlarmO.alAcknowledgeTextTrue
             else:
                 Alarmtext = Alarmtext + AlarmO.alAcknowledgeTextFalse
+            Alarmtext = Alarmtext + "\n"
+            MQueue.put("I@" + Alarmtext)
 
-            print(Alarmtext, "\n")
         #######################################################################
         return
 
     def fillActualPage(self):
+        # internal use
         self.actualPage = []
         for i in range(0, len(self.list)):
             if i >= (self.actualPageNo - 1) * self.numberOfLines\

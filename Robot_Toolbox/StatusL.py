@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ###############################################################################
 # Class of status list
-# Version:  2016.01.08
+# Version:  2016.01.09
 ###############################################################################
 from Robot_Toolbox.Status import *
 from Robot_Toolbox.Alarm import *
@@ -21,7 +21,7 @@ class StatusL:
         self.list.append(Status)            # index = stNumber
         return
 
-    def putValue(self, string, AlarmList, AQueue):
+    def putValue(self, string, AQueue, LQueue, MQueue):
         audioMessage = None
         separatedString = string.split(":")                # Status name, value
         value = int(separatedString[1].strip(" "))         # value
@@ -32,16 +32,16 @@ class StatusL:
             and Status.stAlert is True):
                 # edge 0 to 1 or edge 1 to 0
                 # generate alarm for alarm list
-                AlarmO = Alarm(datetime.datetime.now(),
+                AlarmO = Alarm(str(datetime.datetime.now()),
                                Status.stDescription,
                                "ST",
-                               Status.stNumber,       # int 0..n
+                               str(Status.stNumber),  # int 0..n
                                "",                    # for measured value only
-                               value,                 # int 0/1
+                               str(value),            # int 0/1
                                "",                    # for measured value only
-                               0)                     # for measured value only
+                               "0")                   # for measured value only
 
-                AlarmList.putAlarm(AlarmO)
+                LQueue.put(["L@", AlarmO])
 
             if (Status.stStatus != value                   # comming / going
             and Status.stCg is True
@@ -60,7 +60,7 @@ class StatusL:
             Status.stStatus = value
 
         else:
-            print("Status not found: ", separatedString[0], "\n")
+            MQueue.put("I@Process status and measured value: Status not found: " + separatedString[0])
         if audioMessage is not None:
             AQueue.put(audioMessage)
         return

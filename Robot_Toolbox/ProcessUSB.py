@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ###############################################################################
-# Class USBprocess
-# Version: 2016_01_07
+# Class Process USB
+# Version: 2016_01_09
 #
 # Please note, that the CQueue will only operate after a message has been
 # received from MQueue or at least after timeout (100ms).
@@ -12,13 +12,13 @@ import time
 import platform
 
 
-class USBprocess:
+class ProcessUSB:
 
     def __str__(self):
-        nachricht = "USB process"
+        nachricht = "Process USB"
         return nachricht
 
-    def USBrun(self, MQueue, CQueue):
+    def Run(self, MQueue, CQueue, PQueue):
         if platform.system() == "Linux":
             self.device = "/dev/ttyUSB0"  # Linux
         else:
@@ -27,13 +27,14 @@ class USBprocess:
         self.disturbance = True
         while self.disturbance is True:
             try:
-                self.ser = serial.Serial(self.device, 115200, timeout=0.1)
+                self.ser = serial.Serial(self.device, 38400, timeout=0.1)
                 self.disturbance = False
-                MQueue.put("S@USB disturbance: 0\n")
+                PQueue.put("S@USB disturbance: 0")
             except serial.SerialException:
                 # wait for the next trial
                 # MQueue.put("I@USB open failed")
-                MQueue.put("S@USB disturbance: 1\n")
+                PQueue.put("S@USB disturbance: 1")
+                MQueue.put("I@USB open failed")
                 time.sleep(1)
                 continue
             else:
@@ -47,7 +48,7 @@ class USBprocess:
                 result = result.decode("utf-8")  # see except UnicodeDecodeError
                 if result is not None\
                 and result.rfind("\n") != -1:
-                    MQueue.put(result)
+                    PQueue.put(result)
 
                 # get command from CQueue
                 if not CQueue.empty():
@@ -56,17 +57,18 @@ class USBprocess:
                     self.ser.write(command)
 
             except serial.SerialException:
-                MQueue.put("S@USB disturbance: 1\n")
+                PQueue.put("S@USB disturbance: 1")
                 # initiation USB after connection  was lost
                 while True:
                     try:
                         # clear buffer
                         self.ser.close()
                         self.ser.open()
-                        MQueue.put("S@USB disturbance: 0\n")
+                        PQueue.put("S@USB disturbance: 0")
                     except serial.SerialException:
                         # wait for the next trial
                         # MQueue.put("I@USB open failed")
+                        MQueue.put("I@USB open failed")
                         time.sleep(1)
                         continue
                     else:
