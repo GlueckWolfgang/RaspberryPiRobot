@@ -70,7 +70,7 @@ class MeasuredValueL:
 
                         AlarmList.putAlarm(AlarmO)
 
-            elif separatedStringP[0] == "UL_Exceeded":
+            elif separatedStringP[1] == "UL_Exceeded":
                 if MV.UlAbove != int(separatedStringP[2]):
                     print(separatedString[0], MV.UlAbove, separatedStringP[2])
                     # edge 0 to 1 or edge 1 to 0

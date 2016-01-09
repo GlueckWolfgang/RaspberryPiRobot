@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ###############################################################################
 # Raspberry Robot Program
-# Version: 2016_01_07
+# Version: 2016_01_09
 # Creator: Wolfgang Glück
 ###############################################################################
 import multiprocessing as mp
@@ -14,23 +14,11 @@ from Robot_Toolbox.USBprocess import *
 from Robot_Toolbox.Audioprocess import *
 
 
+
 ###############################################################################
 # Main process
 if __name__ == '__main__':
-    ###########################################################################
-    # Create instance of queues and processes
-    AQueue = mp.Queue()
-    MQueue = mp.Queue()
-    CQueue = mp.Queue()
 
-    USBProcess = USBprocess()
-    AudioProcess = Audioprocess()
-    processList = [mp.Process(target=USBProcess.USBrun, args=(MQueue, CQueue)),
-                   mp.Process(target=AudioProcess.Audiorun, args=(MQueue, AQueue))]
-
-    # starting child processes
-    for i in range(0, len(processList)):
-        processList[i].start()
     ###########################################################################
     # Create instance of measured value list
     MeasuredValueList = MeasuredValueL()
@@ -48,6 +36,23 @@ if __name__ == '__main__':
     AlarmList = AlarmL()
 
     ###########################################################################
+    # Create instance of queues and processes
+    AQueue = mp.Queue()
+    MQueue = mp.Queue()
+    CQueue = mp.Queue()
+    PQueue = mp.Queue()
+
+    USBProcess = USBprocess()
+    AudioProcess = Audioprocess()
+
+
+    processList = [mp.Process(target=USBProcess.USBrun, args=(MQueue, CQueue)),
+                   mp.Process(target=AudioProcess.Audiorun, args=(MQueue, AQueue, CQueue, CommandList))]
+
+    # starting child processes
+    for i in range(0, len(processList)):
+        processList[i].start()
+
     # Endless loop of main program
     while True:
         if not MQueue.empty():
@@ -67,11 +72,6 @@ if __name__ == '__main__':
                 # internal message
                 result = result.replace("I@", "")
                 print (result)
-
-            elif result.find("C@") == 0:
-                result = result.replace("C@", "")
-                split = result.split(" ")
-                CQueue.put(CommandList.sendCommandByNumber(split[0], split[1]))
 
             # print(result)
     ###########################################################################

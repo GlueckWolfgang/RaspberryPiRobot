@@ -14,7 +14,7 @@ class StatusL:
         self.list = []                      # List of status objects
 
     def __str__(self):
-        nachricht = " List of stati"
+        nachricht = "List of stati"
         return nachricht
 
     def putStatus(self, Status):
