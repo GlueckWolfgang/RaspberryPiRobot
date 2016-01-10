@@ -8,6 +8,7 @@
 # AQueue    order queue for audio output, structure see below
 # Amplifier will be switched on and off by energy saving reason, it takes 500 mA
 ###############################################################################
+from Robot_Toolbox.Audio import *
 import pyglet
 
 
@@ -31,24 +32,25 @@ class ProcessAudio:
                     amplifier = True
 
                 # get order from AQueue
-                # structure:
-                # [type, no, stAlert, stCg, status , cTextNo]
                 Audio = AQueue.get()
                 # play pieep (0)
                 url = "data/CG/0.mp3"
                 clip0 = pyglet.media.load(url, streaming=False)
                 player.queue(clip0)
 
-                if Audio[0] == "MV":
+                # MQueue.put("I@" + Audio.aType + " " + Audio.aNumber + " "
+                #       + str(Audio.aCG) + " " + Audio.aValue + " " + Audio.aCAudioNo)
+
+                if Audio.aType == "MV":
                     # play description text for measured value according to no
-                    url = "data/MV/" + Audio[1] + ".mp3"
+                    url = "data/MV/" + Audio.aNumber+ ".mp3"
                     # MQueue.put("I@Clip1URL: " + url)
                     clip1 = pyglet.media.load(url, streaming=False)
                     player.queue(clip1)
 
-                    if  int(Audio[4]) == 1:
+                    if  Audio.aValue == "1":
                         # play comming text according to status == 1 and cTextNo
-                        url = "data/CG/" + Audio[5] + ".mp3"
+                        url = "data/CG/" + Audio.aCAudioNo + ".mp3"
 
                     else:
                         # play going text (4) according to status == 0
@@ -57,16 +59,16 @@ class ProcessAudio:
                     clip2 = pyglet.media.load(url, streaming=False)
                     player.queue(clip2)
 
-                elif Audio[0] == "ST":
+                elif Audio.aType == "ST":
                     # play description text for status according to no
-                    url = "data/ST/" + Audio[1] + ".mp3"
+                    url = "data/ST/" + Audio.aNumber + ".mp3"
                     # MQueue.put("I@Clip1URL: " + url)
                     clip1 = pyglet.media.load(url, streaming=False)
                     player.queue(clip1)
 
                     # check if status has Cg character
-                    if Audio[3] is True:
-                        if int(Audio[4]) == 1:
+                    if Audio.aCG is True:
+                        if Audio.aValue == "1":
                             # play comming text (3) according to status == 1
                             url = "data/CG/3.mp3"
                         else:
@@ -93,7 +95,7 @@ class ProcessAudio:
         # configuration of a player
         player = pyglet.media.Player()
         # play peep after startup
-        AQueue.put(["peep only", "", "", "", "", ""])
+        AQueue.put(Audio("Peep only", "0", True, "1", "0"))
 
         # call pyglet process and timer
         pyglet.clock.schedule_interval(play_next, 1.0)

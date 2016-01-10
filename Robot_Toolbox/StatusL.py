@@ -5,7 +5,9 @@
 ###############################################################################
 from Robot_Toolbox.Status import *
 from Robot_Toolbox.Alarm import *
+from Robot_Toolbox.Audio import *
 import datetime
+
 
 
 class StatusL:
@@ -52,11 +54,11 @@ class StatusL:
                 # edge 0 to 1 or edge 1 to 0
                 # generate audio message
                 if Status.stAlert is True:
-                    audioMessage = ["ST", str(Status.stNumber),
-                                          Status.stAlert,
+                    audioMessage = Audio("ST",
+                                          str(Status.stNumber),
                                           Status.stCg,
                                           str(value),
-                                          "0"]
+                                          "0")        # for measured value only
             Status.stStatus = value
 
         else:

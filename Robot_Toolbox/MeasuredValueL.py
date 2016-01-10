@@ -5,6 +5,7 @@
 ###############################################################################
 from Robot_Toolbox.MeasuredValue import *
 from Robot_Toolbox.Alarm import *
+from Robot_Toolbox.Audio import *
 import datetime
 
 class MeasuredValueL:
@@ -53,11 +54,11 @@ class MeasuredValueL:
                     MV.LlBelow = int(separatedStringP[2])
                     if MV.LlBelowAlert is True:
                         # generate audio message
-                        audioMessage = ["MV", str(MV.mvNumber),
-                                              MV.LlBelowAlert,
+                        audioMessage = Audio("MV",
+                                              str(MV.mvNumber),
                                               True,
                                               str(MV.LlBelow),
-                                              "2"]
+                                              "2")
                         # generate alarm for alarm list
                         AlarmO = Alarm(str(datetime.datetime.now()),
                         MV.mvDescription + " " + MV.LlBelowDescription,
@@ -77,11 +78,11 @@ class MeasuredValueL:
                     MV.UlAbove = int(separatedStringP[2])
                     if MV.UlAboveAlert is True:
                         # generate audio message
-                        audioMessage = ["MV", str(MV.mvNumber),
-                                              MV.UlAboveAlert,
+                        audioMessage = Audio("MV",
+                                              str(MV.mvNumber),
                                               True,
                                               str(MV.UlAbove),
-                                              "1"]
+                                              "1")
 
                         # generate alarm for alarm list
                         AlarmO = Alarm(str(datetime.datetime.now()),
