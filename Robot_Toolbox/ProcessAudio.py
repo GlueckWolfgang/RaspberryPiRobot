@@ -3,9 +3,9 @@
 # Class Process Audio
 # Version:  2016.01.09
 # CQueue    for sending commands like amplifier on/off
-# MQueue    Can be used for status messages
+# MQueue    Can be used for fault messages
 #           (I@anyString can be sent)
-# AQueue    order queue for audio output, structure see below
+# AQueue    order queue for audio output
 # Amplifier will be switched on and off by energy saving reason, it takes 500 mA
 ###############################################################################
 from Robot_Toolbox.Audio import *
@@ -48,7 +48,7 @@ class ProcessAudio:
                     clip1 = pyglet.media.load(url, streaming=False)
                     player.queue(clip1)
 
-                    if  Audio.aValue == "1":
+                    if  Audio.aStatus == "1":
                         # play comming text according to status == 1 and cTextNo
                         url = "data/CG/" + Audio.aCAudioNo + ".mp3"
 
@@ -68,7 +68,7 @@ class ProcessAudio:
 
                     # check if status has Cg character
                     if Audio.aCG is True:
-                        if Audio.aValue == "1":
+                        if Audio.aStatus == "1":
                             # play comming text (3) according to status == 1
                             url = "data/CG/3.mp3"
                         else:

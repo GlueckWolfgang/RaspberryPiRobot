@@ -13,12 +13,12 @@
 
 
 class Audio:
-    def __init__(self, aType, aNumber, aCG, aValue, aCAudioNo):
+    def __init__(self, aType, aNumber, aCG, aStatus, aCAudioNo):
 
         self.aType = aType
         self.aNumber = aNumber
         self.aCG = aCG
-        self.aValue = aValue
+        self.aStatus = aStatus
         self.aCAudioNo = aCAudioNo
 
     def __str__(self):
