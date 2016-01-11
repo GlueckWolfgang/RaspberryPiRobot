@@ -24,7 +24,7 @@ class ProcessAlarmList:
 
             elif Message[0] == "Q@":
                 # Acknowledge alarm list
-                AlarmList.AcknowledeAlarmList()
+                AlarmList.acknowledgeAlarmList(MQueue)
 
             else:
                 MQueue.put("I@Process Alarm list: Unknown message at LQueue " + Message[0])

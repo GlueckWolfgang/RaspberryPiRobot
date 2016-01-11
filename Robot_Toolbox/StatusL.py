@@ -38,10 +38,10 @@ class StatusL:
                                Status.stDescription,
                                "ST",
                                str(Status.stNumber),  # int 0..n
-                               "",                    # for measured value only
+                               "",                    # Subtype for measured value
                                str(value),            # int 0/1
-                               "",                    # for measured value only
-                               "0")                   # for measured value only
+                               "",                    # DType for measured value
+                               "0")                   # Value for measured value
 
                 LQueue.put(["L@", AlarmO])
 

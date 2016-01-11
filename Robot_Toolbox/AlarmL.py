@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ###############################################################################
 # Class of alarm list
-# Version:  2016.01.09
+# Version:  2016.01.11
 # not yet fully tested!
 ###############################################################################
 import copy
@@ -42,10 +42,13 @@ class AlarmL:
             else:
                 Alarmtext = Alarmtext + AlarmO.alStatusTextC + " "
             if AlarmO.alAcknowledged is True:
-                Alarmtext = Alarmtext + AlarmO.alAcknowledgeTextTrue
+                Alarmtext = Alarmtext + AlarmO.alAcknowledgeTextTrue + " "
             else:
-                Alarmtext = Alarmtext + AlarmO.alAcknowledgeTextFalse
+                Alarmtext = Alarmtext + AlarmO.alAcknowledgeTextFalse + " "
+            if AlarmO.alDelete is True:
+                Alarmtext = Alarmtext + "D"
             Alarmtext = Alarmtext + "\n"
+
             MQueue.put("I@" + Alarmtext)
 
         #######################################################################
@@ -61,22 +64,22 @@ class AlarmL:
         return self.actualPageNo
 
     def pageForward(self):
-        if actualPageNo < maxPageNo:
-            actualPageNo += 1
+        if self.actualPageNo < self.maxPageNo:
+            self.actualPageNo += 1
             self.fillActualPage()
         return self.actualPageNo
 
     def pageBackward(self):
-        if actualPageNo > 1:
-            actualPageNo -= 1
+        if self.actualPageNo > 1:
+            self.actualPageNo -= 1
             self.fillActualPage()
         return self.actualPageNo
 
-    def firstPage(self):
+    def firstPageNo(self):
         self.actualPageNo = 1
         return self.actualPageNo
 
-    def lastPage(self):
+    def lastPageNo(self):
         self.actualPageNo = maxPageNo
         return self.actualPageNo
 
@@ -86,37 +89,37 @@ class AlarmL:
     def getMaxPageNo(self):
         return self.maxPageNo
 
-    def acknowledgeAlarmList(self):
-        # start at the end of list and read alarms and set alAcknowledge
-        for i in range(len(self.list - 1), -1):
-            self.AlarmO = self.list[i]
-            self.AlarmO.alAcknowledge = True
-
+    def acknowledgeAlarmList(self, MQueue):
+        # start at the end of list and read alarms and set alAcknowledged
+        for i in range(len(self.list) - 1, -1, -1):
+            AlarmO = self.list[i]
+            AlarmO.alAcknowledged = True
             # if the alarm was going
-            if self.list[i].alStatus == 0:
-                for j in range(i, -1):
-                    if self.alarmO.alNumber == self.list[i].alNumber\
-                    and self.alarmO.alType == self.list[i].alType\
-                    and self.alarmO.alSubtype == self.list[i].alsubType:
+            if AlarmO.alStatus == "0":
+                for j in range(i, -1, -1):
+                    if AlarmO.alNumber == self.list[j].alNumber\
+                    and AlarmO.alType == self.list[j].alType\
+                    and AlarmO.alSubType == self.list[j].alSubType:
                         # set alDelete for all elder alarms of the same number,type and subtype
                         # even the last alarm of this number, type and subtype
-                        self.AlarmO.alDelete = True
+                        self.list[j].alDelete = True
+
             else:
-            # the alarm was comming,
-                for j in range(i - 1, -1):
-                    if self.alarmO.alNumber == self.list[i].alNumber\
-                    and self.alarmO.alType == self.list[i].alType\
-                    and self.alarmO.alSubtype == self.list[i].alsubType:
+            # the alarm was comming
+                for j in range(i - 1, -1, -1):
+                    if AlarmO.alNumber == self.list[j].alNumber\
+                    and AlarmO.alType == self.list[j].alType\
+                    and AlarmO.alSubType == self.list[j].alSubType:
                         # set alDelete for all elder alarms of the same number,type and subtype
                         # except the last alarm of this number, type and subtype
-                        self.AlarmO.alDelete = True
+                        self.list[j].alDelete = True
 
         # delete all alarms with alDelete is set
-        self.listCopy = copy.copy(self.list)
-        for i in range(0, len(self.listCopy)):
-            if self.listCopy[i].alDelete is True:
-                self.list.remove(self.listCopy[i])
-        self.listCopy = []
+        listCopy = copy.copy(self.list)
+        for i in range(0, len(listCopy)):
+            if listCopy[i].alDelete is True:
+                self.list.remove(listCopy[i])
+        listCopy = []
 
         # adapt maxPageNo after acknowledge execution
         self.maxPageNo = len(self.list) / self.numberOfLines

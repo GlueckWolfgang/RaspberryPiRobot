@@ -63,7 +63,7 @@ class MeasuredValueL:
                         AlarmO = Alarm(str(datetime.datetime.now()),
                         MV.mvDescription + " " + MV.LlBelowDescription,
                         "MV",
-                        MV.mvNumber,           # int 0..n
+                        str(MV.mvNumber),      # int 0..n
                         "LL",                  # Subtype
                         str(MV.LlBelow),       # int 0/1
                         MV.mvDtype,            # "Integer", "Float"
@@ -88,9 +88,9 @@ class MeasuredValueL:
                         AlarmO = Alarm(str(datetime.datetime.now()),
                         MV.mvDescription + " " + MV.UlAboveDescription,
                         "MV",
-                        MV.mvNumber,           # int 0..n
+                        str(MV.mvNumber),      # int 0..n
                         "UL",                  # Subtype
-                        str(MV.UlAbove),            # int 0/1
+                        str(MV.UlAbove),       # int 0/1
                         MV.mvDtype,            # "Integer", "Float"
                         str(MV.value))
 

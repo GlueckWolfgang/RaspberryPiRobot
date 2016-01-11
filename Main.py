@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ###############################################################################
 # Raspberry Robot Program
-# Version: 2016_01_09
+# Version: 2016_01_11
 # Creator: Wolfgang Glück
 ###############################################################################
 import multiprocessing as mp
@@ -20,7 +20,6 @@ from Robot_Toolbox.ProcessAlarmList import *
 ###############################################################################
 # Main process
 if __name__ == '__main__':
-
     ###########################################################################
     # Create instance of measured value list
     MeasuredValueList = MeasuredValueL()
@@ -55,9 +54,13 @@ if __name__ == '__main__':
                    mp.Process(target=STAndMVProcess.Run, args=(PQueue, AQueue, LQueue, MQueue, StatusList, MeasuredValueList)),
                    mp.Process(target=AlarmProcess.Run, args=(LQueue, MQueue, AlarmList))]
 
+
+
     # starting child processes
     for i in range(0, len(processList)):
         processList[i].start()
+
+    count = 1
 
     # Endless loop of main program
     while True:
@@ -68,6 +71,14 @@ if __name__ == '__main__':
                 # internal message
                 result = result.replace("I@", "")
                 print (result)
-            time.sleep(1)
+
+        time.sleep(1)
+
+        # for test reasons only, until web server is in place
+        count += 1
+        if count == 30:
+            count = 1
+            # acknoledge alarm list every 30 seconds
+            LQueue.put(["Q@", ""])
 
     ###########################################################################
