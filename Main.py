@@ -39,10 +39,10 @@ if __name__ == '__main__':
     ###########################################################################
     # Create instance of queues and processes
     AQueue = mp.Queue()
-    MQueue = mp.Queue()
     CQueue = mp.Queue()
-    PQueue = mp.Queue()
     LQueue = mp.Queue()
+    MQueue = mp.Queue()
+    PQueue = mp.Queue()
 
     USBProcess = ProcessUSB()
     AudioProcess = ProcessAudio()
@@ -64,7 +64,7 @@ if __name__ == '__main__':
 
     # Endless loop of main program
     while True:
-        if not MQueue.empty():
+        while not MQueue.empty():
             result = MQueue.get().strip()
 
             if result.find("I@") == 0:
@@ -78,7 +78,7 @@ if __name__ == '__main__':
         count += 1
         if count == 30:
             count = 1
-            # acknoledge alarm list every 30 seconds
+            # acknowledge alarm list every 30 seconds
             LQueue.put(["Q@", ""])
 
     ###########################################################################
