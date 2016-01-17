@@ -70,6 +70,7 @@ class CommandL:
         self.putCommand(CommandO)
         CommandO = Command(13, "Amplifier: ")
         self.putCommand(CommandO)
-
+        CommandO = Command(14, "Align ")
+        self.putCommand(CommandO)
 
         return
