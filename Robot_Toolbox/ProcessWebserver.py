@@ -21,31 +21,28 @@ class ProcessWebserver:
                 self.write("Tornado webserver is running!")
                 self.MQueue.put("I@Main Handler was executed")
 
-        db1 = []  # control board
-#        db2 = []  # alarm list
+
         db3 = []  # map
 
         class StoryHandler1(tornado.web.RequestHandler):
 
             def initialize(self, db):
-                self.db = db
-                # get initial status and mesured value to db
+                self.PQueue = db[0]
+                self.WLQueue = db[1]
 
             def get(self):
                 self.write("This is story: Status and measured values")
                 # get actual status and mesured value to db
                 # ask PQueue for data
+                self.PQueue.put(["R@", ""])
                 # read WPQueue not blocking
+
                 # write to page
 
         class StoryHandler2(tornado.web.RequestHandler):
             def initialize(self, db):
                 self.LQueue = db[0]
                 self.WLQueue = db[1]
-                # get initial alarm list page to db
-                # ask LQueue for data
-                self.LQueue.put(["R@", ""])
-                # read WLQueue blocking
 
             def get(self):
                 self.write("This is story: Alarm list")
@@ -59,7 +56,6 @@ class ProcessWebserver:
         class StoryHandler3(tornado.web.RequestHandler):
             def initialize(self, db):
                 self.db = db
-                # get initial map to db
 
             def get(self):
                 self.write("This is story: Map")
@@ -68,7 +64,7 @@ class ProcessWebserver:
         def make_app():
             return tornado.web.Application([
                 (r"/", MainHandler, dict(db=MQueue)),
-                (r"/story/1", StoryHandler1, dict(db=db1)),
+                (r"/story/1", StoryHandler1, dict(db=[PQueue, WPQueue])),
                 (r"/story/2", StoryHandler2, dict(db=[LQueue, WLQueue])),
                 (r"/story/3", StoryHandler3, dict(db=db3))
             ])
