@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ###############################################################################
 # Class Prozess Alarm list
-# Version:  2016.01.09
+# Version:  2016.01.20
 #
 # LQueue             = queue to listen
 # MQueue             = process Main queue
@@ -15,7 +15,7 @@ class ProcessAlarmList:
         nachricht = "Process Alarm list"
         return nachricht
 
-    def Run(self, LQueue, MQueue, AlarmList):
+    def Run(self, LQueue, MQueue, WLQueue, AlarmList):
         while True:
             Message = LQueue.get()
 

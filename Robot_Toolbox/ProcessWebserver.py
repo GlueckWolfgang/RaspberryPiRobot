@@ -10,17 +10,23 @@ import tornado.web
 
 class ProcessWebserver:
 
-    def Run(self, WLQueue, MQueue, LQueue):
+    def Run(self, WLQueue,WPQueue, MQueue, LQueue, PQueue):
 
         class MainHandler(tornado.web.RequestHandler):
+
+            def initialize(self, db):
+                self.MQueue = db
+
             def get(self):
                 self.write("Tornado webserver is running!")
+                self.MQueue.put("I@Main Handler was executed")
 
         db1 = []  # control board
-        db2 = []  # alarm list
+#        db2 = []  # alarm list
         db3 = []  # map
 
         class StoryHandler1(tornado.web.RequestHandler):
+
             def initialize(self, db):
                 self.db = db
                 # get initial status and mesured value to db
@@ -33,18 +39,19 @@ class ProcessWebserver:
                 # write to page
 
         class StoryHandler2(tornado.web.RequestHandler):
-            def initialize(self, db, LQueue, WLQueue):
-                self.db = db
+            def initialize(self, db):
+                self.LQueue = db[0]
+                self.WLQueue = db[1]
                 # get initial alarm list page to db
                 # ask LQueue for data
-                LQueue.put(["R@", ""])
+                self.LQueue.put(["R@", ""])
                 # read WLQueue blocking
 
-            def get(self, LQueue, WLQueue):
+            def get(self):
                 self.write("This is story: Alarm list")
                 # get actual alarm list page to db
                 # ask LQueue for data
-                LQueue.put(["R@", ""])
+                self.LQueue.put(["R@", ""])
                 # read WLQueue not blocking
 
                 # write to page
@@ -60,9 +67,9 @@ class ProcessWebserver:
 
         def make_app():
             return tornado.web.Application([
-                (r"/", MainHandler),
+                (r"/", MainHandler, dict(db=MQueue)),
                 (r"/story/1", StoryHandler1, dict(db=db1)),
-                (r"/story/2", StoryHandler2, dict(db=db2)),
+                (r"/story/2", StoryHandler2, dict(db=[LQueue, WLQueue])),
                 (r"/story/3", StoryHandler3, dict(db=db3))
             ])
 
