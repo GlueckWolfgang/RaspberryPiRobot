@@ -52,8 +52,9 @@ class ProcessWebserver:
             def initialize(self, db):
                 self.LQueue = db[0]
                 self.WLQueue = db[1]
-                self.actualPageNo = "1"
-                self.maxPageNo = "1"
+                self.actualPageNo = "0"
+                self.maxPageNo = "0"
+                self.numberOFLines = "0"
                 self.actualPage = []
 
             def get(self):
@@ -66,11 +67,20 @@ class ProcessWebserver:
                 # read WLQueue
 
                 message = WLQueue.get()
-                self.actualPageNo = message[0]
-                self.maxPageNo = message[1]
-                self.actualPage = message[2]
+                # read header
+                self.actualPageNo = message[0][0]
+                self.maxPageNo = message[0][1]
+                self.numberOfLines = message[0][2]
+                # remove header
+                del message[0]
+                # store list
+                self.actualPage = message
 
                 # write to page
+                self.write("Page number: " + self.actualPageNo +
+                            "Maximal page number: " + self.maxPageNo +
+                            "Number of lines: " + self.numberOfLines)
+
 
         class StoryHandler3(tornado.web.RequestHandler):
             def initialize(self, db):

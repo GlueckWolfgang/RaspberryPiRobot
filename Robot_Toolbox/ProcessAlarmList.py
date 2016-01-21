@@ -8,6 +8,7 @@
 # AlarmList          = Alarm list
 ###############################################################################
 
+
 class ProcessAlarmList:
 
     def __str__(self):
@@ -28,9 +29,7 @@ class ProcessAlarmList:
 
             elif Message[0] == "R@":
                 # Request from webserver
-                WLQueue.put([str(AlarmList.actualPageNo),
-                             str(AlarmList.maxPageNo),
-                             AlarmList.getActualPage()])
+                WLQueue.put(AlarmList.getActualPage())
 
             else:
                 MQueue.put("I@Process Alarm list: Unknown message at LQueue " + Message[0])

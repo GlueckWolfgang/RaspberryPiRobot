@@ -22,8 +22,10 @@ class AlarmL:
         return nachricht
 
     def getActualPage(self):
-        alarmList = []
-        for i in range(0, len(aelf.actualPage)):
+        # first line contains some head informarion
+        alarmList = [[str(self.actualPageNo), str(self.maxPageNo),str(self.numberOfLines),"",""]]
+        # following lines containing alarm rows of actual page
+        for i in range(0, len(self.actualPage)):
             AlarmO = self.actualPage[i]
             Alarmtext = [AlarmO.alDateTime,
                          AlarmO.alDescription]
@@ -32,19 +34,21 @@ class AlarmL:
             else:
                 Alarmtext.append(AlarmO.alValue)
             if AlarmO.alStatus == "0":
-                Alarmtext.appen(AlarmO.alStatusTextG)
+                Alarmtext.append(AlarmO.alStatusTextG)
             else:
                 Alarmtext.append(AlarmO.alStatusTextC)
             if AlarmO.alAcknowledged is True:
                 Alarmtext.append(AlarmO.alAcknowledgeTextTrue)
             else:
                 Alarmtext.append(AlarmO.alAcknowledgeTextFalse)
-            alarmList.appen(Alarmtext)
+
+            alarmList.append(Alarmtext)
+
         return alarmList
 
     def putAlarm(self, AlarmO, MQueue):
         self.list.append(AlarmO)
-        self.maxPageNo = len(self.list) / self.numberOfLines
+        self.maxPageNo = int(len(self.list) / self.numberOfLines)
         if len(self.list) % self.numberOfLines > 0:
             self.maxPageNo += 1
         self.fillActualPage()
@@ -65,10 +69,7 @@ class AlarmL:
             if AlarmO.alAcknowledged is True:
                 Alarmtext = Alarmtext + AlarmO.alAcknowledgeTextTrue + " "
             else:
-                Alarmtext = Alarmtext + AlarmO.alAcknowledgeTextFalse + " "
-            if AlarmO.alDelete is True:
-                Alarmtext = Alarmtext + "D"
-            Alarmtext = Alarmtext + "\n"
+                Alarmtext = Alarmtext + AlarmO.alAcknowledgeTextFalse + "\n"
 
             MQueue.put("I@" + Alarmtext)
 
@@ -129,7 +130,7 @@ class AlarmL:
         listCopy = []
 
         # adapt maxPageNo after acknowledge execution
-        self.maxPageNo = len(self.list) / self.numberOfLines
+        self.maxPageNo = int(len(self.list) / self.numberOfLines)
         if len(self.list) % self.numberOfLines > 0:
             self.maxPageNo += 1
 
