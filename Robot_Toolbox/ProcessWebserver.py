@@ -33,17 +33,17 @@ class ProcessWebserver:
 
             def get(self):
                 self.write("This is story: Status and measured values")
+                # the site requests data in a cycle of 500 ms
                 # get actual status and mesured value
                 # ask PQueue for data
                 self.PQueue.put(["R@", ""])
 
-                # read WPQueue not blocking
-                while not WPQueue.empty():
-                    message = WPQueue.get()
-                    if message[0] == "S@":
-                        self.status = message[1]
-                    if message[0] == "MV@":
-                        self.measuredValue = message[1]
+                # read WPQueue
+                message = WPQueue.get()
+                if message[0] == "S@":
+                    self.status = message[1]
+                if message[0] == "MV@":
+                    self.measuredValue = message[1]
 
                 # write to page
 
@@ -57,16 +57,17 @@ class ProcessWebserver:
 
             def get(self):
                 self.write("This is story: Alarm list")
+                # the site requests data in a cycle of 1s
                 # get actual alarm list page
                 # ask LQueue for data
                 self.LQueue.put(["R@", ""])
 
-                # read WLQueue not blocking
-                while not WLQueue.empty():
-                    message = WLQueue.get()
-                    self.actualPageNo = message[0]
-                    self.maxPageNo = message[1]
-                    self.actualPage = message[2]
+                # read WLQueue
+
+                message = WLQueue.get()
+                self.actualPageNo = message[0]
+                self.maxPageNo = message[1]
+                self.actualPage = message[2]
 
                 # write to page
 
@@ -76,7 +77,10 @@ class ProcessWebserver:
 
             def get(self):
                 self.write("This is story: Map")
+                # the site requests data in a cycle of 1s
                 # get actual map
+
+                # write to page
 
         def make_app():
             return tornado.web.Application([

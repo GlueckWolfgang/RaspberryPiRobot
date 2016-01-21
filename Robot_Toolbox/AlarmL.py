@@ -21,10 +21,6 @@ class AlarmL:
         nachricht = "List of alarms"
         return nachricht
 
-    def getActualPage(self):
-
-        return [self.actualPageNo, self.maxPageNo, self.actualPage]
-
     def putAlarm(self, AlarmO, MQueue):
         self.list.append(AlarmO)
         self.maxPageNo = len(self.list) / self.numberOfLines
