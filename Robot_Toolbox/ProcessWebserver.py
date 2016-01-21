@@ -39,11 +39,12 @@ class ProcessWebserver:
                 self.PQueue.put(["R@", ""])
 
                 # read WPQueue
-                message = WPQueue.get()
-                if message[0] == "S@":
-                    self.status = message[1]
-                if message[0] == "MV@":
-                    self.measuredValue = message[1]
+                for i in range(0, 2):
+                    message = WPQueue.get()
+                    if message[0] == "S@":
+                        self.status = message[1]
+                    if message[0] == "MV@":
+                        self.measuredValue = message[1]
 
                 # write to page
 
@@ -51,8 +52,8 @@ class ProcessWebserver:
             def initialize(self, db):
                 self.LQueue = db[0]
                 self.WLQueue = db[1]
-                self.actualPageNo = 1
-                self.maxPageNo = 1
+                self.actualPageNo = "1"
+                self.maxPageNo = "1"
                 self.actualPage = []
 
             def get(self):

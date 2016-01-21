@@ -21,6 +21,27 @@ class AlarmL:
         nachricht = "List of alarms"
         return nachricht
 
+    def getActualPage(self):
+        alarmList = []
+        for i in range(0, len(aelf.actualPage)):
+            AlarmO = self.actualPage[i]
+            Alarmtext = [AlarmO.alDateTime,
+                         AlarmO.alDescription]
+            if AlarmO.alType == "ST":
+                Alarmtext.append("")
+            else:
+                Alarmtext.append(AlarmO.alValue)
+            if AlarmO.alStatus == "0":
+                Alarmtext.appen(AlarmO.alStatusTextG)
+            else:
+                Alarmtext.append(AlarmO.alStatusTextC)
+            if AlarmO.alAcknowledged is True:
+                Alarmtext.append(AlarmO.alAcknowledgeTextTrue)
+            else:
+                Alarmtext.append(AlarmO.alAcknowledgeTextFalse)
+            alarmList.appen(Alarmtext)
+        return alarmList
+
     def putAlarm(self, AlarmO, MQueue):
         self.list.append(AlarmO)
         self.maxPageNo = len(self.list) / self.numberOfLines
