@@ -15,7 +15,7 @@ class AlarmL:
         self.actualPage = []     # alarms of actual visible page
         self.actualPageNo = 1    # actual visible page number
         self.maxPageNo = 1       # maximum pagenumber depends on number of alarms
-        self.numberOfLines = 45  # Number of lines per page
+        self.numberOfLines = 25  # Number of lines per page
 
     def __str__(self):
         nachricht = "List of alarms"
