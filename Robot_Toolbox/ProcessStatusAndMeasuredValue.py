@@ -1,12 +1,13 @@
 # -*- coding: utf-8 -*-
 ###############################################################################
 # Class Prozess status and measured value
-# Version:  2016.01.09
+# Version:  2016.01.21
 #
 # PQueue             = queue to listen
 # AQueue.............= process Audio queue
 # LQueue.............= process Alarm list queue
 # MQueue             = process Main queue
+# WPQueue            = process webserver queue
 # StatusList         = image for stati
 # MeasuredValueList  = image for measured values
 ###############################################################################
@@ -18,7 +19,7 @@ class ProcessStatusAndMeasuredValue:
         nachricht = "Process Status and measured value"
         return nachricht
 
-    def Run(self, PQueue, AQueue, LQueue, MQueue, StatusList, MeasuredValueList):
+    def Run(self, PQueue, AQueue, LQueue, MQueue, WPQueue, StatusList, MeasuredValueList):
 
         while True:
             Message = PQueue.get()
@@ -31,6 +32,11 @@ class ProcessStatusAndMeasuredValue:
                 Message = Message.replace("MV@", "")
                 # Put measured value
                 MeasuredValueList.putValue(Message, AQueue, LQueue, MQueue)
+
+            elif Message.find("R@") == 0:
+                WPQueue.put(["S@", StatusList.list])
+                WPQueue.put(["MV@", MeasuredValueList.list])
+
             else:
                 MQueue.put("I@Process status and measured value: Unknown message at PQueue: " + Message)
 

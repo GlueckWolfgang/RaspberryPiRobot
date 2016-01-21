@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ###############################################################################
 # Class of alarm list
-# Version:  2016.01.11
+# Version:  2016.01.21
 # not yet fully tested!
 ###############################################################################
 import copy
@@ -18,8 +18,12 @@ class AlarmL:
         self.numberOfLines = 45  # Number of lines per page
 
     def __str__(self):
-        nachricht = " List of alarms"
+        nachricht = "List of alarms"
         return nachricht
+
+    def getActualPage(self):
+
+        return [self.actualPageNo, self.maxPageNo, self.actualPage]
 
     def putAlarm(self, AlarmO, MQueue):
         self.list.append(AlarmO)
@@ -74,20 +78,6 @@ class AlarmL:
             self.actualPageNo -= 1
             self.fillActualPage()
         return self.actualPageNo
-
-    def firstPageNo(self):
-        self.actualPageNo = 1
-        return self.actualPageNo
-
-    def lastPageNo(self):
-        self.actualPageNo = maxPageNo
-        return self.actualPageNo
-
-    def getActualPageNo(self):
-        return self.actualPageNo
-
-    def getMaxPageNo(self):
-        return self.maxPageNo
 
     def acknowledgeAlarmList(self, MQueue):
         # start at the end of list and read alarms and set alAcknowledged
