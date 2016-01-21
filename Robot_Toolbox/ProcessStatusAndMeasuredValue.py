@@ -11,7 +11,7 @@
 # StatusList         = image for stati
 # MeasuredValueList  = image for measured values
 ###############################################################################
-
+import copy
 
 class ProcessStatusAndMeasuredValue:
 
@@ -34,8 +34,8 @@ class ProcessStatusAndMeasuredValue:
                 MeasuredValueList.putValue(Message, AQueue, LQueue, MQueue)
 
             elif Message.find("R@") == 0:
-                WPQueue.put(["S@", StatusList.list])
-                WPQueue.put(["MV@", MeasuredValueList.list])
+                WPQueue.put(["S@", copy.copy(StatusList.list)])
+                WPQueue.put(["MV@", copy.copy(MeasuredValueList.list)])
 
             else:
                 MQueue.put("I@Process status and measured value: Unknown message at PQueue: " + Message)

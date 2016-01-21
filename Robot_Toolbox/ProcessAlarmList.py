@@ -7,7 +7,7 @@
 # MQueue             = process Main queue
 # AlarmList          = Alarm list
 ###############################################################################
-
+import copy
 
 class ProcessAlarmList:
 
@@ -29,7 +29,9 @@ class ProcessAlarmList:
 
             elif Message[0] == "R@":
                 # Request from webserver
-                WLQueue.put(AlarmList.getActualPage)
+                WLQueue.put([copy.copy(AlarmList.actualPageNo),
+                             copy.copy(AlarmList.maxPageNo),
+                             copy.copy(AlarmList.getActualPage)])
 
             else:
                 MQueue.put("I@Process Alarm list: Unknown message at LQueue " + Message[0])
