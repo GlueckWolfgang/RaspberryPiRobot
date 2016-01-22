@@ -1,11 +1,12 @@
 # -*- coding: utf-8 -*-
 ###############################################################################
 # Class Prozess webserver
-# Version:  2016.01.21
+# Version:  2016.01.22
 #
 ###############################################################################
 import tornado.ioloop
 import tornado.web
+
 
 
 class ProcessWebserver:
@@ -56,16 +57,19 @@ class ProcessWebserver:
                 self.maxPageNo = "0"
                 self.numberOFLines = "0"
                 self.actualPage = []
+                # read template
+                self.template = open("templates/Alarmlist.html", "r")
+                self.site = self.template.read()
+                self.template.close()
+
 
             def get(self):
-                self.write("This is story: Alarm list")
                 # the site requests data in a cycle of 1s
                 # get actual alarm list page
                 # ask LQueue for data
                 self.LQueue.put(["R@", ""])
 
                 # read WLQueue
-
                 message = WLQueue.get()
                 # read header
                 self.actualPageNo = message[0][0]
@@ -75,11 +79,18 @@ class ProcessWebserver:
                 del message[0]
                 # store list
                 self.actualPage = message
+                # put data to head table
+                self.siteCopy = self.site.replace("?actual", self.actualPageNo)
+                self.siteCopy = self.siteCopy.replace("?last", self.maxPageNo)
+                # put data to main table
+                for i in range(0,len(self.actualPage)):
+                    line = self.actualPage[i]
+                    for j in range(0,5):
+                        self.siteCopy = self.siteCopy.replace('title="' + str(i + 1) + "." + str(j + 1) + '">' +'&nbsp;',
+                                                              'title="' + str(i + 1) + "." + str(j + 1) + '">' + line[j])
 
                 # write to page
-                self.write("Page number: " + self.actualPageNo +
-                            "Maximal page number: " + self.maxPageNo +
-                            "Number of lines: " + self.numberOfLines)
+                self.write(self.siteCopy)
 
 
         class StoryHandler3(tornado.web.RequestHandler):

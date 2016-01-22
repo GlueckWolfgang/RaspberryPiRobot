@@ -5,6 +5,7 @@
 #
 # LQueue             = queue to listen
 # MQueue             = process Main queue
+# WLQueue            = process webserver queue
 # AlarmList          = Alarm list
 ###############################################################################
 

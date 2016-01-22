@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 ###############################################################################
 # Class of alarm list
-# Version:  2016.01.21
-# not yet fully tested!
+# Version:  2016.01.22
+#
 ###############################################################################
 import copy
 from Robot_Toolbox.Alarm import *
@@ -52,28 +52,6 @@ class AlarmL:
         if len(self.list) % self.numberOfLines > 0:
             self.maxPageNo += 1
         self.fillActualPage()
-        # for test reasons only, until the web client works
-        #######################################################################
-        MQueue.put("I@\nAlarmlist:")
-        for i in range(0, len(self.list)):
-            AlarmO = self.list[i]
-            Alarmtext = AlarmO.alDateTime + " " + AlarmO.alDescription + " "
-            if AlarmO.alType == "ST":
-                Alarmtext = Alarmtext + "                       "
-            else:
-                Alarmtext = Alarmtext + AlarmO.alValue + " "
-            if AlarmO.alStatus == "0":
-                Alarmtext = Alarmtext + AlarmO.alStatusTextG + " "
-            else:
-                Alarmtext = Alarmtext + AlarmO.alStatusTextC + " "
-            if AlarmO.alAcknowledged is True:
-                Alarmtext = Alarmtext + AlarmO.alAcknowledgeTextTrue + " "
-            else:
-                Alarmtext = Alarmtext + AlarmO.alAcknowledgeTextFalse + "\n"
-
-            MQueue.put("I@" + Alarmtext)
-
-        #######################################################################
         return
 
     def fillActualPage(self):
@@ -131,7 +109,8 @@ class AlarmL:
 
         # adapt maxPageNo after acknowledge execution
         self.maxPageNo = int(len(self.list) / self.numberOfLines)
-        if len(self.list) % self.numberOfLines > 0:
+        if len(self.list) % self.numberOfLines > 0\
+        or self.maxPageNo == 0:
             self.maxPageNo += 1
 
         # check if actualPageNo is out of range after acknowledge execution

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ###############################################################################
 # Raspberry Robot Program
-# Version: 2016_01_20
+# Version: 2016_01_22
 # Creator: Wolfgang Glück
 ###############################################################################
 import multiprocessing as mp
@@ -78,12 +78,5 @@ if __name__ == '__main__':
                 print (result)
 
         time.sleep(1)
-
-        # for test reasons only, until web server is in place
-        count += 1
-        if count == 30:
-            count = 1
-            # acknowledge alarm list every 30 seconds
-            LQueue.put(["Q@", ""])
 
     ###########################################################################
