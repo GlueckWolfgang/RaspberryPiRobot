@@ -63,6 +63,17 @@ class AlarmL:
                 self.actualPage.append(self.list[i])
         return self.actualPageNo
 
+    def firstPage(self):
+        self.actualPageNo = 1
+        self.fillActualPage()
+        return self.actualPageNo
+
+    def lastPage(self):
+        self.actualPageNo = self.maxPageNo
+        self.fillActualPage()
+        return self.actualPageNo
+
+
     def pageForward(self):
         if self.actualPageNo < self.maxPageNo:
             self.actualPageNo += 1

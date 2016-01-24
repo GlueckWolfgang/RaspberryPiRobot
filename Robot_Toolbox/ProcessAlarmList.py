@@ -33,10 +33,10 @@ class ProcessAlarmList:
                     AlarmList.pageForward()
                 elif Message[1] == "ft":
                     # First page
-                    AlarmList.actualPageNo = 1
+                    AlarmList.firstPage()
                 elif Message[1] == "lt":
                     # Last page
-                    AlarmList.actualPageNo = AlarmList.maxPageNo
+                    AlarmList.lastPage()
                 else:
                     MQueue.put("I@Process Alarm list: Unknown message at LQueue " + Message[0] + Message[1])
 
