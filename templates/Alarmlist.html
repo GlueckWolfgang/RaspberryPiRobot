@@ -6,7 +6,6 @@
 <meta name="author" content="Wolfgang Gl&uuml;ck">
 <meta name="editor" content="html-editor phase 5">
 <meta http-equiv="refresh" content="1; URL=/Alarmlist/0"/>
-
 </head>
 
 <body text="#000000" bgcolor="#FFFFFF" link="#FF0000" alink="#FF0000" vlink="#FF0000">
@@ -14,22 +13,22 @@
 <table width="30%" border="0" bgcolor="#FFFFFF" cellpadding="0" cellspacing="2">
  <tr>
   <td align="center">
-  <button type="button" onClick="sendCommand("1")">Acknowledge</button>
+  <button type="button" onClick="sendCommand('1')">Acknowledge</button>
   </td>
   <td>Page: </td>
   <td align="center">?actual</td>
   <td width="20"></td>
   <td>
-  <button type="button" onClick="sendCommand("4")">first</button>
+  <button type="button" onClick="sendCommand('4')">first</button>
   </td>
   <td align="center">
-  <button type="button" onClick="sendCommand("2")">&lt;</button>
+  <button type="button" onClick="sendCommand('2')">&lt;</button>
   </td>
   <td align="center">
-  <button type="button" onClick="sendCommand("3")">&gt;</button>
+  <button type="button" onClick="sendCommand('3')">&gt;</button>
   </td>
   <td align="center">
-  <button type="button" onClick="sendCommand("5")">last</button>
+  <button type="button" onClick="sendCommand('5')">last</button>
   </td>
   <td width="20"></td>
   <td align="center">?last</td>
@@ -223,8 +222,8 @@
 </table>
 
 <script>
-function sendCommand(parameter) {
-    window.location.href = "/Alarmlist/" + parameter
+function sendCommand(parameter){
+  window.location.href = "/Alarmlist/" + parameter
 }
 </script>
 
