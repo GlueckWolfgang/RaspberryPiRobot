@@ -1,36 +1,49 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<title>Alarmliste</title>
+<title>Alarm list</title>
 <meta name="description" content="Presentation of robot system alarms, acknowledge and paging">
 <meta name="author" content="Wolfgang Gl&uuml;ck">
 <meta name="editor" content="html-editor phase 5">
-<meta http-equiv="refresh" content="1; URL=http://192.168.1.200:8080/story/2"/>
+<meta http-equiv="refresh" content="1; URL=/Alarmlist/0"/>
+
 </head>
 
 <body text="#000000" bgcolor="#FFFFFF" link="#FF0000" alink="#FF0000" vlink="#FF0000">
 
-<table width="40%" border="1" bgcolor="#C0C0C0" cellpadding="0" cellspacing="2">
+<table width="30%" border="0" bgcolor="#FFFFFF" cellpadding="0" cellspacing="2">
  <tr>
-  <td align="center">Acknowledge</td>
-  <td></td>
-  <td align="center" onClick="$first">First</td>
+  <td align="center">
+  <button type="button" onClick="sendCommand("1")">Acknowledge</button>
+  </td>
+  <td>Page: </td>
   <td align="center">?actual</td>
-  <td align="center" onClick="$pagebw">Page bw</td>
-  <td align="center" onClick="$pagefw">Page fw</td>
-  <td align="center" onClick="$last">Last</td>
+  <td width="20"></td>
+  <td>
+  <button type="button" onClick="sendCommand("4")">first</button>
+  </td>
+  <td align="center">
+  <button type="button" onClick="sendCommand("2")">&lt;</button>
+  </td>
+  <td align="center">
+  <button type="button" onClick="sendCommand("3")">&gt;</button>
+  </td>
+  <td align="center">
+  <button type="button" onClick="sendCommand("5")">last</button>
+  </td>
+  <td width="20"></td>
   <td align="center">?last</td>
  </tr>
 </table>
 
-<table width="100%" border="1" bgcolor="#C0C0C0" cellpadding="0" cellspacing="2">
+<table width="100%" border="0" bgcolor="#FFFFFF" cellpadding="0" cellspacing="2">
  <caption><h2>Robot alarm list</h2></caption>
  <tr>
-  <td width="150" align="left" bgcolor="#A0A0A0" title="0.1">Date / Time</td>
-  <td width="740" align="left" bgcolor="#A0A0A0" title="0.2">Message</td>
-  <td width="80" align="right" bgcolor="#A0A0A0" title="0.3">Value</td>
+  <td width="80" align="left" bgcolor="#A0A0A0" title="0.1">Date / Time</td>
+  <td width="300" align="left" bgcolor="#A0A0A0" title="0.2">Message</td>
+  <td width="70" align="right" bgcolor="#A0A0A0" title="0.3">Value</td>
   <td width="20" align="center" bgcolor="#A0A0A0" title="0.4">C/G</td>
-  <td width="20" align="center" bgcolor="#A0A0A0" title="0.5">A</td>
+  <td width="10" align="center" bgcolor="#A0A0A0" title="0.5">A</td>
  </tr>
  <tr>
   <td title="1.1">&nbsp;</td>
@@ -208,6 +221,12 @@
   <td align="center" title="25.5">&nbsp;</td>
  </tr>
 </table>
+
+<script>
+function sendCommand(parameter) {
+    window.location.href = "/Alarmlist/" + parameter
+}
+</script>
 
 </body>
 

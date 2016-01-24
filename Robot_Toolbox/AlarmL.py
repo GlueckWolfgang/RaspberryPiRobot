@@ -27,7 +27,7 @@ class AlarmL:
         # following lines containing alarm rows of actual page
         for i in range(0, len(self.actualPage)):
             AlarmO = self.actualPage[i]
-            Alarmtext = [AlarmO.alDateTime,
+            Alarmtext = [AlarmO.alDateTime[0:23],
                          AlarmO.alDescription]
             if AlarmO.alType == "ST":
                 Alarmtext.append("")

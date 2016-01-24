@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ###############################################################################
 # Class Prozess webserver
-# Version:  2016.01.22
+# Version:  2016.01.24
 #
 ###############################################################################
 import tornado.ioloop
@@ -32,7 +32,7 @@ class ProcessWebserver:
                 self.status = []
                 self.measuredValue = []
 
-            def get(self):
+            def get(self, Panel_id):
                 self.write("This is story: Status and measured values")
                 # the site requests data in a cycle of 500 ms
                 # get actual status and mesured value
@@ -53,17 +53,13 @@ class ProcessWebserver:
             def initialize(self, db):
                 self.LQueue = db[0]
                 self.WLQueue = db[1]
-                self.actualPageNo = "0"
-                self.maxPageNo = "0"
-                self.numberOFLines = "0"
-                self.actualPage = []
+
                 # read template
                 self.template = open("templates/Alarmlist.html", "r")
                 self.site = self.template.read()
                 self.template.close()
 
-
-            def get(self):
+            def get(self, Alarmlist_id):
                 # the site requests data in a cycle of 1s
                 # get actual alarm list page
                 # ask LQueue for data
@@ -71,33 +67,39 @@ class ProcessWebserver:
 
                 # read WLQueue
                 message = WLQueue.get()
-                # read header
-                self.actualPageNo = message[0][0]
-                self.maxPageNo = message[0][1]
-                self.numberOfLines = message[0][2]
-                # remove header
-                del message[0]
-                # store list
-                self.actualPage = message
+
+                # check argument from site
+                if Alarmlist_id == "1":
+                    self.LQueue.put(["Q@", ""])
+                elif Alarmlist_id == "2":
+                    self.LQueue.put(["P@", "bwd"])
+                elif Alarmlist_id == "3":
+                    self.LQueue.put(["P@", "fwd"])
+                elif Alarmlist_id == "4":
+                    self.LQueue.put(["P@", "ft"])
+                elif Alarmlist_id == "5":
+                    self.LQueue.put(["P@", "lt"])
+
                 # put data to head table
-                self.siteCopy = self.site.replace("?actual", self.actualPageNo)
-                self.siteCopy = self.siteCopy.replace("?last", self.maxPageNo)
+                self.siteCopy = self.site.replace("?actual", message[0][0])
+                self.siteCopy = self.siteCopy.replace("?last", message[0][1])
+                del message[0]
+
                 # put data to main table
-                for i in range(0,len(self.actualPage)):
-                    line = self.actualPage[i]
-                    for j in range(0,5):
-                        self.siteCopy = self.siteCopy.replace('title="' + str(i + 1) + "." + str(j + 1) + '">' +'&nbsp;',
-                                                              'title="' + str(i + 1) + "." + str(j + 1) + '">' + line[j])
+                for i in range(0, len(message)):
+                    row = message[i]
+                    for j in range(0, 5):
+                        self.siteCopy = self.siteCopy.replace('title="' + str(i + 1) + "." + str(j + 1) + '">' + '&nbsp;',
+                                                              'title="' + str(i + 1) + "." + str(j + 1) + '">' + row[j])
 
                 # write to page
                 self.write(self.siteCopy)
-
 
         class StoryHandler3(tornado.web.RequestHandler):
             def initialize(self, db):
                 self.db = db
 
-            def get(self):
+            def get(self, Map_id):
                 self.write("This is story: Map")
                 # the site requests data in a cycle of 1s
                 # get actual map
@@ -107,9 +109,9 @@ class ProcessWebserver:
         def make_app():
             return tornado.web.Application([
                 (r"/", MainHandler, dict(db=MQueue)),
-                (r"/story/1", StoryHandler1, dict(db=[PQueue, WPQueue])),
-                (r"/story/2", StoryHandler2, dict(db=[LQueue, WLQueue])),
-                (r"/story/3", StoryHandler3, dict(db=db3))
+                (r"/Panel/([0-20]+)", StoryHandler1, dict(db=[PQueue, WPQueue])),
+                (r"/Alarmlist/([0-5]+)", StoryHandler2, dict(db=[LQueue, WLQueue])),
+                (r"/Map/([0-9]+)", StoryHandler3, dict(db=db3))
             ])
 
         app = make_app()

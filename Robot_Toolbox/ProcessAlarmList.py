@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ###############################################################################
 # Class Prozess Alarm list
-# Version:  2016.01.21
+# Version:  2016.01.23
 #
 # LQueue             = queue to listen
 # MQueue             = process Main queue
@@ -24,6 +24,22 @@ class ProcessAlarmList:
                 # Put Alarm
                 AlarmList.putAlarm(Message[1], MQueue)
 
+            elif Message[0] == "P@":
+                if Message[1] == "bwd":
+                    # Page backward
+                    AlarmList.pageBackward()
+                elif Message[1] == "fwd":
+                    # Page forward
+                    AlarmList.pageForward()
+                elif Message[1] == "ft":
+                    # First page
+                    AlarmList.actualPageNo = 1
+                elif Message[1] == "lt":
+                    # Last page
+                    AlarmList.actualPageNo = AlarmList.maxPageNo
+                else:
+                    MQueue.put("I@Process Alarm list: Unknown message at LQueue " + Message[0] + Message[1])
+
             elif Message[0] == "Q@":
                 # Acknowledge alarm list
                 AlarmList.acknowledgeAlarmList(MQueue)
@@ -33,4 +49,4 @@ class ProcessAlarmList:
                 WLQueue.put(AlarmList.getActualPage())
 
             else:
-                MQueue.put("I@Process Alarm list: Unknown message at LQueue " + Message[0])
+                MQueue.put("I@Process Alarm list: Unknown message at LQueue " + Message[0] + Message[1])
