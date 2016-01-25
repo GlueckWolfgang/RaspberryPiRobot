@@ -100,19 +100,32 @@ class ProcessWebserver:
             def initialize(self, db):
                 self.db = db
 
-            def get(self, templates_id):
+            def get(self, Map_id):
                 self.write("This is story: Map")
                 # the site requests data in a cycle of 1s
                 # get actual map
 
                 # write to page
 
+        class StoryHandler4(tornado.web.RequestHandler):
+
+            def get(self, filename):
+                # deliver js files to page
+                MQueue.put("I@" + filename)
+                # read js file
+                self.file = open("static/" + filename, "r")
+                self.script = self.file.read()
+                self.file.close()
+                # write to page
+                self.write(self.script)
+
         def make_app():
             return tornado.web.Application([
                 (r"/", MainHandler, dict(db=MQueue)),
                 (r"/Panel/([0-20]+)", StoryHandler1, dict(db=[PQueue, WPQueue])),
                 (r"/Alarmlist/([0-5]+)", StoryHandler2, dict(db=[LQueue, WLQueue])),
-                (r"/Map/([0-5]+)", StoryHandler3, dict(db=db3))
+                (r"/Map/([0-5]+)", StoryHandler3, dict(db=db3)),
+                (r"/static/(.*)", StoryHandler4)
             ])
 
         app = make_app()
