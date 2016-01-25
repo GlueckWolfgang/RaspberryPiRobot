@@ -61,13 +61,7 @@ class ProcessWebserver:
 
             def get(self, Alarmlist_id):
                 # the site requests data in a cycle of 1s
-                # get actual alarm list page
-                # ask LQueue for data
-                self.LQueue.put(["R@", ""])
-
-                # read WLQueue
-                message = WLQueue.get()
-
+                MQueue.put("I@" + Alarmlist_id)
                 # check argument from site
                 if Alarmlist_id == "1":
                     self.LQueue.put(["Q@", ""])
@@ -79,6 +73,13 @@ class ProcessWebserver:
                     self.LQueue.put(["P@", "ft"])
                 elif Alarmlist_id == "5":
                     self.LQueue.put(["P@", "lt"])
+
+                # get actual alarm list page
+                # ask LQueue for data
+                self.LQueue.put(["R@", ""])
+
+                # read WLQueue
+                message = WLQueue.get()
 
                 # put data to head table
                 self.siteCopy = self.site.replace("?actual", message[0][0])
@@ -99,7 +100,7 @@ class ProcessWebserver:
             def initialize(self, db):
                 self.db = db
 
-            def get(self, Map_id):
+            def get(self, templates_id):
                 self.write("This is story: Map")
                 # the site requests data in a cycle of 1s
                 # get actual map
@@ -111,7 +112,7 @@ class ProcessWebserver:
                 (r"/", MainHandler, dict(db=MQueue)),
                 (r"/Panel/([0-20]+)", StoryHandler1, dict(db=[PQueue, WPQueue])),
                 (r"/Alarmlist/([0-5]+)", StoryHandler2, dict(db=[LQueue, WLQueue])),
-                (r"/Map/([0-9]+)", StoryHandler3, dict(db=db3))
+                (r"/Map/([0-5]+)", StoryHandler3, dict(db=db3))
             ])
 
         app = make_app()
