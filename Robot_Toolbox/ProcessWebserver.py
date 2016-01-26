@@ -66,12 +66,16 @@ class ProcessWebserver:
         class StoryHandler2(tornado.web.RequestHandler):
 
             def get(self, filename):
-                # deliver js files to page
-                # read js file
+                # deliver files to page
+                # read file
                 self.file = open("static/" + filename, "r")
                 self.script = self.file.read()
                 self.file.close()
                 # write to page
+                if filename.endswith(".css"):
+                    self.set_header("Content-Type", "text/css")
+                elif filename.endswith(".js"):
+                   self.set_header("Content-Type", "text/javascript")
                 self.write(self.script)
 
         def make_app():
