@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 ###############################################################################
 # Class of Alarm
-# Version: 2016.01.08
+# Version: 2016.01.26
 #
-# alDateTime        = Time stamp created in putValue
+# alDateTime        = str(Time stamp) created in putValue
 # all other parameters according to MeasuredValueL respectively StatusL
 # alDescription     = Description text
 # alType            = "ST", "MV"
@@ -12,6 +12,7 @@
 # alStatus          = str (0, 1)
 # alDtype           = "Integer", "Float"
 # alValue...........= measured value according to alDtype
+# alDimension       = "V", "A", "cm"
 ###############################################################################
 
 

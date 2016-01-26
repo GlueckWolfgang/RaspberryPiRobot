@@ -67,7 +67,7 @@ class MeasuredValueL:
                         "LL",                  # Subtype
                         str(MV.LlBelow),       # int 0/1
                         MV.mvDtype,            # "Integer", "Float"
-                        str(MV.value),
+                        str(MV.value),         # Value
                         MV.mvDimension)        # Dimension
 
                         LQueue.put(["L@", AlarmO])
@@ -93,7 +93,7 @@ class MeasuredValueL:
                         "UL",                  # Subtype
                         str(MV.UlAbove),       # int 0/1
                         MV.mvDtype,            # "Integer", "Float"
-                        str(MV.value),
+                        str(MV.value),         # Value
                         MV.mvDimension)        # Dimension
 
                         LQueue.put(["L@", AlarmO])
