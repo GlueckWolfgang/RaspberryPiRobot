@@ -41,7 +41,8 @@ class StatusL:
                                "",                    # Subtype for measured value
                                str(value),            # int 0/1
                                "",                    # DType for measured value
-                               "0")                   # Value for measured value
+                               "0",                   # Value for measured value
+                               "")                    # Dimension for measured value
 
                 LQueue.put(["L@", AlarmO])
 

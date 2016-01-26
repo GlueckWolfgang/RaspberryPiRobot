@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ###############################################################################
 # Class Prozess webserver
-# Version:  2016.01.24
+# Version:  2016.01.26
 #
 ###############################################################################
 import tornado.ioloop
@@ -61,7 +61,6 @@ class ProcessWebserver:
 
             def get(self, Alarmlist_id):
                 # the site requests data in a cycle of 1s
-                MQueue.put("I@" + Alarmlist_id)
                 # check argument from site
                 if Alarmlist_id == "1":
                     self.LQueue.put(["Q@", ""])
@@ -89,7 +88,7 @@ class ProcessWebserver:
                 # put data to main table
                 for i in range(0, len(message)):
                     row = message[i]
-                    for j in range(0, 5):
+                    for j in range(0, len(row)):
                         self.siteCopy = self.siteCopy.replace('title="' + str(i + 1) + "." + str(j + 1) + '">' + '&nbsp;',
                                                               'title="' + str(i + 1) + "." + str(j + 1) + '">' + row[j])
 
@@ -111,7 +110,6 @@ class ProcessWebserver:
 
             def get(self, filename):
                 # deliver js files to page
-                MQueue.put("I@" + filename)
                 # read js file
                 self.file = open("static/" + filename, "r")
                 self.script = self.file.read()

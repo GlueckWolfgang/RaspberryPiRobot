@@ -17,7 +17,7 @@
 
 class Alarm:
     def __init__(self, alDateTime, alDescription, alType, alNumber, alSubType,
-                       alStatus, alDtype, alValue):
+                       alStatus, alDtype, alValue, alDimension):
 
         self.alDateTime = alDateTime
         self.alDescription = alDescription
@@ -31,6 +31,7 @@ class Alarm:
         self.alStatus = alStatus
         self.alDtype = alDtype
         self.alValue = alValue
+        self.alDimension = alDimension
         self.alAcknowledged = False
         self.alDelete = False
 

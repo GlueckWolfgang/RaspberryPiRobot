@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ###############################################################################
 # Class of Measured Value List
-# Version:  2016.01.09
+# Version:  2016.01.26
 ###############################################################################
 from Robot_Toolbox.MeasuredValue import *
 from Robot_Toolbox.Alarm import *
@@ -67,7 +67,8 @@ class MeasuredValueL:
                         "LL",                  # Subtype
                         str(MV.LlBelow),       # int 0/1
                         MV.mvDtype,            # "Integer", "Float"
-                        str(MV.value))
+                        str(MV.value),
+                        MV.mvDimension)        # Dimension
 
                         LQueue.put(["L@", AlarmO])
 
@@ -92,7 +93,8 @@ class MeasuredValueL:
                         "UL",                  # Subtype
                         str(MV.UlAbove),       # int 0/1
                         MV.mvDtype,            # "Integer", "Float"
-                        str(MV.value))
+                        str(MV.value),
+                        MV.mvDimension)        # Dimension
 
                         LQueue.put(["L@", AlarmO])
                         # AlarmList.putAlarm(AlarmO, MQueue)
