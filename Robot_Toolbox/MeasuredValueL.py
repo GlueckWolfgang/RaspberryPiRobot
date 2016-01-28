@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ###############################################################################
 # Class of Measured Value List
-# Version:  2016.01.26
+# Version:  2016.01.28
 ###############################################################################
 from Robot_Toolbox.MeasuredValue import *
 from Robot_Toolbox.Alarm import *
@@ -67,6 +67,7 @@ class MeasuredValueL:
                         "LL",                  # Subtype
                         str(MV.LlBelow),       # int 0/1
                         MV.mvDtype,            # "Integer", "Float"
+                        str(MV.Ll),            # Limit
                         str(MV.value),         # Value
                         MV.mvDimension)        # Dimension
 
@@ -93,6 +94,7 @@ class MeasuredValueL:
                         "UL",                  # Subtype
                         str(MV.UlAbove),       # int 0/1
                         MV.mvDtype,            # "Integer", "Float"
+                        str(MV.Ul),            # Limit
                         str(MV.value),         # Value
                         MV.mvDimension)        # Dimension
 

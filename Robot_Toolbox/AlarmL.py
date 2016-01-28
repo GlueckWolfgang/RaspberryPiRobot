@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ###############################################################################
 # Class of alarm list
-# Version:  2016.01.26
+# Version:  2016.01.28
 #
 ###############################################################################
 import copy
@@ -32,7 +32,9 @@ class AlarmL:
             if AlarmO.alType == "ST":
                 Alarmtext.append("")
                 Alarmtext.append("")
+                Alarmtext.append("")
             else:
+                Alarmtext.append(AlarmO.alLimit)
                 Alarmtext.append(AlarmO.alValue)
                 Alarmtext.append(AlarmO.alDimension)
 

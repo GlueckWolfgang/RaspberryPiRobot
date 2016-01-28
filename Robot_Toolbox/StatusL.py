@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ###############################################################################
 # Class of status list
-# Version:  2016.01.26
+# Version:  2016.01.28
 ###############################################################################
 from Robot_Toolbox.Status import *
 from Robot_Toolbox.Alarm import *
@@ -41,6 +41,7 @@ class StatusL:
                                "",                    # Subtype for measured value
                                str(value),            # int 0/1
                                "",                    # DType for measured value
+                               "",                    # Limit of measured value
                                "",                    # Value for measured value
                                "")                    # Dimension for measured value
 
