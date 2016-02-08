@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ###############################################################################
 # Class Prozess Alarm list
-# Version:  2016.01.23
+# Version:  2016.02.06
 #
 # LQueue             = queue to listen
 # MQueue             = process Main queue
@@ -46,7 +46,9 @@ class ProcessAlarmList:
 
             elif Message[0] == "R@":
                 # Request from webserver
-                WLQueue.put(AlarmList.getActualPage())
+                output = AlarmList.getActualPage(MQueue)
+                WLQueue.put(output)
+
 
             else:
                 MQueue.put("I@Process Alarm list: Unknown message at LQueue " + Message[0] + Message[1])

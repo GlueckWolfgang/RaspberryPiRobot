@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ###############################################################################
 # Raspberry Robot Program
-# Version: 2016_01_22
+# Version: 2016_02_06
 # Creator: Wolfgang Glück
 ###############################################################################
 import multiprocessing as mp
@@ -70,7 +70,7 @@ if __name__ == '__main__':
     # Endless loop of main program
     while True:
         while not MQueue.empty():
-            result = MQueue.get().strip()
+            result = MQueue.get()
 
             if result.find("I@") == 0:
                 # internal message

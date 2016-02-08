@@ -1,0 +1,284 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<title>Robot</title>
+<meta content="text/html" charset="utf-8" http-equiv="Content-Type" />
+<meta name="description" content="Alarm list" />
+<meta name="author" content="Wolfgang Glueck" />
+<meta name="editor" content="html-editor phase 5" />
+</head>
+
+<body>
+<div class="ui-widget-content
+     ui-state-default
+     ui-corner-top
+     ui-corner-bottom">
+
+    <table class="AlarmListButtons">
+         <tr>
+            <td class="left" ><button type="button" id="Backnowledge">Acknowledge</button></td>
+
+            <td class="left">Page: </td>
+
+            <td class="right" id="actual">&nbsp;</td>
+
+            <td class="center"><button type="button" id="Bft">First</button></td>
+
+            <td class="center"><button type="button" id="Bbwd">&lt;</button></td>
+
+            <td class="center"><button type="button" id="Bfwd">&gt;</button></td>
+
+            <td class="center"><button type="button" id="Blt">Last</button></td>
+
+            <td class="right" id="last">&nbsp;</td>
+
+         </tr>
+    </table>
+
+    <table class="AlarmList">
+            <caption>Robot Alarm List</caption>
+            <thead>
+                 <tr>
+                      <th class= "width1 left" id="0.1">Date/Time</th>
+                      <th class= "width2 left" id="0.2">Message</th>
+                      <th class= "width3 right" id="0.3">Limit</th>
+                      <th class= "width3 right" id="0.4">Value</th>
+                      <th class= "width4 left" id="0.5">Dim.</th>
+                      <th class= "width4 center" id="0.6">C/G</th>
+                      <th class= "width4 center" id="0.7">A</th>
+                 </tr>
+            </thead>
+
+            <tbody>
+                 <tr>
+                      <td class="left" id="1.1">&nbsp;</td>
+                      <td class="left" id="1.2">&nbsp;</td>
+                      <td class="right" id="1.3">&nbsp;</td>
+                      <td class="right" id="1.4">&nbsp;</td>
+                      <td class="left" id="1.5">&nbsp;</td>
+                      <td class="center" id="1.6">&nbsp;</td>
+                      <td class="center" id="1.7">&nbsp;</td>
+                 </tr>
+                 <tr class="zebra">
+                      <td class="left" id="2.1">&nbsp;</td>
+                      <td class="left" id="2.2">&nbsp;</td>
+                      <td class="right" id="2.3">&nbsp;</td>
+                      <td class="right" id="2.4">&nbsp;</td>
+                      <td class="left" id="2.5">&nbsp;</td>
+                      <td class="center" id="2.6">&nbsp;</td>
+                      <td class="center" id="2.7">&nbsp;</td>
+                 </tr>
+                 <tr>
+                      <td class="left" id="3.1">&nbsp;</td>
+                      <td class="left" id="3.2">&nbsp;</td>
+                      <td class="right" id="3.3">&nbsp;</td>
+                      <td class="right" id="3.4">&nbsp;</td>
+                      <td class="left" id="3.5">&nbsp;</td>
+                      <td class="center" id="3.6">&nbsp;</td>
+                      <td class="center" id="3.7">&nbsp;</td>
+                 </tr>
+                 <tr class="zebra">
+                      <td class="left" id="4.1">&nbsp;</td>
+                      <td class="left" id="4.2">&nbsp;</td>
+                      <td class="right" id="4.3">&nbsp;</td>
+                      <td class="right" id="4.4">&nbsp;</td>
+                      <td class="left" id="4.5">&nbsp;</td>
+                      <td class="center" id="4.6">&nbsp;</td>
+                      <td class="center" id="4.7">&nbsp;</td>
+                 </tr>
+                 <tr>
+                     <td class="left" id="5.1">&nbsp;</td>
+                     <td class="left" id="5.2">&nbsp;</td>
+                     <td class="right" id="5.3">&nbsp;</td>
+                     <td class="right" id="5.4">&nbsp;</td>
+                     <td class="left" id="5.5">&nbsp;</td>
+                     <td class="center" id="5.6">&nbsp;</td>
+                     <td class="center" id="5.7">&nbsp;</td>
+                 </tr>
+                 <tr class="zebra">
+                      <td class="left" id="6.1">&nbsp;</td>
+                      <td class="left" id="6.2">&nbsp;</td>
+                      <td class="right" id="6.3">&nbsp;</td>
+                      <td class="right" id="6.4">&nbsp;</td>
+                      <td class="left" id="6.5">&nbsp;</td>
+                      <td class="center" id="6.6">&nbsp;</td>
+                      <td class="center" id="6.7">&nbsp;</td>
+                 </tr>
+                 <tr>
+                     <td class="left" id="7.1">&nbsp;</td>
+                     <td class="left" id="7.2">&nbsp;</td>
+                     <td class="right" id="7.3">&nbsp;</td>
+                     <td class="right" id="7.4">&nbsp;</td>
+                     <td class="left" id="7.5">&nbsp;</td>
+                     <td class="center" id="7.6">&nbsp;</td>
+                     <td class="center" id="7.7">&nbsp;</td>
+                 </tr>
+                 <tr class="zebra">
+                     <td class="left" id="8.1">&nbsp;</td>
+                     <td class="left" id="8.2">&nbsp;</td>
+                     <td class="right" id="8.3">&nbsp;</td>
+                     <td class="right" id="8.4">&nbsp;</td>
+                     <td class="left" id="8.5">&nbsp;</td>
+                     <td class="center" id="8.6">&nbsp;</td>
+                     <td class="center" id="8.7">&nbsp;</td>
+                 </tr>
+                 <tr>
+                    <td class="left" id="9.1">&nbsp;</td>
+                    <td class="left" id="9.2">&nbsp;</td>
+                    <td class="right" id="9.3">&nbsp;</td>
+                    <td class="right" id="9.4">&nbsp;</td>
+                    <td class="left" id="9.5">&nbsp;</td>
+                    <td class="center" id="9.6">&nbsp;</td>
+                    <td class="center" id="9.7">&nbsp;</td>
+                 </tr>
+                 <tr class="zebra">
+                    <td class="left" id="10.1">&nbsp;</td>
+                    <td class="left" id="10.2">&nbsp;</td>
+                    <td class="right" id="10.3">&nbsp;</td>
+                    <td class="right" id="10.4">&nbsp;</td>
+                    <td class="left" id="10.5">&nbsp;</td>
+                    <td class="center" id="10.6">&nbsp;</td>
+                    <td class="center" id="10.7">&nbsp;</td>
+                 </tr>
+                 <tr>
+                      <td class="left" id="11.1">&nbsp;</td>
+                      <td class="left" id="11.2">&nbsp;</td>
+                      <td class="right" id="11.3">&nbsp;</td>
+                      <td class="right" id="11.4">&nbsp;</td>
+                      <td class="left" id="11.5">&nbsp;</td>
+                      <td class="center" id="11.6">&nbsp;</td>
+                      <td class="center" id="11.7">&nbsp;</td>
+                 </tr>
+                 <tr class="zebra">
+                      <td class="left" id="12.1">&nbsp;</td>
+                      <td class="left" id="12.2">&nbsp;</td>
+                      <td class="right" id="12.3">&nbsp;</td>
+                      <td class="right" id="12.4">&nbsp;</td>
+                      <td class="left" id="12.5">&nbsp;</td>
+                      <td class="center" id="12.6">&nbsp;</td>
+                      <td class="center" id="12.7">&nbsp;</td>
+                 </tr>
+                 <tr>
+                      <td class="left" id="13.1">&nbsp;</td>
+                      <td class="left" id="13.2">&nbsp;</td>
+                      <td class="right" id="13.3">&nbsp;</td>
+                      <td align="right" id="13.4">&nbsp;</td>
+                      <td class="left" id="13.5">&nbsp;</td>
+                      <td class="center" id="13.6">&nbsp;</td>
+                      <td class="center" id="13.7">&nbsp;</td>
+                 </tr>
+                 <tr class="zebra">
+                      <td class="left" id="14.1">&nbsp;</td>
+                      <td class="left" id="14.2">&nbsp;</td>
+                      <td class="right" id="14.3">&nbsp;</td>
+                      <td class="right" id="14.4">&nbsp;</td>
+                      <td class="left" id="14.5">&nbsp;</td>
+                      <td class="center" id="14.6">&nbsp;</td>
+                      <td class="center" id="14.7">&nbsp;</td>
+                 </tr>
+                 <tr>
+                      <td class="left" id="15.1">&nbsp;</td>
+                      <td class="left" id="15.2">&nbsp;</td>
+                      <td class="right" id="15.3">&nbsp;</td>
+                      <td class="right" id="15.4">&nbsp;</td>
+                      <td class="left" id="15.5">&nbsp;</td>
+                      <td class="center" id="15.6">&nbsp;</td>
+                      <td class="center" id="15.7">&nbsp;</td>
+                 </tr>
+                 <tr class="zebra">
+                     <td class="left" id="16.1">&nbsp;</td>
+                     <td class="left" id="16.2">&nbsp;</td>
+                     <td class="right" id="16.3">&nbsp;</td>
+                     <td class="right" id="16.4">&nbsp;</td>
+                     <td class="left" id="16.5">&nbsp;</td>
+                     <td class="center" id="16.6">&nbsp;</td>
+                     <td class="center" id="16.7">&nbsp;</td>
+                 </tr>
+                 <tr>
+                    <td class="left" id="17.1">&nbsp;</td>
+                    <td class="left" id="17.2">&nbsp;</td>
+                    <td class="right" id="17.3">&nbsp;</td>
+                    <td class="right" id="17.4">&nbsp;</td>
+                    <td class="left" id="17.5">&nbsp;</td>
+                    <td class="center" id="17.6">&nbsp;</td>
+                    <td class="center" id="17.7">&nbsp;</td>
+                 </tr>
+                 <tr class="zebra">
+                      <td class="left" id="18.1">&nbsp;</td>
+                      <td class="left" id="18.2">&nbsp;</td>
+                      <td class="right" id="18.3">&nbsp;</td>
+                      <td class="right" id="18.4">&nbsp;</td>
+                      <td class="left" id="18.5">&nbsp;</td>
+                      <td class="center" id="18.6">&nbsp;</td>
+                      <td class="center" id="18.7">&nbsp;</td>
+                 </tr>
+                 <tr>
+                      <td class="left" id="19.1">&nbsp;</td>
+                      <td class="left" id="19.2">&nbsp;</td>
+                      <td class="right" id="19.3">&nbsp;</td>
+                      <td class="right" id="19.4">&nbsp;</td>
+                      <td class="left" id="19.5">&nbsp;</td>
+                      <td class="center" id="19.6">&nbsp;</td>
+                      <td class="center" id="19.7">&nbsp;</td>
+                 </tr>
+                 <tr class="zebra">
+                      <td class="left" id="20.1">&nbsp;</td>
+                      <td class="left" id="20.2">&nbsp;</td>
+                      <td class="right" id="20.3">&nbsp;</td>
+                      <td class="right" id="20.4">&nbsp;</td>
+                      <td class="left" id="20.5">&nbsp;</td>
+                      <td class="center" id="20.6">&nbsp;</td>
+                      <td class="center" id="20.7">&nbsp;</td>
+                 </tr>
+                 <tr>
+                      <td class="left" id="21.1">&nbsp;</td>
+                      <td class="left" id="21.2">&nbsp;</td>
+                      <td class="right" id="21.3">&nbsp;</td>
+                      <td class="right" id="21.4">&nbsp;</td>
+                      <td class="left" id="21.5">&nbsp;</td>
+                      <td class="center" id="21.6">&nbsp;</td>
+                      <td class="center" id="21.7">&nbsp;</td>
+                 </tr>
+                 <tr class="zebra">
+                      <td class="left" id="22.1">&nbsp;</td>
+                      <td class="left" id="22.2">&nbsp;</td>
+                      <td class="right" id="22.3">&nbsp;</td>
+                      <td class="right" id="22.4">&nbsp;</td>
+                      <td class="left" id="22.5">&nbsp;</td>
+                      <td class="center" id="22.6">&nbsp;</td>
+                      <td class="center" id="22.7">&nbsp;</td>
+                 </tr>
+                 <tr>
+                      <td class="left" id="23.1">&nbsp;</td>
+                      <td class="left" id="23.2">&nbsp;</td>
+                      <td class="right" id="23.3">&nbsp;</td>
+                      <td class="right" id="23.4">&nbsp;</td>
+                      <td class="left" id="23.5">&nbsp;</td>
+                      <td class="center" id="23.6">&nbsp;</td>
+                      <td class="center" id="23.7">&nbsp;</td>
+                 </tr>
+                 <tr class="zebra">
+                     <td class="left" id="24.1">&nbsp;</td>
+                     <td class="left" id="24.2">&nbsp;</td>
+                     <td class="right" id="24.3">&nbsp;</td>
+                     <td class="right" id="24.4">&nbsp;</td>
+                     <td class="left" id="24.5">&nbsp;</td>
+                     <td class="center" id="24.6">&nbsp;</td>
+                     <td class="center" id="24.7">&nbsp;</td>
+                 </tr>
+                 <tr>
+                     <td class="left" id="25.1">&nbsp;</td>
+                     <td class="left" id="25.2">&nbsp;</td>
+                     <td class="right" id="25.3">&nbsp;</td>
+                     <td class="right" id="25.4">&nbsp;</td>
+                     <td class="left" id="25.5">&nbsp;</td>
+                     <td class="center" id="25.6">&nbsp;</td>
+                     <td class="center" id="25.7">&nbsp;</td>
+                 </tr>
+            </tbody>
+    </table>
+</div>
+
+
+</body>
+</html>

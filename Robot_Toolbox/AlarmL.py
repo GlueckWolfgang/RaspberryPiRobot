@@ -1,11 +1,12 @@
 # -*- coding: utf-8 -*-
 ###############################################################################
 # Class of alarm list
-# Version:  2016.01.28
+# Version:  2016.02.07
 #
 ###############################################################################
 import copy
 from Robot_Toolbox.Alarm import *
+import json
 
 
 class AlarmL:
@@ -17,14 +18,22 @@ class AlarmL:
         self.maxPageNo = 1       # maximum pagenumber depends on number of alarms
         self.numberOfLines = 25  # Number of lines per page
 
+        # generate an empty dictionary as template
+        self.template = {"actual": "&nbsp;", "last": "&nbsp;"}
+        for i in range(0, self.numberOfLines):
+            for j in range(0, 7):
+                element = {str(i + 1) + "." + str(j + 1): "&nbsp;"}
+                self.template.update(element)
+
     def __str__(self):
         nachricht = "List of alarms"
         return nachricht
 
-    def getActualPage(self):
-        # first line contains some head informarion
-        alarmList = [[str(self.actualPageNo), str(self.maxPageNo),str(self.numberOfLines),"",""]]
-        # following lines containing alarm rows of actual page
+    def getActualPage(self, MQueue):
+        # first line contains some head information
+        alarmList = [[str(self.actualPageNo), str(self.maxPageNo),str(self.numberOfLines)]]
+
+        # the following lines containing alarm rows of actual page
         for i in range(0, len(self.actualPage)):
             AlarmO = self.actualPage[i]
             Alarmtext = [AlarmO.alDateTime[0:23],
@@ -42,6 +51,7 @@ class AlarmL:
                 Alarmtext.append(AlarmO.alStatusTextG)
             else:
                 Alarmtext.append(AlarmO.alStatusTextC)
+
             if AlarmO.alAcknowledged is True:
                 Alarmtext.append(AlarmO.alAcknowledgeTextTrue)
             else:
@@ -49,7 +59,19 @@ class AlarmL:
 
             alarmList.append(Alarmtext)
 
-        return alarmList
+        # generate dictionary from empty template
+        dictionary = copy.copy(self.template)
+        dictionary.update({"actual": alarmList[0][0], "last": alarmList[0][1]})
+
+        # fill in existing alarmlist values except headline [0][1..7]
+        for i in range(1, len(alarmList)):
+            for j in range(0, 7):
+                element = {str(i) + "." + str(j + 1): alarmList[i][j]}
+                dictionary.update(element)
+
+        output = json.dumps(dictionary)
+
+        return output
 
     def putAlarm(self, AlarmO, MQueue):
         self.list.append(AlarmO)

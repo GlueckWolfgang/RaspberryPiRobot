@@ -1,0 +1,73 @@
+/* CSS for the tables */
+
+table {
+   width: 100%;
+   border-collapse: separate;
+   background: #EEEEEE;
+   color: black;
+}
+
+table.AlarmListButtons {
+   width: 30%;
+   border-collapse: separate;
+   background: #EEEEEE;
+   color: black;
+}
+
+table.AlarmList th.width1 {
+   width: 130px;
+}
+
+table.AlarmList th.width2 {
+   width: 400px;
+}
+
+table.AlarmList th.width3 {
+   width: 20px;
+}
+
+table.AlarmList th.width4 {
+   width: 10px;
+}
+
+caption {
+   font-size: 120%;
+   font-weight: bold;
+   background-color: #EEEEEE;
+   color: black;
+   text-align: center;
+}
+
+thead {
+   background-color: #A0A0A0;
+   color: white;
+   border-bottom: 1px solid #999;
+   font-size: 100%;
+   font-weight: bold;
+}
+
+tbody {
+   background-color: #EEEEEE;
+   color: black;
+   border-bottom: 1px solid #999;
+   font-size: 90%;
+   font-weight: normal;
+}
+
+.left {
+  text-align: left;
+}
+
+.right {
+  text-align: right;
+}
+
+.center {
+  text-align: center;
+}
+
+.zebra {
+   background-color: #FFFFFF;
+   color: black;
+}
+
