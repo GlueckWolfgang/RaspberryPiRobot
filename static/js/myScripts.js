@@ -3,10 +3,10 @@ $(document).ready(function(){
        console.log("function tabs called")
        $('#tabs').tabs({active: 1});
 
-       $('#Backnowledge').click(function(event) {
+       $(document).on("click", '#Backnowledge', (function(event) {
                               console.log("acknowledge click.");
                               Send('Alarmlist/acknowledge');
-                         });
+                         }));
 });
 
 // 1s cycle
@@ -15,10 +15,10 @@ $(document).ready(function(){
 //}, 1000);
 
 // 2s cycle
-//setInterval(function() {
-//  AlarmlistData()
-//   console.log("2s cycle has been started")
-//}, 2000);
+setInterval(function() {
+  AlarmlistData()
+   console.log("2s cycle has been started")
+}, 2000);
 
 
 // Ajax

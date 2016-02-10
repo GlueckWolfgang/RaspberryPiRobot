@@ -68,9 +68,10 @@ class ProcessWebserver:
                         self.write(output)
 
                     elif url.endswith("/acknowledge"):
-                        self.LQueue.put("Q@", "")
+                        self.LQueue.put(["Q@", ""])
                         dictionary = {"phantasy": "&nbsp;"}
                         output = json.dumps(dictionary)
+                        self.MQueue.put("I@" + output)
                         self.write(output)
 
                 elif url.startswith("Panel.html"):
