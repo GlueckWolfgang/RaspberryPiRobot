@@ -7,6 +7,26 @@ $(document).ready(function(){
                               console.log("acknowledge click.");
                               Send('Alarmlist/acknowledge');
                          }));
+
+       $(document).on("click", '#Bft', (function(event) {
+                              console.log("first click.");
+                              Send('Alarmlist/ft');
+                         }));
+
+       $(document).on("click", '#Bbwd', (function(event) {
+                              console.log("backward click.");
+                              Send('Alarmlist/bwd');
+                         }));
+
+       $(document).on("click", '#Bfwd', (function(event) {
+                              console.log("foreward click.");
+                              Send('Alarmlist/fwd');
+                         }));
+
+       $(document).on("click", '#Blt', (function(event) {
+                              console.log("last click.");
+                              Send('Alarmlist/lt');
+                         }));
 });
 
 // 1s cycle

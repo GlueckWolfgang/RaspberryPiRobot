@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ###############################################################################
 # Class Prozess webserver
-# Version:  2016.02.08
+# Version:  2016.02.10
 #
 ###############################################################################
 import tornado.ioloop
@@ -71,7 +71,12 @@ class ProcessWebserver:
                         self.LQueue.put(["Q@", ""])
                         dictionary = {"phantasy": "&nbsp;"}
                         output = json.dumps(dictionary)
-                        self.MQueue.put("I@" + output)
+                        self.write(output)
+                    else:
+                        key = url.split("/")
+                        self.LQueue.put(["P@", key[1]])
+                        dictionary = {"phantasy": "&nbsp;"}
+                        output = json.dumps(dictionary)
                         self.write(output)
 
                 elif url.startswith("Panel.html"):
