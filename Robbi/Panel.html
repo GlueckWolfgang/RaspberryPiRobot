@@ -1,27 +1,69 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-<title>Robot</title>
-<meta content="text/html" charset="utf-8" http-equiv="Content-Type" />
-<meta name="description" content="Panel" />
-<meta name="author" content="Wolfgang Glueck" />
-<meta name="editor" content="html-editor phase 5" />
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Robot</title>
+    <meta http-equiv="Content-Type" content="text/html charset=utf-8" />
+    <meta name="description" content="Panel" />
+    <meta name="author" content="Wolfgang Glueck" />
+    <meta name="editor" content="html-editor phase 5" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" type="text/css" />
+    <link rel="stylesheet" href="../static/css/panelStyle.css" type="text/css" />
+<style type="text/css">
+/*<![CDATA[*/
+ td.c-5 {vertical-align: middle; width: 15px;}
+ td.c-4 {vertical-align: middle; width: 50px;}
+ td.c-3 {vertical-align: middle; width: 30px;}
+ td.c-2 {vertical-align: middle; width: 150px;}
+ td.c-1 {vertical-align: middle; width: 100px;}
+/*]]>*/
+</style>
 </head>
 
 <body>
-<div class="ui-widget-content
-     ui-state-default
-     ui-corner-top
-     ui-corner-bottom">
-   <div id="panel">
-        <p>This is space for the panel
-        <p><i class="fa fa-circle red"></i></p>
-        <p><i class="fa fa-circle yellow"></i></p>
-        <p><i class="fa fa-circle green"></i></p></p>
-   </div>
-</div>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
-<link rel="stylesheet" href="../static/css/panelStyle.css" />
+    <div class="ui-widget-content ui-state-default ui-corner-top ui-corner-bottom">
+        <table border="0" cellpadding="4" cellspacing="1" summary="">
+            <tr>
+                <td class="c-1"></td>
+
+                <td class="right c-2">Compass_actual</td>
+
+                <td class="right c-3">270.3</td>
+
+                <td class="left c-4">Degrees</td>
+
+                <td class="c-1"></td>
+
+                <td class="c-1"></td>
+
+                <td class="right c-1">Amplifier</td>
+
+                <td class="c-5"></td>
+
+                <td class="c-1"></td>
+            </tr>
+
+            <tr>
+                <td class="c-1"></td>
+
+                <td class="right c-2">Compass_smothed</td>
+
+                <td class="right c-3">270.5</td>
+
+                <td class="left c-4">Degrees</td>
+
+                <td class="c-1"></td>
+
+                <td class="c-1"></td>
+
+                <td class="right c-1">Compass</td>
+
+                <td class="c-5"></td>
+
+                <td class="c-1"></td>
+            </tr>
+        </table>
+    </div>
 </body>
 </html>

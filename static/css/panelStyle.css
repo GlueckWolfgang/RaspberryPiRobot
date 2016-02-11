@@ -1,12 +1,27 @@
-/* CSS for the panel */
-.red {
-color: red;
+.cred {
+color:red;
 }
 
-.yellow {
-color: yellow;
+.cyellow {
+color:yellow;
 }
 
-.green {
-color: green;
+.cgreen {
+color:green;
+}
+
+.bggray {
+color:gray;
+}
+
+.bggreen {
+background-color:green;
+}
+
+.right {
+    text-align: right;
+}
+
+.left {
+    text-align: left;
 }
