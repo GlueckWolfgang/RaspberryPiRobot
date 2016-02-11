@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ###############################################################################
 # Class Prozess webserver
-# Version:  2016.02.10
+# Version:  2016.02.11
 #
 ###############################################################################
 import tornado.ioloop
@@ -33,7 +33,10 @@ class ProcessWebserver:
             # deliver static files to page
             def get(self, url):
                 MQueue.put("I@Static Handler: " + url)
-                if url.endswith(".png"):
+                if url.endswith(".png")\
+                or url.endswith(".ico")\
+                or url.endswith(".jpg")\
+                or url.endswith(".gif"):
                     fh = open("static/" + url, "br")  # binary mode for png
                 else:
                     fh = open("static/" + url, "r")
