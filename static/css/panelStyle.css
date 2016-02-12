@@ -1,21 +1,21 @@
 .cred {
-color:red;
+    color:red;
 }
 
 .cyellow {
-color:yellow;
+    color:yellow;
 }
 
 .cgreen {
-color:green;
+    color:green;
 }
 
 .bggray {
-color:gray;
+    color:gray;
 }
 
 .bggreen {
-background-color:green;
+    background-color:green;
 }
 
 .right {
@@ -24,4 +24,8 @@ background-color:green;
 
 .left {
     text-align: left;
+}
+
+.mv {
+    border: 1px solid #000000;
 }

@@ -41,6 +41,7 @@ class ProcessWebserver:
                 else:
                     fh = open("static/" + url, "r")
                 content = fh.read()
+                fh.close()
                 if content:
                     # write to page
                     if url.endswith(".css"):
