@@ -41,6 +41,31 @@ class StatusL:
         nachricht = "List of stati"
         return nachricht
 
+    def getData(self):
+        for key in template_S:
+            stid = key.split("_")  # S, stNo, code
+            ST = getStatusByNumber(int(stid[1]))
+            if stid[2] == "D":
+                template_S[key] = ST.stDescription
+            elif stid[2] == "St":
+                if ST.stStatus == True:
+                   template_S[key] = "on"
+                else:
+                    template_S[key] = "off"
+            elif stid[2] == "Cc":
+                if ST.stStatus == True:
+                   template_S[key] = "green"
+                else:
+                   template_S[key] = "white"
+            elif stid[2] == "Cl":
+                if ST.stStatus == True:
+                   template_S[key] = "green"
+                else:
+                   template_S[key] = "red"
+
+        return json.dumps(template_S)
+
+
     def putStatus(self, Status):
         self.list.append(Status)            # index = stNumber
         return

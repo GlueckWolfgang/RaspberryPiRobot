@@ -17,7 +17,7 @@ class MeasuredValueL:
 
     def __init__(self):
         self.list = []                      # List of measured value objects
-        template_M = dict()
+        template_M = dict()                 # template for dictionary of Panel.html with all id= "M_...)
 
         def get_ids(html_file, regular_expression):
              ids = dict()
@@ -40,6 +40,32 @@ class MeasuredValueL:
     def __str__(self):
         nachricht = " List of measured values"
         return nachricht
+
+
+    def getData(self):
+        for key in template_M:
+            mvid = key.split("_")  # M, mvNo, code
+            MV = getMeasuredValueByNumber(int(mvid[1]))
+            if mvid[2] == "D":
+                template_M[key] = MV.mvDescription
+            elif mvid[2] == "Dim":
+                template_M[key] = MV.mvDimension
+            elif mvid[2] == "V":
+                template_M[key] = str(MV.value)
+            elif mvid[2] == "Cv":
+                if MV.UlAbove == 0\
+                and MV.LlBelow == 0:
+                    template_M[key] = "black"
+                elif MV.UlAbove == 1:
+                    template_M[key] = "red"
+                elif MV.LlBelow == 1:
+                    template_M[key] = "yellow"
+            elif mvid[2] == "Ul":
+                template_M[key] = str(MV.Ul)
+            elif mvid[2] == "Ll":
+                template_M[key] = str(MV.Ll)
+        return json.dumps(template_M)
+
 
     def putMeasuredValue(self, measuredValue):
         self.list.append(measuredValue)     # index = mvNumber
