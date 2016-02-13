@@ -37,13 +37,13 @@ class ProcessStatusAndMeasuredValue:
             elif Message.find("R@") == 0:
                 # request for data (Panel.html)
                 # get measured values
-                dictionaryM = MeasuredValueList.getData(MQueue)
-                MQueue.put("I@ MVdic:" + json.dumps(dictionaryM))
+                dictionary = MeasuredValueList.getData(MQueue)
+                MQueue.put("I@ MVdic:" + json.dumps(dictionary))
                 # get status values
-                dictionaryS = (StatusList.getData(MQueue))
-                MQueue.put("I@ STdic:" + json.dumps(dictionaryS))
+                dictionary.update(StatusList.getData(MQueue))
+                MQueue.put("I@ STdic:" + json.dumps(dictionary))
                 # send to webserver
-                output = json.dumps(dictionaryM)
+                output = json.dumps(dictionary)
                 WPQueue.put(output)
 
 

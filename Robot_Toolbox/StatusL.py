@@ -34,7 +34,7 @@ class StatusL:
             return ids
 
         # create dictionary
-        self.template_S = get_ids("Robbi/Panel.html", r'[id="S_+"]')
+        self.template_S = get_ids("Robbi/Panel.html", r"S_+")
 
     def __str__(self):
         nachricht = "List of stati"

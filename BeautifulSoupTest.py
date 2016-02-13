@@ -4,7 +4,6 @@
 # Version:  2016.02.13
 #
 ###############################################################################
-import json
 import re
 import codecs
 from bs4 import BeautifulSoup as Soup
@@ -25,8 +24,8 @@ def get_ids(html_file, regular_expression):
     return ids
 
 # create dictionary
-template_M = dict()
-template_M = (get_ids("Robbi/Panel.html", r'[id="M_+"]'))
+
+template_M = (get_ids("Robbi/Panel.html", r"M_+"))
 
 print(template_M)
 

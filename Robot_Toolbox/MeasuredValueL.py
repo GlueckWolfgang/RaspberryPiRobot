@@ -33,7 +33,7 @@ class MeasuredValueL:
             return ids
 
         # create dictionary
-        self.template_M = get_ids("Robbi/Panel.html", r'[id="M_+"]')
+        self.template_M = get_ids("Robbi/Panel.html", r"M_+")
 
 
 
