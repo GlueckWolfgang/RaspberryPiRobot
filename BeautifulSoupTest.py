@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ###############################################################################
 # Test beautiful soup
-# Version:  2016.02.12
+# Version:  2016.02.13
 #
 ###############################################################################
 import json
@@ -17,6 +17,10 @@ def get_ids(html_file, regular_expression):
             id = element.get('id')
             if id:
                 ids[id] = ""
+                if id.endswith("_V"):
+                # add Cv
+                    id = id.replace("_V", "_Cv")
+                    ids[id] = ""
     return ids
 
 

@@ -23,7 +23,7 @@ class ProcessWebserver:
                 siteUrl = url
 
                 # handle html sources
-                self.render("..\\Robbi\\" + siteUrl)
+                self.render("../Robbi/" + siteUrl)
 
         class StaticHandler(tornado.web.RequestHandler):
 
