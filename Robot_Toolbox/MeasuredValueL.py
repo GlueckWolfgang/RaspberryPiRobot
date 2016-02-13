@@ -1,13 +1,12 @@
 # -*- coding: utf-8 -*-
 ###############################################################################
 # Class of Measured Value List
-# Version:  2016.01.28
+# Version:  2016.02.13
 ###############################################################################
 from Robot_Toolbox.MeasuredValue import *
 from Robot_Toolbox.Alarm import *
 from Robot_Toolbox.Audio import *
 import datetime
-import json
 import re
 import codecs
 from bs4 import BeautifulSoup as Soup
@@ -17,24 +16,25 @@ class MeasuredValueL:
 
     def __init__(self):
         self.list = []                      # List of measured value objects
-        template_M = dict()                 # template for dictionary of Panel.html with all id= "M_...)
+        self.template_M = dict()            # template for dictionary of Panel.html with all id= "M_...)
 
         def get_ids(html_file, regular_expression):
-             ids = dict()
-             with codecs.open(html_file, 'r', encoding='utf-8', errors='ignore') as fh:
-               soup = Soup(fh, 'html.parser')
-               for element in soup.find_all('td', id=re.compile(regular_expression)):
-                   id = element.get('id')
-                   if id:
-                       ids[id] = ""
-                       if id.endswith("_V"):
-                       # add Cv
-                           id = id.replace("_V", "_Cv")
-                           ids[id] = ""
-             return ids
+            ids = dict()
+            with codecs.open(html_file, 'r', encoding='utf-8', errors='ignore') as fh:
+                soup = Soup(fh, 'html.parser')
+                for element in soup.find_all('td', id=re.compile(regular_expression)):
+                    idi = element.get('id')
+                    if idi:
+                        ids[idi] = "?"
+                        if idi.endswith("_V"):
+                            # add Cv
+                            idi = idi.replace("_V", "_Cv")
+                            ids[idi] = "?"
+            return ids
 
         # create dictionary
-        template_M = get_ids("Robbi/Panel.html", r'["id=M_]+"')
+        self.template_M = get_ids("Robbi/Panel.html", r'[id="M_+"]')
+
 
 
     def __str__(self):
@@ -42,29 +42,29 @@ class MeasuredValueL:
         return nachricht
 
 
-    def getData(self):
-        for key in template_M:
+    def getData(self, MQueue):
+        for key in self.template_M:
             mvid = key.split("_")  # M, mvNo, code
-            MV = getMeasuredValueByNumber(int(mvid[1]))
+            MV = self.getMeasuredValueByNumber(int(mvid[1]))
             if mvid[2] == "D":
-                template_M[key] = MV.mvDescription
+                self.template_M[key] = MV.mvDescription
             elif mvid[2] == "Dim":
-                template_M[key] = MV.mvDimension
+                self.template_M[key] = MV.mvDimension
             elif mvid[2] == "V":
-                template_M[key] = str(MV.value)
+                self.template_M[key] = str(MV.value)
             elif mvid[2] == "Cv":
-                if MV.UlAbove == 0\
-                and MV.LlBelow == 0:
-                    template_M[key] = "black"
-                elif MV.UlAbove == 1:
-                    template_M[key] = "red"
-                elif MV.LlBelow == 1:
-                    template_M[key] = "yellow"
+                if MV.UlAbove == False\
+                and MV.LlBelow == False:
+                    self.template_M[key] = "black"
+                elif MV.UlAbove == True:
+                    self.template_M[key] = "red"
+                elif MV.LlBelow == True:
+                    self.template_M[key] = "yellow"
             elif mvid[2] == "Ul":
-                template_M[key] = str(MV.Ul)
+                self.template_M[key] = str(MV.Ul)
             elif mvid[2] == "Ll":
-                template_M[key] = str(MV.Ll)
-        return json.dumps(template_M)
+                self.template_M[key] = str(MV.Ll)
+        return self.template_M
 
 
     def putMeasuredValue(self, measuredValue):

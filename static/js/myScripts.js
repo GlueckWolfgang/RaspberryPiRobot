@@ -1,4 +1,5 @@
 // TABS
+// Version: 2016_02_13 
 $(document).ready(function(){
        console.log("function tabs called")
        $('#tabs').tabs({active: 1});
@@ -30,9 +31,10 @@ $(document).ready(function(){
 });
 
 // 1s cycle
-//setInterval(function() {
-//   console.log("1s cycle has been started")
-//}, 1000);
+setInterval(function() {
+   PanelData()
+   console.log("1s cycle has been started")
+}, 1000);
 
 // 2s cycle
 setInterval(function() {
@@ -42,6 +44,28 @@ setInterval(function() {
 
 
 // Ajax
+// Panel data
+function PanelData(){
+ var active = $('#tabs').tabs( "option", "active" );
+ if  (active == 0) {
+     $.ajax({
+       type: 'GET',
+       url: '/ajax/Panel/data',
+       async: true,
+       dataType: "JSON",
+       success: function(obj, textstatus, jqXhr) {
+          dictionary = eval("(" + jqXhr.responseText + ")");
+          $.each(dictionary, function(id,val) {
+              if (document.getElementById(id) !== null) {
+                  document.getElementById(id).innerHTML = val;
+              }
+          });
+       },
+       error: function (jqXhr, textStatus, errorThrown) {
+       }
+     });
+ }
+}
 
 // Alarmlist data
 function AlarmlistData(){

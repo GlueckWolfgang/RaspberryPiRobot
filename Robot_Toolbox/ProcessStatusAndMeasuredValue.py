@@ -11,7 +11,7 @@
 # StatusList         = image for stati
 # MeasuredValueList  = image for measured values
 ###############################################################################
-import copy
+import json
 
 
 class ProcessStatusAndMeasuredValue:
@@ -36,9 +36,15 @@ class ProcessStatusAndMeasuredValue:
 
             elif Message.find("R@") == 0:
                 # request for data (Panel.html)
-                dictionary = MeasuredValueList.getData()
-                dictionary.update(StatusList.getData())
-                WPQueue.put(dictionary)
+                # get measured values
+                dictionaryM = MeasuredValueList.getData(MQueue)
+                MQueue.put("I@ MVdic:" + json.dumps(dictionaryM))
+                # get status values
+                dictionaryS = (StatusList.getData(MQueue))
+                MQueue.put("I@ STdic:" + json.dumps(dictionaryS))
+                # send to webserver
+                output = json.dumps(dictionaryM)
+                WPQueue.put(output)
 
 
 

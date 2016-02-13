@@ -1,13 +1,12 @@
 # -*- coding: utf-8 -*-
 ###############################################################################
 # Class of status list
-# Version:  2016.01.28
+# Version:  2016.02.13
 ###############################################################################
 from Robot_Toolbox.Status import *
 from Robot_Toolbox.Alarm import *
 from Robot_Toolbox.Audio import *
 import datetime
-import json
 import re
 import codecs
 from bs4 import BeautifulSoup as Soup
@@ -18,52 +17,52 @@ class StatusL:
 
     def __init__(self):
         self.list = []                      # List of status objects
-        template_S = dict()
+        self.template_S = dict()
 
         def get_ids(html_file, regular_expression):
-             ids = dict()
-             with codecs.open(html_file, 'r', encoding='utf-8', errors='ignore') as fh:
-               soup = Soup(fh, 'html.parser')
-               for element in soup.find_all('td', id=re.compile(regular_expression)):
-                   id = element.get('id')
-                   if id:
-                       ids[id] = ""
-                       if id.endswith("_V"):
-                       # add Cv
-                           id = id.replace("_V", "_Cv")
-                           ids[id] = ""
-             return ids
+            ids = dict()
+            with codecs.open(html_file, 'r', encoding='utf-8', errors='ignore') as fh:
+                soup = Soup(fh, 'html.parser')
+                for element in soup.find_all('td', id=re.compile(regular_expression)):
+                    idi = element.get('id')
+                    if idi:
+                        ids[idi] = ""
+                        if idi.endswith("_V"):
+                            # add Cv
+                            idi = idi.replace("_V", "_Cv")
+                            ids[idi] = ""
+            return ids
 
         # create dictionary
-        template_S = get_ids("Robbi/Panel.html", r'["id=S_]+"')
+        self.template_S = get_ids("Robbi/Panel.html", r'[id="S_+"]')
 
     def __str__(self):
         nachricht = "List of stati"
         return nachricht
 
-    def getData(self):
-        for key in template_S:
+    def getData(self, MQueue):
+        for key in self.template_S:
             stid = key.split("_")  # S, stNo, code
-            ST = getStatusByNumber(int(stid[1]))
+            ST = self.getStatusByNumber(int(stid[1]))
             if stid[2] == "D":
-                template_S[key] = ST.stDescription
+                self.template_S[key] = ST.stDescription
             elif stid[2] == "St":
                 if ST.stStatus == True:
-                   template_S[key] = "on"
+                   self.template_S[key] = "on"
                 else:
-                    template_S[key] = "off"
+                    self.template_S[key] = "off"
             elif stid[2] == "Cc":
                 if ST.stStatus == True:
-                   template_S[key] = "green"
+                   self.template_S[key] = "green"
                 else:
-                   template_S[key] = "white"
+                   self.template_S[key] = "white"
             elif stid[2] == "Cl":
                 if ST.stStatus == True:
-                   template_S[key] = "green"
+                   self.template_S[key] = "green"
                 else:
-                   template_S[key] = "red"
+                   self.template_S[key] = "red"
 
-        return json.dumps(template_S)
+        return self.template_S
 
 
     def putStatus(self, Status):

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ###############################################################################
 # Class Prozess webserver
-# Version:  2016.02.11
+# Version:  2016.02.13
 #
 ###############################################################################
 import tornado.ioloop
@@ -19,7 +19,7 @@ class ProcessWebserver:
                 self.MQueue = db
 
             def get(self, url):
-                MQueue.put("I@Mainhandler url: " + url)
+                self.MQueue.put("I@Mainhandler url: " + url)
                 siteUrl = url
 
                 # handle html sources
@@ -32,7 +32,7 @@ class ProcessWebserver:
 
             # deliver static files to page
             def get(self, url):
-                MQueue.put("I@Static Handler: " + url)
+                self.MQueue.put("I@Static Handler: " + url)
                 if url.endswith(".png")\
                 or url.endswith(".ico")\
                 or url.endswith(".jpg")\
@@ -61,9 +61,11 @@ class ProcessWebserver:
                 self.LQueue = db[0]
                 self.WLQueue = db[1]
                 self.MQueue = db[2]
+                self.PQueue = db[3]
+                self.WPQueue = db[4]
 
             def get(self, url):
-                MQueue.put("I@" + url)
+                self.MQueue.put("I@ AjaxHandler" + url)
                 if url.startswith("Alarmlist"):
                     if url.endswith("/data"):
                         # acquire data
@@ -83,10 +85,14 @@ class ProcessWebserver:
                         output = json.dumps(dictionary)
                         self.write(output)
 
-                elif url.startswith("Panel.html"):
-                    pass
+                elif url.startswith("Panel"):
+                    if url.endswith("/data"):
+                        # acquire data
+                        self.PQueue.put("R@")
+                        output = self.WPQueue.get()
+                        self.write(output)
 
-                elif url.startswith("Map.html"):
+                elif url.startswith("Map"):
                     pass
 
                 else:
@@ -99,7 +105,7 @@ class ProcessWebserver:
             return tornado.web.Application([
                 (r"/Robbi/(.*)", MainHandler, dict(db=MQueue)),
                 (r"/static/(.*)", StaticHandler, dict(db=MQueue)),
-                (r"/ajax/(.*)", AjaxHandler, dict(db=[LQueue, WLQueue, MQueue]))
+                (r"/ajax/(.*)", AjaxHandler, dict(db=[LQueue, WLQueue, MQueue, PQueue, WPQueue]))
             ], **self.settings)
 
         app = make_app()
