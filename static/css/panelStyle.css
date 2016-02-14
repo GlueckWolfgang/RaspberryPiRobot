@@ -1,21 +1,38 @@
-.cred {
-    color:red;
+.red {
+    color:#FF0000;
+
 }
 
-.cyellow {
-    color:yellow;
+.yellow {
+    color:#FFD700;
 }
 
-.cgreen {
-    color:green;
+.green {
+    color:#00FF00;
 }
 
-.bggray {
-    color:gray;
+.gray {
+    color:#AAAAAA;
+}
+
+.black {
+    color:#000000;
+}
+
+.white {
+    color:#FFFFFF;
 }
 
 .bggreen {
     background-color:green;
+}
+
+.bgblack {
+    background-color:black;
+}
+
+.bgwhite {
+    background-color:white;
 }
 
 .right {

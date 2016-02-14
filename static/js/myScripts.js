@@ -1,5 +1,5 @@
 // TABS
-// Version: 2016_02_14 
+// Version: 2016_02_14
 $(document).ready(function(){
        console.log("function tabs called")
        $('#tabs').tabs({active: 1});
@@ -59,7 +59,7 @@ function PanelData(){
                     idc = null
                     if (document.getElementById(id) !== null) {
                       // id read from dictionary, found in document
-                      if (!id.endsWith("_Ec") && (!id.endsWith("El"))) {                
+                      if (!id.endsWith("_Ec") && (!id.endsWith("El"))) {
                           // change value except empty id types
                           document.getElementById(id).innerHTML = val;
                           if (id.endsWith("_V")) {
@@ -69,22 +69,43 @@ function PanelData(){
                           }
                       }
                       else if (id.endsWith("_Ec")) {
-                              idc = id.replace("_Ec", "Cc")
+                              idc = id.replace("_Ec", "_Cc")
                               // new style for button
                               val = dictionary [idc]
                       }
                       else if (id.endsWith("_El")){
-                              idc = id.replace("_El", "Cl")
+                              idc = id.replace("_El", "_Cl")
                               // new style for lamp
                               val = dictionary [idc]
-                      }                    
+                      }
                     }
                     if (idc) {
-                      // remove old style(black, red, yellow, green, white)
-                      
-                      // add new style from val
+                        // remove old and add new style
+                        document.getElementById(id).className =
+                        document.getElementById(id).className.replace
+                        ( /(?:^|\s)black(?!\S)/g , "x" )
+
+                        document.getElementById(id).className =
+                        document.getElementById(id).className.replace
+                        ( /(?:^|\s)red(?!\S)/g , "x" )
+
+                        document.getElementById(id).className =
+                        document.getElementById(id).className.replace
+                        ( /(?:^|\s)yellow(?!\S)/g , "x" )
+
+                        document.getElementById(id).className =
+                        document.getElementById(id).className.replace
+                        ( /(?:^|\s)green(?!\S)/g , "x" )
+
+                        document.getElementById(id).className =
+                        document.getElementById(id).className.replace
+                        ( /(?:^|\s)white(?!\S)/g , "x" )
+
+                        document.getElementById(id).className =
+                        document.getElementById(id).className.replace
+                        ( /(?:^|\s)x(?!\S)/g , val )
                     }
-                
+
                 });
             },
             error: function (jqXhr, textStatus, errorThrown) {

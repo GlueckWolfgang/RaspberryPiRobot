@@ -25,11 +25,11 @@ class MeasuredValueL:
                 for element in soup.find_all('td', id=re.compile(regular_expression)):
                     idi = element.get('id')
                     if idi:
-                        ids[idi] = "?"
+                        ids[idi] = ""
                         if idi.endswith("_V"):
                             # add Cv
                             idi = idi.replace("_V", "_Cv")
-                            ids[idi] = "?"
+                            ids[idi] = ""
             return ids
 
         # create dictionary

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ###############################################################################
 # Class Prozess status and measured value
-# Version:  2016.02.13
+# Version:  2016.02.14
 #
 # PQueue             = queue to listen
 # AQueue.............= process Audio queue
@@ -36,18 +36,23 @@ class ProcessStatusAndMeasuredValue:
 
             elif Message.find("R@") == 0:
                 # request for data (Panel.html)
+
                 # get measured values
-                dictionary = MeasuredValueList.getData(MQueue)
-                # MQueue.put("I@ MVdic:" + json.dumps(dictionary))
+                dictionary1 = dict()
+                dictionary1 = MeasuredValueList.getData(MQueue)
+                # MQueue.put("I@ MVdic:" + json.dumps(dictionary1))
+
                 # get status values
-                dictionary.update(StatusList.getData(MQueue))
-                # MQueue.put("I@ STdic:" + json.dumps(dictionary))
+                dictionary2 = dict()
+                dictionary2 = StatusList.getData(MQueue)
+                # MQueue.put("I@ STdic:" + json.dumps(dictionary2))
+
+                # mixup both dicts
+                dictionary = dict()
+                dictionary.update(dictionary1)
+                dictionary.update(dictionary2)
                 # send to webserver
                 output = json.dumps(dictionary)
                 WPQueue.put(output)
-
-
-
-
             else:
                 MQueue.put("I@Process status and measured value: Unknown message at PQueue: " + Message)

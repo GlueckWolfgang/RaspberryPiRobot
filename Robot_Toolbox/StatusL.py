@@ -27,17 +27,13 @@ class StatusL:
                     idi = element.get('id')
                     if idi:
                         ids[idi] = ""
-                        if idi.endswith("_V"):
-                            # add Cv
-                            idi = idi.replace("_V", "_Cv")
-                            ids[idi] = ""
-                        elif idi.endswith("_Ec"):
+                        if idi.endswith("_Ec"):
                             # add Cc
                             idi = idi.replace("_Ec", "_Cc")
                             ids[idi] = ""
                         elif idi.endswith("_El"):
                             # add Cl
-                            idi = idi.replace("_El", "Cl")
+                            idi = idi.replace("_El", "_Cl")
                             ids[idi] = ""
             return ids
 
