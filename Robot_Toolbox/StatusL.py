@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ###############################################################################
 # Class of status list
-# Version:  2016.02.13
+# Version:  2016.02.14
 ###############################################################################
 from Robot_Toolbox.Status import *
 from Robot_Toolbox.Alarm import *
@@ -30,6 +30,14 @@ class StatusL:
                         if idi.endswith("_V"):
                             # add Cv
                             idi = idi.replace("_V", "_Cv")
+                            ids[idi] = ""
+                        elif idi.endswith("_Ec"):
+                            # add Cc
+                            idi = idi.replace("_Ec", "_Cc")
+                            ids[idi] = ""
+                        elif idi.endswith("_El"):
+                            # add Cl
+                            idi = idi.replace("_El", "Cl")
                             ids[idi] = ""
             return ids
 
