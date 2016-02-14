@@ -38,10 +38,10 @@ class ProcessStatusAndMeasuredValue:
                 # request for data (Panel.html)
                 # get measured values
                 dictionary = MeasuredValueList.getData(MQueue)
-                MQueue.put("I@ MVdic:" + json.dumps(dictionary))
+                # MQueue.put("I@ MVdic:" + json.dumps(dictionary))
                 # get status values
                 dictionary.update(StatusList.getData(MQueue))
-                MQueue.put("I@ STdic:" + json.dumps(dictionary))
+                # MQueue.put("I@ STdic:" + json.dumps(dictionary))
                 # send to webserver
                 output = json.dumps(dictionary)
                 WPQueue.put(output)
