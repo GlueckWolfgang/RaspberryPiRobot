@@ -31,8 +31,16 @@
     background-color:black;
 }
 
+.bggray {
+    color:#AAAAAA;
+}
+
 .bgwhite {
     background-color:white;
+}
+
+.bgred {
+    background-color:#FF0000;
 }
 
 .right {
@@ -49,4 +57,9 @@
 
 .space {
     height: 50px;
+}
+.button {
+    display: block;
+    margin: auto;
+    
 }

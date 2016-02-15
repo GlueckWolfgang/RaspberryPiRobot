@@ -96,6 +96,18 @@ function PanelData(){
                         document.getElementById(id).className =
                         document.getElementById(id).className.replace
                         ( /(?:^|\s)green(?!\S)/g , "x" )
+                        
+                        document.getElementById(id).className =
+                        document.getElementById(id).className.replace
+                        ( /(?:^|\s)bggreen(?!\S)/g , "x" )
+                        
+                        document.getElementById(id).className =
+                        document.getElementById(id).className.replace
+                        ( /(?:^|\s)bggrey(?!\S)/g , "x" )
+                        
+                        document.getElementById(id).className =
+                        document.getElementById(id).className.replace
+                        ( /(?:^|\s)bgred(?!\S)/g , "x" )
 
                         document.getElementById(id).className =
                         document.getElementById(id).className.replace

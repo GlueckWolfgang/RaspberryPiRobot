@@ -57,9 +57,9 @@ class StatusL:
                     self.template_S[key] = "off"
             elif stid[2] == "Cc":
                 if ST.stStatus == True:
-                   self.template_S[key] = "green"
+                   self.template_S[key] = "bggreen"
                 else:
-                   self.template_S[key] = "white"
+                   self.template_S[key] = "bggrey"
             elif stid[2] == "Cl":
                 if ST.stStatus == True:
                    self.template_S[key] = "green"
@@ -172,6 +172,14 @@ class StatusL:
         StatusO = Status(17, "TestPoint2", True, False)
         self.putStatus(StatusO)
         StatusO = Status(18, "TestPoint3", True, False)
+        self.putStatus(StatusO)
+        StatusO = Status(19, "Manual Operation", False, True)
+        self.putStatus(StatusO)
+        StatusO = Status(20, "Explore", False, True)
+        self.putStatus(StatusO)
+        StatusO = Status(21, "Target move", False, True)
+        self.putStatus(StatusO)
+        StatusO = Status(22, "Align", False, True)
         self.putStatus(StatusO)
 
         return

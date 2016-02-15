@@ -1,21 +1,22 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
 
 <html>
 <head>
     <title>Robot</title>
-    <meta http-equiv="Content-Type" content="text/html charset=utf-8" />
-    <meta name="description" content="Panel" />
-    <meta name="author" content="Wolfgang Glueck" />
-    <meta name="editor" content="html-editor phase 5" />
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" type="text/css" />
-    <link rel="stylesheet" href="../static/css/panelStyle.css" type="text/css" />
+    <meta http-equiv="Content-Type" content="text/html charset=utf-8"/>
+    <meta name="description" content="Panel"/>
+    <meta name="author" content="Wolfgang Glueck"/>
+    <meta name="editor" content="html-editor phase 5"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="../static/css/panelStyle.css" type="text/css"/>
 <style type="text/css">
 /*<![CDATA[*/
- td.c-5 {vertical-align: middle; width: 15px;}
- td.c-4 {vertical-align: middle; width: 50px;}
- td.c-3 {vertical-align: middle; width: 30px;}
- td.c-2 {vertical-align: middle; width: 150px;}
- td.c-1 {vertical-align: middle; width: 90px;}
+ td.c-5 {width: 15px;}
+ td.c-4 {width: 50px;}
+ td.c-3 {width: 30px;}
+ td.c-2 {width: 150px;}
+ td.c-1 {width: 90px;}
 /*]]>*/
 </style>
 </head>
@@ -30,19 +31,19 @@
 
                 <td class="black mv right c-3" id="M_15_V">270.3</td>
 
-                <td class="left c-4">&#176;</td>
+                <td class="left c-4">&deg;</td>
 
                 <td class="right c-4">Roll</td>
 
                 <td class="black mv right c-3" id="M_11_V">1</td>
 
-                <td class="left c-4">&#176;</td>
+                <td class="left c-4">&deg;</td>
 
                 <td class="right c-1">Amplifier</td>
 
-                <td class="black c-5" id="S_15_El"><i class="fa fa-circle"></i></td>
+                <td class="black c-5" id="S_15_El"><i class="fa fa-circle">&nbsp;</i></td>
 
-                <td class="c-1">&nbsp;</td>
+                <td class="c-2">&nbsp;</td>
             </tr>
 
             <tr>
@@ -52,78 +53,136 @@
 
                 <td class="black mv right c-3" id="M_13_V">270.5</td>
 
-                <td class="left c-4">&#176;</td>
+                <td class="left c-4">&deg;</td>
 
-                <td class="right c-4" >Pitch</td>
+                <td class="right c-4">Pitch</td>
 
                 <td class="black mv right c-3" id="M_12_V">-2</td>
 
-                <td class="left c-4">&#176;</td>
+                <td class="left c-4">&deg;</td>
 
                 <td class="right c-1">Compass</td>
 
-                <td class="black c-5" id="S_14_El"><i class="fa fa-circle"></i></td>
+                <td class="black c-5" id="S_14_El"><i class="fa fa-circle">&nbsp;</i></td>
 
-                <td class="c-1">&nbsp;</td>
+                <td class="c-2">&nbsp;</td>
             </tr>
         </table>
-        <table border="0" cellpadding="4" cellspacing="2" summary="">
 
-<table border="0" cellpadding="4" cellspacing="2" summary="">
-    <tr>
-        <td class="c-2"></td>
-        <td ><img src="../static/images/Robot.jpg" /></td>
-        <td>
-        <table border="0" cellpadding="4" cellspacing="1" summary="">
-    <tr>
-        <td class="space"></td>
-        <td class="space"></td>
-        <td class="space"></td>
-    </tr>
-    <tr>
-        <td class="right c-1" >Battery_9V </td>
-        <td class="black mv right c-3" id="M_3_V">10.0</td>
-        <td class="left c-3">V</td>
-    </tr>
-    <tr>
-        <td class="space"> </td>
-        <td class="space"> </td>
-        <td class="space"> </td>
-    </tr>
-    <tr>
-        <td class="right c-1" >Battery_7V </td>
-        <td class="black mv right c-3" id="M_4_V">7.6</td>
-        <td class="left c-3">V</td>
-    </tr>
-    <tr>
-        <td class="space"></td>
-        <td class="space"></td>
-        <td class="space"></td>
-    </tr>
-    <tr>
-        <td class="right c-1" >Battery_5V </td>
-        <td class="black mv right c-3" id="M_5_V">5.0</td>
-        <td class="left c-3">V</td>
-    </tr>
-    <tr>
-        <td class="space"></td>
-        <td class="space"></td>
-        <td class="space"></td>
-    </tr>
-    <tr>
-        <td class="right c-1" >Arduino 5V </td>
-        <td class="black mv right c-3" id="M_6_V">5.0</td>
-        <td class="left c-3">V</td>
-    </tr>
-    <tr>
-        <td class="space"></td>
-        <td class="space"></td>
-        <td class="space"></td>
-    </tr>
-</table>
-        </td>
-    <tr>
-</table>
+        <table border="0" cellpadding="4" cellspacing="2" summary="">
+            <tr>
+                <td class="c-2">
+                    <table border="0" cellpadding="2" cellspacing="0" summary="">
+                        <tr>
+                            <td colspan="3"><button class="button bggreen" type="button" id="S_19_Ec">Manual Operation</button></td>                  
+                        </tr>
+                        <tr>
+                            <td rowspan="3"><button class="button bgred" type="button" id="S_4_Ec">Robot-Stop!</button></td>
+                            <td><button class="button grey" type="button" id="S_5_Ec">Forward<br/>slow</button></td>
+                            <td rowspan="3"><button class="button grey" type="button" id="S_22_Ec">Robot-Align!</button></td>
+                            <tr><td><button class="button bggrey" type="button" id="S_6_Ec">Forward<br/>half</button></td></tr>
+                            <tr><td><button class="button bggrey" type="button" id="S_7_Ec">Forward<br/>full</button></td></tr>                            
+                        </tr>
+                            
+                        <tr>
+                            <td><button class="button bggrey" type="button" id="S_8_Ec">Steering<br/>left</button></td>
+                            <td><button class="button bggrey" type="button" id="Steering ahead">Steering<br/>ahead</button></td>
+                            <td><button class="button bggrey" type="button" id="S_9_Ec">Steering<br/>right</button></td>
+                        </tr>
+                        <tr>
+                            <td><button class="button bggrey" type="button" id="S_10_Ec">Turn 45&deg;<br/>left</button></td>
+                            <td>&nbsp;</td>
+                            <td><button class="button bggrey" type="button" id="S_11_Ec">Turn 45&deg;<br/>right</button></td>
+                        </tr>
+                        <tr>
+                            <td><button class="button bggrey" type="button" id="S_12_Ec">Turn 90&deg;<br/>left</button></td>
+                            <td>&nbsp;</td>
+                            <td><button class="button bggrey" type="button" id="S_13_Ec">Turn 90&deg;<br/>right</button></td>
+                        </tr>
+                    </table>
+                </td>
+
+                <td>
+                    <img src="../static/images/Robot.jpg" alt="Camera image"/> 
+                </td>
+
+                <td>
+                    <table border="0" cellpadding="4" cellspacing="1" summary="">
+                        <tr>
+                            <td class="space"></td>
+
+                            <td class="space"></td>
+
+                            <td class="space"></td>
+                        </tr>
+
+                        <tr>
+                            <td class="right c-1">Battery_9V</td>
+
+                            <td class="black mv right c-3" id="M_3_V">10.0</td>
+
+                            <td class="left c-3">V</td>
+                        </tr>
+
+                        <tr>
+                            <td class="space"></td>
+
+                            <td class="space"></td>
+
+                            <td class="space"></td>
+                        </tr>
+
+                        <tr>
+                            <td class="right c-1">Battery_7V</td>
+
+                            <td class="black mv right c-3" id="M_4_V">7.6</td>
+
+                            <td class="left c-3">V</td>
+                        </tr>
+
+                        <tr>
+                            <td class="space"></td>
+
+                            <td class="space"></td>
+
+                            <td class="space"></td>
+                        </tr>
+
+                        <tr>
+                            <td class="right c-1">Battery_5V</td>
+
+                            <td class="black mv right c-3" id="M_5_V">5.0</td>
+
+                            <td class="left c-3">V</td>
+                        </tr>
+
+                        <tr>
+                            <td class="space"></td>
+
+                            <td class="space"></td>
+
+                            <td class="space"></td>
+                        </tr>
+
+                        <tr>
+                            <td class="right c-1">Arduino 5V</td>
+
+                            <td class="black mv right c-3" id="M_6_V">5.0</td>
+
+                            <td class="left c-3">V</td>
+                        </tr>
+
+                        <tr>
+                            <td class="space"></td>
+
+                            <td class="space"></td>
+
+                            <td class="space"></td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
     </div>
 </body>
 </html>
