@@ -112,6 +112,10 @@ function PanelData(){
                         document.getElementById(id).className =
                         document.getElementById(id).className.replace
                         ( /(?:^|\s)white(?!\S)/g , " x" )
+                        
+                        document.getElementById(id).className =
+                        document.getElementById(id).className.replace
+                        ( /(?:^|\s)bgwhite(?!\S)/g , " x" )
 
                         document.getElementById(id).className =
                         document.getElementById(id).className.replace

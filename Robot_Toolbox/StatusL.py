@@ -71,7 +71,7 @@ class StatusL:
                 if ST.stStatus == True:
                    self.template_S[key] = " bgred"
                 else:
-                   self.template_S[key] = " bggrey"
+                   self.template_S[key] = " bgwhite"
             elif stid[2] == "Cl":
                 if ST.stStatus == True:
                    self.template_S[key] = " green"
