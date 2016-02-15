@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ###############################################################################
 # Class Prozess status and measured value
-# Version:  2016.02.14
+# Version:  2016.02.15
 #
 # PQueue             = queue to listen
 # AQueue.............= process Audio queue

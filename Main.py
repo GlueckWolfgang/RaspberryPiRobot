@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ###############################################################################
 # Raspberry Robot Program
-# Version: 2016_02_06
+# Version: 2016_02_15
 # Creator: Wolfgang Glück
 ###############################################################################
 import multiprocessing as mp
@@ -64,6 +64,10 @@ if __name__ == '__main__':
     # starting child processes
     for i in range(0, len(processList)):
         processList[i].start()
+
+    # set default manual operation and stop
+    PQueue.put("S@Manual Operation: 1")
+    PQueue.put("S@Stop: 1")
 
     count = 1
 

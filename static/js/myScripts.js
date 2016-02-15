@@ -83,35 +83,35 @@ function PanelData(){
                         // remove old and add new style
                         document.getElementById(id).className =
                         document.getElementById(id).className.replace
-                        ( /(?:^|\s)black(?!\S)/g , "x" )
+                        ( /(?:^|\s)black(?!\S)/g , " x" )
 
                         document.getElementById(id).className =
                         document.getElementById(id).className.replace
-                        ( /(?:^|\s)red(?!\S)/g , "x" )
+                        ( /(?:^|\s)red(?!\S)/g , " x" )
 
                         document.getElementById(id).className =
                         document.getElementById(id).className.replace
-                        ( /(?:^|\s)yellow(?!\S)/g , "x" )
+                        ( /(?:^|\s)yellow(?!\S)/g , " x" )
 
                         document.getElementById(id).className =
                         document.getElementById(id).className.replace
-                        ( /(?:^|\s)green(?!\S)/g , "x" )
+                        ( /(?:^|\s)green(?!\S)/g , " x" )
                         
                         document.getElementById(id).className =
                         document.getElementById(id).className.replace
-                        ( /(?:^|\s)bggreen(?!\S)/g , "x" )
+                        ( /(?:^|\s)bggreen(?!\S)/g , " x" )
                         
                         document.getElementById(id).className =
                         document.getElementById(id).className.replace
-                        ( /(?:^|\s)bggrey(?!\S)/g , "x" )
+                        ( /(?:^|\s)bggrey(?!\S)/g , " x" )
                         
                         document.getElementById(id).className =
                         document.getElementById(id).className.replace
-                        ( /(?:^|\s)bgred(?!\S)/g , "x" )
+                        ( /(?:^|\s)bgred(?!\S)/g , " x" )
 
                         document.getElementById(id).className =
                         document.getElementById(id).className.replace
-                        ( /(?:^|\s)white(?!\S)/g , "x" )
+                        ( /(?:^|\s)white(?!\S)/g , " x" )
 
                         document.getElementById(id).className =
                         document.getElementById(id).className.replace

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ###############################################################################
 # Class of status list
-# Version:  2016.02.14
+# Version:  2016.02.15
 ###############################################################################
 from Robot_Toolbox.Status import *
 from Robot_Toolbox.Alarm import *
@@ -35,6 +35,18 @@ class StatusL:
                             # add Cl
                             idi = idi.replace("_El", "_Cl")
                             ids[idi] = ""
+                for element in soup.find_all('button', id=re.compile(regular_expression)):
+                    idi = element.get('id')
+                    if idi:
+                        ids[idi] = ""
+                        if idi.endswith("_Ec"):
+                            # add Cc
+                            idi = idi.replace("_Ec", "_Cc")
+                            ids[idi] = ""
+                        elif idi.endswith("_El"):
+                            # add Cl
+                            idi = idi.replace("_El", "_Cl")
+                            ids[idi] = ""
             return ids
 
         # create dictionary
@@ -57,14 +69,14 @@ class StatusL:
                     self.template_S[key] = "off"
             elif stid[2] == "Cc":
                 if ST.stStatus == True:
-                   self.template_S[key] = "bggreen"
+                   self.template_S[key] = " bgred"
                 else:
-                   self.template_S[key] = "bggrey"
+                   self.template_S[key] = " bggrey"
             elif stid[2] == "Cl":
                 if ST.stStatus == True:
-                   self.template_S[key] = "green"
+                   self.template_S[key] = " green"
                 else:
-                   self.template_S[key] = "red"
+                   self.template_S[key] = " red"
 
         return self.template_S
 
