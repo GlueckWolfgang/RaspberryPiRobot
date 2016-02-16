@@ -1,33 +1,96 @@
 // TABS
 // Version: 2016_02_14
 $(document).ready(function(){
-       console.log("function tabs called")
-       $('#tabs').tabs({active: 1});
+    console.log("function tabs called")
+    $('#tabs').tabs({active: 1});
 
-       $(document).on("click", '#Backnowledge', (function(event) {
-                              console.log("acknowledge click.");
-                              Send('Alarmlist/acknowledge');
-                         }));
+    $(document).on("click", '#Backnowledge', (function(event) {
+                          console.log("acknowledge click.");
+                          Send('Alarmlist/acknowledge');
+                     }));
 
-       $(document).on("click", '#Bft', (function(event) {
-                              console.log("first click.");
-                              Send('Alarmlist/ft');
-                         }));
+    $(document).on("click", '#Bft', (function(event) {
+                          console.log("first click.");
+                          Send('Alarmlist/ft');
+                     }));
 
-       $(document).on("click", '#Bbwd', (function(event) {
-                              console.log("backward click.");
-                              Send('Alarmlist/bwd');
-                         }));
+    $(document).on("click", '#Bbwd', (function(event) {
+                          console.log("backward click.");
+                          Send('Alarmlist/bwd');
+                     }));
 
-       $(document).on("click", '#Bfwd', (function(event) {
-                              console.log("foreward click.");
-                              Send('Alarmlist/fwd');
-                         }));
+    $(document).on("click", '#Bfwd', (function(event) {
+                          console.log("foreward click.");
+                          Send('Alarmlist/fwd');
+                     }));
 
-       $(document).on("click", '#Blt', (function(event) {
-                              console.log("last click.");
-                              Send('Alarmlist/lt');
-                         }));
+    $(document).on("click", '#Blt', (function(event) {
+                          console.log("last click.");
+                          Send('Alarmlist/lt');
+                     }));
+                     
+    $(document).on("click", '#S_19_Ec', (function(event) {
+                          console.log("manual click.");
+                          Send('Panel/S_19_Ec');
+                     }));
+    $(document).on("click", '#S_3_Ec', (function(event) {
+                          console.log("stop click.");
+                          Send('Panel/S_3_Ec');
+                     }));
+    $(document).on("click", '#S_5_Ec', (function(event) {
+                          console.log("slow click.");
+                          Send('Panel/S_5_Ec');
+                     }));
+                     
+    $(document).on("click", '#S_22_Ec', (function(event) {
+                          console.log("align click.");
+                          Send('Panel/S_22_Ec');
+                     }));
+    $(document).on("click", '#S_6_Ec', (function(event) {
+                          console.log("half click.");
+                          Send('Panel/S_6_Ec');
+                     }));
+                     
+    $(document).on("click", '#S_7_Ec', (function(event) {
+                          console.log("full click.");
+                          Send('Panel/S_7_Ec');
+                     }));
+                     
+    $(document).on("click", '#S_8_Ec', (function(event) {
+                          console.log("St left click.");
+                          Send('Panel/S_8_Ec');
+                     }));
+                     
+    $(document).on("click", '#S_23_Ec', (function(event) {
+                          console.log("St ahead click.");
+                          Send('Panel/S_23_Ec');
+                     }));
+                     
+    $(document).on("click", '#S_9_Ec', (function(event) {
+                          console.log("St right click.");
+                          Send('Panel/S_9_Ec');
+                     }));
+
+    $(document).on("click", '#S_10_Ec', (function(event) {
+                          console.log("Turn 45 left click.");
+                          Send('Panel/S_10_Ec');
+                     }));
+                     
+    $(document).on("click", '#S_11_Ec', (function(event) {
+                          console.log("Turn 45 right click.");
+                          Send('Panel/S_11_Ec');
+                     }));
+                     
+    $(document).on("click", '#S_12_Ec', (function(event) {
+                          console.log("Turn 90 left click.");
+                          Send('Panel/S_12_Ec');
+                     }));
+                     
+    $(document).on("click", '#S_13_Ec', (function(event) {
+                          console.log("Turn 90 right click.");
+                          Send('Panel/S_13_Ec');
+                     }));
+                     
 });
 
 // 1s cycle

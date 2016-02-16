@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ###############################################################################
 # Class of Status
-# Version: 2015.12.29
+# Version: 2015.02.16
 #
 # stNumber      = 1..n
 # stDescription = ("Turn slow 45 right!",..)
@@ -15,7 +15,7 @@ class Status:
     def __init__(self, stNumber, stDescription, stAlert, stCg):
         self.stNumber = stNumber
         self.stDescription = stDescription
-        self.stStatus = False
+        self.stStatus = 0
         self.stAlert = stAlert
         self.stCg = stCg
 

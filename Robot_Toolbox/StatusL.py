@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ###############################################################################
 # Class of status list
-# Version:  2016.02.15
+# Version:  2016.02.16
 ###############################################################################
 from Robot_Toolbox.Status import *
 from Robot_Toolbox.Alarm import *
@@ -63,17 +63,17 @@ class StatusL:
             if stid[2] == "D":
                 self.template_S[key] = ST.stDescription
             elif stid[2] == "St":
-                if ST.stStatus == True:
+                if ST.stStatus == 1:
                    self.template_S[key] = "on"
                 else:
                     self.template_S[key] = "off"
             elif stid[2] == "Cc":
-                if ST.stStatus == True:
+                if ST.stStatus == 1:
                    self.template_S[key] = " bgred"
                 else:
                    self.template_S[key] = " bgwhite"
             elif stid[2] == "Cl":
-                if ST.stStatus == True:
+                if ST.stStatus == 1:
                    self.template_S[key] = " green"
                 else:
                    self.template_S[key] = " red"
@@ -193,5 +193,8 @@ class StatusL:
         self.putStatus(StatusO)
         StatusO = Status(22, "Align", False, True)
         self.putStatus(StatusO)
+        StatusO = Status(23, "Steering ahead", False, True)
+        self.putStatus(StatusO)
+
 
         return

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ###############################################################################
 # Raspberry Robot Program
-# Version: 2016_02_15
+# Version: 2016_02_16
 # Creator: Wolfgang Glück
 ###############################################################################
 import multiprocessing as mp
@@ -55,7 +55,7 @@ if __name__ == '__main__':
 
     processList = [mp.Process(target=USBProcess.Run, args=(MQueue, CQueue, PQueue)),
                    mp.Process(target=AudioProcess.Run, args=(MQueue, AQueue, CQueue, CommandList)),
-                   mp.Process(target=STAndMVProcess.Run, args=(PQueue, AQueue, LQueue, MQueue, WPQueue, StatusList, MeasuredValueList)),
+                   mp.Process(target=STAndMVProcess.Run, args=(PQueue, AQueue, LQueue, MQueue, WPQueue, CQueue, StatusList, MeasuredValueList)),
                    mp.Process(target=AlarmProcess.Run, args=(LQueue, MQueue, WLQueue, AlarmList)),
                    mp.Process(target=WebserverProcess.Run, args=(WLQueue, WPQueue, MQueue, LQueue, PQueue))]
 

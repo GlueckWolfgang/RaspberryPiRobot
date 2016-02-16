@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ###############################################################################
 # Class Process USB
-# Version: 2016_01_09
+# Version: 2016_02_16
 #
 # Please note, that the CQueue will only operate after a message has been
 # received from MQueue or at least after timeout (100ms).
@@ -24,11 +24,11 @@ class ProcessUSB:
         else:
             self.device = "COM3"          # Windows
 
-        self.disturbance = True
-        while self.disturbance is True:
+        self.disturbance = 1
+        while self.disturbance == 1:
             try:
                 self.ser = serial.Serial(self.device, 38400, timeout=0.1)
-                self.disturbance = False
+                self.disturbance = 0
                 PQueue.put("S@USB disturbance: 0")
             except serial.SerialException:
                 # wait for the next trial

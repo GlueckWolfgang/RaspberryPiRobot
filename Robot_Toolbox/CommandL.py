@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ###############################################################################
 # Class of command list
-# Version:  2016.01.05
+# Version:  2016.02.16
 ###############################################################################
 from Robot_Toolbox.Command import *
 
@@ -19,10 +19,10 @@ class CommandL:
         self.list.append(Command)            # index = coNumber
         return
 
-    def sendCommandByNumber(self,coNumber, coValue):
+    def sendCommandByNumber(self, coNumber, coValue):
         if int(coNumber) < len(self.list):        # list must not be empty
             CommandO = self.getCommandByNumber(coNumber)
-            Command = CommandO.coDescription + coValue
+            Command = CommandO.coDescription + ": " + coValue
             return Command
         else:
             return None
@@ -35,7 +35,7 @@ class CommandL:
 
     def getCommandByName(self, coName):
         for i in range(0, len(self.list)):  # list must not be empty
-            if self.list[i].coDescription == coName:
+            if self.list[i].coDescription.startswith(coName):
                 return self.list[i]
             else:
                 continue
@@ -44,33 +44,32 @@ class CommandL:
     def generateCommandList(self):
         CommandO = Command(0, "Stop")
         self.putCommand(CommandO)
-        CommandO = Command(1, "ForwardSlow")
+        CommandO = Command(1, "Forward slow")
         self.putCommand(CommandO)
-        CommandO = Command(2, "ForwardHalf")
+        CommandO = Command(2, "Forward half")
         self.putCommand(CommandO)
-        CommandO = Command(3, "ForwardFull")
+        CommandO = Command(3, "Forward full")
         self.putCommand(CommandO)
-        CommandO = Command(4, "SteeringLeft")
+        CommandO = Command(4, "Steering left")
         self.putCommand(CommandO)
-        CommandO = Command(5, "SteeringRight")
+        CommandO = Command(5, "Steering right")
         self.putCommand(CommandO)
-        CommandO = Command(6, "SteeringAhead")
+        CommandO = Command(6, "Steering ahead")
         self.putCommand(CommandO)
-        CommandO = Command(7, "TurnSLow45Left")
+        CommandO = Command(7, "Turn slow 45 left")
         self.putCommand(CommandO)
-        CommandO = Command(8, "TurnSlow45Right")
+        CommandO = Command(8, "Turn slow 45 right")
         self.putCommand(CommandO)
-        CommandO = Command(9, "TurnSlow90Left")
+        CommandO = Command(9, "Turn slow 90 left")
         self.putCommand(CommandO)
-        CommandO = Command(10, "TurnSlow90Right")
+        CommandO = Command(10, "Turn slow 90 right")
         self.putCommand(CommandO)
-        CommandO = Command(11, "WlanReady")
+        CommandO = Command(11, "Wlan ready")             # Main?
         self.putCommand(CommandO)
-        CommandO = Command(12, "EncoderReset")
+        CommandO = Command(12, "Encoder reset")          # Process Explore, TargetMove
         self.putCommand(CommandO)
-        CommandO = Command(13, "Amplifier: ")
+        CommandO = Command(13, "Amplifier")              # ProcessAudio
         self.putCommand(CommandO)
-        CommandO = Command(14, "Align")
+        CommandO = Command(14, "Align")                  # Process Explore, TargetMove
         self.putCommand(CommandO)
-
         return

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ###############################################################################
 # Class Prozess webserver
-# Version:  2016.02.13
+# Version:  2016.02.16
 #
 ###############################################################################
 import tornado.ioloop
@@ -90,6 +90,12 @@ class ProcessWebserver:
                         # acquire data
                         self.PQueue.put("R@")
                         output = self.WPQueue.get()
+                        self.write(output)
+                    else:
+                        command = url.split("/")
+                        self.PQueue.put("C@" + command[1])
+                        dictionary = {"phantasy": "&nbsp;"}
+                        output = json.dumps(dictionary)
                         self.write(output)
 
                 elif url.startswith("Map"):
