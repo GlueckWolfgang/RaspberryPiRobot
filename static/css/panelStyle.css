@@ -56,10 +56,15 @@
 }
 
 .space {
-    height: 50px;
+    height: 20px;
 }
 .button {
     display: block;
     margin: auto;
-    
+}
+.imagebig {
+        width: 448px;
+        height: 336px;
+        vertical-align: middle;
+        text-align: center;
 }

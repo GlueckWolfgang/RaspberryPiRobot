@@ -12,10 +12,15 @@
     <link rel="stylesheet" href="../static/css/panelStyle.css" type="text/css"/>
 <style type="text/css">
 /*<![CDATA[*/
+ td.c-10 {width: 80px;}
+ td.c-9 {width: 250px;}
+ td.c-8 {width: 120px;}
+ td.c-7 {width: 60px;}
+ td.c-6 {width: 300px;}
  td.c-5 {width: 15px;}
  td.c-4 {width: 50px;}
  td.c-3 {width: 30px;}
- td.c-2 {width: 150px;}
+ td.c-2 {width: 135px;}
  td.c-1 {width: 90px;}
 /*]]>*/
 </style>
@@ -23,155 +28,122 @@
 
 <body>
     <div class="ui-widget-content ui-state-default ui-corner-top ui-corner-bottom">
-        <table border="0" cellpadding="4" cellspacing="2" summary="">
+        
+        <table border="0" cellpadding="2" cellspacing="2" summary="">
             <tr>
-                <td class="c-1">&nbsp;</td>
+             <td></td>
+             <td>
+                <table border="0" cellpadding="4" cellspacing="2" summary="">
+                    <tr>
 
-                <td class="right c-2">Bearing-smoothed</td>
+                        <td rowspan="2" class="right c-7">Bearing</td>
 
-                <td class="black mv right c-3" id="M_15_V">270.3</td>
+                        <td  class="right c-7">smoothed</td>
 
-                <td class="left c-4">&deg;</td>
+                        <td class="black mv right c-3" id="M_15_V">270.3</td>
 
-                <td class="right c-4">Roll</td>
+                        <td class="left c-3">&deg;</td>
 
-                <td class="black mv right c-3" id="M_11_V">1</td>
+                        <td class="right c-7">Roll</td>
 
-                <td class="left c-4">&deg;</td>
+                        <td class="black mv right c-3" id="M_11_V">1</td>
 
-                <td class="right c-1">Amplifier</td>
+                        <td class="left c-3">&deg;</td>
 
-                <td class="black c-5" id="S_15_El"><i class="fa fa-circle">&nbsp;</i></td>
+                        <td class="right c-7">Amplifier</td>
 
-                <td class="c-2">&nbsp;</td>
-            </tr>
+                        <td class="black c-5" id="S_15_El"><i class="fa fa-circle">&nbsp;</i></td>
 
-            <tr>
-                <td class="c-1">&nbsp;</td>
+                    </tr>
+                    <tr>
 
-                <td class="right c-2">actual</td>
+                        <td class="right c-7">actual</td>
 
-                <td class="black mv right c-3" id="M_13_V">270.5</td>
+                        <td class="black mv right c-3" id="M_13_V">270.5</td>
 
-                <td class="left c-4">&deg;</td>
+                        <td class="left c-3">&deg;</td>
 
-                <td class="right c-4">Pitch</td>
+                        <td class="right c-7">Pitch</td>
 
-                <td class="black mv right c-3" id="M_12_V">-2</td>
+                        <td class="black mv right c-3" id="M_12_V">-2</td>
 
-                <td class="left c-4">&deg;</td>
+                        <td class="left c-3">&deg;</td>
 
-                <td class="right c-1">Compass</td>
+                        <td class="right c-7">Compass</td>
 
-                <td class="black c-5" id="S_14_El"><i class="fa fa-circle">&nbsp;</i></td>
-
-                <td class="c-2">&nbsp;</td>
-            </tr>
+                        <td class="black c-5" id="S_14_El"><i class="fa fa-circle">&nbsp;</i></td>
+                    </tr>
         </table>
-
-        <table border="0" cellpadding="4" cellspacing="2" summary="">
+             </td>
+             <td></td>
+            </tr>
             <tr>
                 <td class="c-2">
                     <table border="0" cellpadding="2" cellspacing="0" summary="">
                         <tr>
-                            <td colspan="3"><button class="button bggrey" type="button" id="S_19_Ec">Manual Operation</button></td>                  
+                            <td colspan="3" class="c-6"><button class="button bggrey" type="button" id="S_19_Ec">Manual Operation</button></td>                  
                         </tr>
                         <tr>
-                            <td rowspan="3"><button class="button bggrey" type="button" id="S_3_Ec">Robot-Stop!</button></td>
-                            <td><button class="button bggrey" type="button" id="S_5_Ec">Forward<br/>slow</button></td>
-                            <td rowspan="3"><button class="button bggrey" type="button" id="S_22_Ec">Robot-Align!</button></td>
-                            <tr><td><button class="button bggrey" type="button" id="S_6_Ec">Forward<br/>half</button></td></tr>
-                            <tr><td><button class="button bggrey" type="button" id="S_7_Ec">Forward<br/>full</button></td></tr>                            
+                            <td rowspan="3" class="c-1"><button class="button bggrey" type="button" id="S_3_Ec">Robot<br/>Stop</button></td>
+                            <td class="c-1"><button class="button bggrey" type="button" id="S_5_Ec">Forward<br/>slow</button></td>
+                            <td rowspan="3" class="c-1"><button class="button bggrey" type="button" id="S_22_Ec">Robot<br/>Align</button></td>
+                            <tr><td class="c-1"><button class="button bggrey" type="button" id="S_6_Ec">Forward<br/>half</button></td></tr>
+                            <tr><td class="c-1"><button class="button bggrey" type="button" id="S_7_Ec">Forward<br/>full</button></td></tr>                            
                         </tr>
                             
                         <tr>
-                            <td><button class="button bggrey" type="button" id="S_8_Ec">Steering<br/>left</button></td>
-                            <td><button class="button bgwhite" type="button" id="S_23_Ec">Steering<br/>ahead</button></td>
-                            <td><button class="button bggrey" type="button" id="S_9_Ec">Steering<br/>right</button></td>
+                            <td class="c-1"><button class="button bggrey" type="button" id="S_8_Ec">Steering<br/>left</button></td>
+                            <td class="c-1"><button class="button bggrey" type="button" id="S_23_Ec">Steering<br/>ahead</button></td>
+                            <td class="c-1"><button class="button bggrey" type="button" id="S_9_Ec">Steering<br/>right</button></td>
                         </tr>
                         <tr>
-                            <td><button class="button bggrey" type="button" id="S_10_Ec">Turn 45&deg;<br/>left</button></td>
-                            <td>&nbsp;</td>
-                            <td><button class="button bggrey" type="button" id="S_11_Ec">Turn 45&deg;<br/>right</button></td>
+                            <td class="c-1"><button class="button bggrey" type="button" id="S_10_Ec">Turn 45&deg;<br/>left</button></td>
+                            <td class="c-1">&nbsp;</td>
+                            <td class="c-1"><button class="button bggrey" type="button" id="S_11_Ec">Turn 45&deg;<br/>right</button></td>
                         </tr>
                         <tr>
-                            <td><button class="button bggrey" type="button" id="S_12_Ec">Turn 90&deg;<br/>left</button></td>
-                            <td>&nbsp;</td>
-                            <td><button class="button bggrey" type="button" id="S_13_Ec">Turn 90&deg;<br/>right</button></td>
+                            <td class="c-1"><button class="button bggrey" type="button" id="S_12_Ec">Turn 90&deg;<br/>left</button></td>
+                            <td class="c-1">&nbsp;</td>
+                            <td class="c-1"><button class="button bggrey" type="button" id="S_13_Ec">Turn 90&deg;<br/>right</button></td>
                         </tr>
                     </table>
                 </td>
 
-                <td>
-                    <img src="../static/images/Robot.jpg" alt="Camera image"/> 
+                <td class="imagebig">
+                    <img src="../static/images/Robot.jpg" alt="Camera image" /> 
                 </td>
 
                 <td>
                     <table border="0" cellpadding="4" cellspacing="1" summary="">
-                        <tr>
-                            <td class="space"></td>
-
-                            <td class="space"></td>
-
-                            <td class="space"></td>
-                        </tr>
 
                         <tr>
-                            <td class="right c-1">Battery_9V</td>
+                            <td class="right c-1">Battery 9V</td>
 
                             <td class="black mv right c-3" id="M_3_V">10.0</td>
 
-                            <td class="left c-3">V</td>
+                            <td class="left c-5">V</td>
                         </tr>
-
                         <tr>
-                            <td class="space"></td>
-
-                            <td class="space"></td>
-
-                            <td class="space"></td>
-                        </tr>
-
-                        <tr>
-                            <td class="right c-1">Battery_7V</td>
+                            <td class="right c-1">Battery 7V</td>
 
                             <td class="black mv right c-3" id="M_4_V">7.6</td>
 
-                            <td class="left c-3">V</td>
+                            <td class="left c-5">V</td>
                         </tr>
-
                         <tr>
-                            <td class="space"></td>
-
-                            <td class="space"></td>
-
-                            <td class="space"></td>
-                        </tr>
-
-                        <tr>
-                            <td class="right c-1">Battery_5V</td>
+                            <td class="right c-1">Battery 5V</td>
 
                             <td class="black mv right c-3" id="M_5_V">5.0</td>
 
-                            <td class="left c-3">V</td>
+                            <td class="left c-5">V</td>
                         </tr>
-
-                        <tr>
-                            <td class="space"></td>
-
-                            <td class="space"></td>
-
-                            <td class="space"></td>
-                        </tr>
-
                         <tr>
                             <td class="right c-1">Arduino 5V</td>
 
                             <td class="black mv right c-3" id="M_6_V">5.0</td>
 
-                            <td class="left c-3">V</td>
+                            <td class="left c-5">V</td>
                         </tr>
-
                         <tr>
                             <td class="space"></td>
 
@@ -179,10 +151,72 @@
 
                             <td class="space"></td>
                         </tr>
+
+                        <tr>
+                            <td class="right c-1">Motor_front_left</td>
+
+                            <td class="black mv right c-3" id="M_10_V">0.4</td>
+
+                            <td class="left c-5">A</td>
+                        </tr>
+                        <tr>
+                            <td class="right c-1">Motor_front_right</td>
+
+                            <td class="black mv right c-3" id="M_7_V">0.4</td>
+
+                            <td class="left c-5">A</td>
+                        </tr>
+                        <tr>
+                            <td class="right c-1">Motor_back_left</td>
+
+                            <td class="black mv right c-3" id="M_9_V">0.4</td>
+
+                            <td class="left c-5">A</td>
+                        </tr>
+                        <tr>
+                            <td class="right c-1">Motor_back_right</td>
+
+                            <td class="black mv right c-3" id="M_8_V">0.4</td>
+
+                            <td class="left c-5">A</td>
+                        </tr>
                     </table>
                 </td>
             </tr>
+            <tr>
+                <td></td>
+                <td>
+                    <table border="0" cellpadding="2" cellspacing="1" summary="">
+                        <tr>   
+                            <td rowspan="2" class="right c-7">Distances</td>
+                            <td class="right c-7">Front_left</td>
+                            <td class="black mv right c-3" id="M_16_V">150</td>
+                            <td class="left c-5">cm</td>
+                            <td class="right c-7">Ahead</td>
+                            <td class="black mv right c-3" id="M_20_V">150</td>
+                            <td class="left c-5">cm</td>
+                            <td class="right c-10">Front_right</td>
+                            <td class="black mv right c-3" id="M_17_V">150</td>
+                            <td class="left c-5">cm</td>
+                        </tr>
+                        <tr>
+                            <td class="right c-7">Back_left</td>
+                            <td class="black mv right c-3" id="M_18_V">150</td>
+                            <td class="left c-5">cm</td>
+                            <td class="right c-7">Down</td>
+                            <td class="black mv right c-3" id="M_22_V">150</td>
+                            <td class="left c-5">cm</td>
+                            <td class="right c-10">Back_right</td>
+                            <td class="black mv right c-3" id="M_19_V">150</td>
+                            <td class="left c-5">cm</td>
+                        </tr>
+                    </table>
+              
+               </td> 
+               <td></td>  
+            </tr>
         </table>
+
     </div>
 </body>
 </html>
