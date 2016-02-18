@@ -93,11 +93,11 @@ $(document).ready(function(){
                      
 });
 
-// 1s cycle
+// 0.1s cycle
 setInterval(function() {
    PanelData()
    console.log("1s cycle has been started")
-}, 1000);
+}, 500);
 
 // 2s cycle
 setInterval(function() {

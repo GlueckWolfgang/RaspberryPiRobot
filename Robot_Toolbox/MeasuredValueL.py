@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ###############################################################################
 # Class of Measured Value List
-# Version:  2016.02.13
+# Version:  2016.02.18
 ###############################################################################
 from Robot_Toolbox.MeasuredValue import *
 from Robot_Toolbox.Alarm import *
@@ -35,12 +35,9 @@ class MeasuredValueL:
         # create dictionary
         self.template_M = get_ids("Robbi/Panel.html", r"M_+")
 
-
-
     def __str__(self):
         nachricht = " List of measured values"
         return nachricht
-
 
     def getData(self, MQueue):
         for key in self.template_M:
@@ -53,19 +50,18 @@ class MeasuredValueL:
             elif mvid[2] == "V":
                 self.template_M[key] = str(MV.value)
             elif mvid[2] == "Cv":
-                if MV.UlAbove == False\
-                and MV.LlBelow == False:
+                if MV.UlAbove == 0\
+                and MV.LlBelow == 0:
                     self.template_M[key] = "black"
-                elif MV.UlAbove == True:
+                elif MV.UlAbove == 1:
                     self.template_M[key] = "red"
-                elif MV.LlBelow == True:
+                elif MV.LlBelow == 1:
                     self.template_M[key] = "yellow"
             elif mvid[2] == "Ul":
                 self.template_M[key] = str(MV.Ul)
             elif mvid[2] == "Ll":
                 self.template_M[key] = str(MV.Ll)
         return self.template_M
-
 
     def putMeasuredValue(self, measuredValue):
         self.list.append(measuredValue)     # index = mvNumber
@@ -83,19 +79,19 @@ class MeasuredValueL:
                 if MV.mvDtype == "Integer":
                     MV.value = int(separatedStringP[2])
                 elif MV.mvDtype == "Float":
-                    MV.value = float(separatedStringP[2])
+                    MV.value = round(float(separatedStringP[2]),1)
 
             elif separatedStringP[1] == "LL":
                 if MV.mvDtype == "Integer":
                     MV.Ll = int(separatedStringP[2])
                 elif MV.mvDtype == "Float":
-                    MV.Ll = float(separatedStringP[2])
+                    MV.Ll = round(float(separatedStringP[2]), 1)
 
             elif separatedStringP[1] == "UL":
                 if MV.mvDtype == "Integer":
                     MV.Ul = int(separatedStringP[2])
                 elif MV.mvDtype == "Float":
-                    MV.Ul = float(separatedStringP[2])
+                    MV.Ul = round(float(separatedStringP[2]), 1)
 
             elif separatedStringP[1] == "LL_Exceeded":
                 if MV.LlBelow != int(separatedStringP[2]):
