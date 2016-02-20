@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ###############################################################################
 # Raspberry Robot Program
-# Version: 2016_02_16
+# Version: 2016_02_19
 # Creator: Wolfgang Glück
 ###############################################################################
 import multiprocessing as mp
@@ -16,6 +16,11 @@ from Robot_Toolbox.ProcessAudio import *
 from Robot_Toolbox.ProcessStatusAndMeasuredValue import *
 from Robot_Toolbox.ProcessAlarmList import *
 from Robot_Toolbox.ProcessWebserver import *
+from Robot_Toolbox.Region import *
+from Robot_Toolbox.Neighbour import *
+from Robot_Toolbox.Relation import *
+
+
 
 
 ###############################################################################
@@ -37,8 +42,8 @@ if __name__ == '__main__':
     # Create instance of alarm list
     AlarmList = AlarmL()
 
-    ###########################################################################
     # Create instance of queues and processes
+    ###########################################################################
     AQueue = mp.Queue()
     CQueue = mp.Queue()
     LQueue = mp.Queue()
@@ -59,8 +64,6 @@ if __name__ == '__main__':
                    mp.Process(target=AlarmProcess.Run, args=(LQueue, MQueue, WLQueue, AlarmList)),
                    mp.Process(target=WebserverProcess.Run, args=(WLQueue, WPQueue, MQueue, LQueue, PQueue))]
 
-
-
     # starting child processes
     for i in range(0, len(processList)):
         processList[i].start()
@@ -69,8 +72,30 @@ if __name__ == '__main__':
     PQueue.put("S@Manual Operation: 1")
     PQueue.put("S@Stop: 1")
 
-    count = 1
+    # Define regions, and relations
+    ###########################################################################
+    Relations = Relation()
 
+    Building = Region("M", 600, 450, 1200, 900, 35.5)
+
+    GroundFloor = Region("M", 600, 450, 1200, 900, 35.5)
+    FirstFloor = Region("M", 600, 450, 1200, 900, 35.5)
+
+    Office = Region("M", 150, 150, 300, 300, 35.5)
+    OfficeDoor = Region("M", 300, 300, 15, 77, 33.5)
+    Corridor1 = Region("M", 270, 320, 95, 150, 33.5)
+
+    Relations.putRelation(Neighbour("M", Office, None, None, None, OfficeDoor))
+    Relations.putRelation(Neighbour("M", OfficeDoor, None, None, Office, Corridor1))
+
+    Relations.putRelation(Neighbour("I", GroundFloor, Office))
+    Relations.putRelation(Neighbour("I", GroundFloor, OfficeDoor))
+    Relations.putRelation(Neighbour("I", GroundFloor, Corridor1))
+
+    Relations.putRelation(Neighbour("I", Building, GroundFloor))
+    Relations.putRelation(Neighbour("I", Building, FirstFloor))
+
+    count = 1
     # Endless loop of main program
     while True:
         while not MQueue.empty():
