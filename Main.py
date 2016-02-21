@@ -72,9 +72,10 @@ if __name__ == '__main__':
     PQueue.put("S@Manual Operation: 1")
     PQueue.put("S@Stop: 1")
 
-    # Define regions, and relations
+    # Define regions
     ###########################################################################
-    Relations = Relation()
+    # x/y = 35/0 is located at the inner left top corner of the building
+    # deviation from north is 35.5 degrees
 
     Building = Region("M", 618, 477, 1236, 954, 35.5)
 
@@ -84,15 +85,17 @@ if __name__ == '__main__':
     Office = Region("M", 148, 684, 295, 472, 35.5)
     OfficeCdoor = Region("M", 549, 295, 12, 82, 35.5)
     Corridor = Region("LMR", 363, 488, 113, 200, 35.5, )
-    Parents = Region("MR", 210, 188, 349, 376, 35.5, 65, 242, 309)
+    Parents = Region("LM", 417, 255, 65, 242, 35.5, 356, 376, 60)
     ParentsBdoor = Region("M", 445, 184, 12, 77, 35.5)
-    ParentsCdoor = Region("M",315, 382, 82, 12, 35.5)
+    ParentsCdoor = Region("M", 315, 382, 82, 12, 35.5)
 
-
+    # Define relations between regions
+    ###########################################################################
+    Relations = Relation()
     Relations.putRelation(Neighbour("M", Office, None, None, None, OfficeCdoor))
     Relations.putRelation(Neighbour("M", OfficeCdoor, None, None, Office, Corridor))
-    Relations.putRelation(Neighbour("M", Parents, None, ParentsCdoor))
-    Relations.putRelation(Neighbour("R", Parents, None, None, None, ParentsBdoor))
+    Relations.putRelation(Neighbour("L", Parents, None, ParentsCdoor))
+    Relations.putRelation(Neighbour("M", Parents, None, None, None, ParentsBdoor))
     Relations.putRelation(Neighbour("L", Corridor, ParentsCdoor, None, OfficeCdoor))
 
     Relations.putRelation(Neighbour("I", GroundFloor, Office))
