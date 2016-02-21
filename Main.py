@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ###############################################################################
 # Raspberry Robot Program
-# Version: 2016_02_19
+# Version: 2016_02_21
 # Creator: Wolfgang Glück
 ###############################################################################
 import multiprocessing as mp
@@ -76,21 +76,31 @@ if __name__ == '__main__':
     ###########################################################################
     Relations = Relation()
 
-    Building = Region("M", 600, 450, 1200, 900, 35.5)
+    Building = Region("M", 618, 477, 1236, 954, 35.5)
 
-    GroundFloor = Region("M", 600, 450, 1200, 900, 35.5)
-    FirstFloor = Region("M", 600, 450, 1200, 900, 35.5)
+    GroundFloor = Region("M", 618, 477, 1236, 954, 35.5)
+    FirstFloor = Region("M", 618, 477, 1236, 954, 35.5)
 
-    Office = Region("M", 150, 150, 300, 300, 35.5)
-    OfficeDoor = Region("M", 300, 300, 15, 77, 33.5)
-    Corridor1 = Region("M", 270, 320, 95, 150, 33.5)
+    Office = Region("M", 148, 684, 295, 472, 35.5)
+    OfficeCdoor = Region("M", 549, 295, 12, 82, 35.5)
+    Corridor = Region("LMR", 363, 488, 113, 200, 35.5, )
+    Parents = Region("MR", 210, 188, 349, 376, 35.5, 65, 242, 309)
+    ParentsBdoor = Region("M", 445, 184, 12, 77, 35.5)
+    ParentsCdoor = Region("M",315, 382, 82, 12, 35.5)
 
-    Relations.putRelation(Neighbour("M", Office, None, None, None, OfficeDoor))
-    Relations.putRelation(Neighbour("M", OfficeDoor, None, None, Office, Corridor1))
+
+    Relations.putRelation(Neighbour("M", Office, None, None, None, OfficeCdoor))
+    Relations.putRelation(Neighbour("M", OfficeCdoor, None, None, Office, Corridor))
+    Relations.putRelation(Neighbour("M", Parents, None, ParentsCdoor))
+    Relations.putRelation(Neighbour("R", Parents, None, None, None, ParentsBdoor))
+    Relations.putRelation(Neighbour("L", Corridor, ParentsCdoor, None, OfficeCdoor))
 
     Relations.putRelation(Neighbour("I", GroundFloor, Office))
-    Relations.putRelation(Neighbour("I", GroundFloor, OfficeDoor))
-    Relations.putRelation(Neighbour("I", GroundFloor, Corridor1))
+    Relations.putRelation(Neighbour("I", GroundFloor, OfficeCdoor))
+    Relations.putRelation(Neighbour("I", GroundFloor, Corridor))
+    Relations.putRelation(Neighbour("I", GroundFloor, Parents))
+    Relations.putRelation(Neighbour("I", GroundFloor, ParentsBdoor))
+    Relations.putRelation(Neighbour("I", GroundFloor, ParentsCdoor))
 
     Relations.putRelation(Neighbour("I", Building, GroundFloor))
     Relations.putRelation(Neighbour("I", Building, FirstFloor))
