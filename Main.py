@@ -17,11 +17,10 @@ from Robot_Toolbox.ProcessStatusAndMeasuredValue import *
 from Robot_Toolbox.ProcessAlarmList import *
 from Robot_Toolbox.ProcessWebserver import *
 from Robot_Toolbox.Region import *
+from Robot_Toolbox.Room import *
+from Robot_Toolbox.Door import *
 from Robot_Toolbox.Neighbour import *
 from Robot_Toolbox.Relation import *
-
-
-
 
 ###############################################################################
 # Main process
@@ -75,85 +74,87 @@ if __name__ == '__main__':
     # Define regions
     ###########################################################################
     # x/y = 35/0 is located at the inner left top corner of the building
-    # deviation from north is 35.5 degrees
-    # Regions will be drawn after turning for the required angle
+    # deviation from north direction is 35.5 degrees
 
-    Building = Region("M", 35.5, 618, 477, 1236, 954)
+    Building = Region("I", 35.5, 0, 0, 1236, 920)
+    GroundFloor = Region("I", 35.5, 0, 0, 1236, 920)
+    FirstFloor = Region("I", 35.5, 0, 0, 1236, 920)
 
-    GroundFloor = Region("M", 35.5, 618, 477, 1236, 954)
-    FirstFloor = Region("M", 35.5, 618, 477, 1236, 954)
+    Office = Room("M", 35.5, 148, 684, 295, 472)
+    Parents = Room("I", 35.5, 35, 0)
+    Parents1 = Room("M", 35.5, 35, 0, 349, 376)
+    Parents2 = Room("M", 35.5, 428, 122, 65, 242)
+    Bath = Room("I", 35.5, 500, 70)
+    Bath1 = Room("M", 35.5, 500, 70, 180, 122)
+    Bath2 = Room("M", 35.5, 461, 122, 194, 200)
+    Shower = Room("M", 35.5, 396, 0, 92, 122)
+    Living = Room("I", 35.5, 685, 70)
+    Living1 = Room("M", 35.5, 685, 70, 500, 501)
+    Living2 = Room("M", 35.5, 900, 571, 299, 324)
+    Kitchen = Room("M", 35.5, 694, 739, 330, 312)
+    Corridor = Room("I", 35.5, 309, 376)
+    Corridor1 = Room("M", 35.5, 309, 376, 95, 198)
+    Corridor2 = Room("M", 35.5, 404, 376, 189, 148)
+    Corridor3 = Room("M", 35.5, 473, 328, 89, 60)
+    Corridor4 = Room("M", 35.5, 562, 368, 111, 148)
 
-    Office = Region("M", 35.5, 148, 684, 295, 472)
-    Parents = Region("LM", 35.5, 356, 376, 60, 417, 255, 65, 242)
-    Bath = Region("LM", 125.5, 122, 200, 0, 52, 214, 194, 200)
-    Shower = Region("M", 35.5, 61, 407, 92, 122)
-    Living = Region("LM", 125.5, 571, 500, 149, 733, 1045, 324, 299)
-    Kitchen = Region("M", 35.5, 694, 739, 330, 312)
-
-    Corridor1 = Region("M", 35.5, 354, 470, 95, 198)
-    Corridor2 = Region("LM", 125.5, 60, 90, -43, 462, 506, 148, 171)
-    Corridor3 = Region("M", 35.5, 113, 198, 111, 148)
-
-    OfficeCdoor = Region("M", 35.5, 301, 549, 12, 82)
-    ParentsBdoor = Region("M", 35.5, 445, 184, 12, 77)
-    ParentsCdoor = Region("M", 35.5, 315, 382, 82, 12)
-    BathSdoor = Region("M", 35.5, 453, 90, 1, 61)
-    BathCdoor = Region("M", 35.5, 459, 322, 77, 12)
-    CellerCdoor = Region("M", 35.5, 461, 507, 82, 12)
-    KitchenCdoor = Region("M", 35.5, 663, 507, 77, 12)
-    KitchenLdoor = Region("M", 35.5, 877, 786, 12, 77)
-    LivingCdoor = Region("M", 35.5, 662, 496, 12, 120)
+    OfficeCdoor = Door("M", 35.5, 301, 549, 12, 82)
+    ParentsBdoor = Door("M", 35.5, 455, 184, 12, 77)
+    ParentsCdoor = Door("M", 35.5, 350, 382, 82, 12)
+    BathSdoor = Door("M", 35.5, 453, 96, 1, 52)
+    BathCdoor = Door("M", 35.5, 518, 322, 77, 12)
+    CellerCdoor = Door("M", 35.5, 461, 542, 82, 12)
+    KitchenCdoor = Door("M", 35.5, 627, 542, 77, 12)
+    KitchenLdoor = Door("M", 35.5, 877, 751, 12, 77)
+    LivingCdoor = Door("M", 35.5, 674, 461, 12, 120)
 
     # Define relations between regions respectively their parts
     ###########################################################################
     Relations = Relation()
-    Relations.putRelation(Neighbour(Office, "M", None, None, None, None, None, None, OfficeCdoor, "M"))
-    Relations.putRelation(Neighbour(Parents, "L", None, None, ParentsCdoor, "M"))
-    Relations.putRelation(Neighbour(Parents, "M", None, None, None, None, None, None, ParentsBdoor, "M"))
-    Relations.putRelation(Neighbour(Bath, "L", None, None, BathSdoor, "M"))
-    Relations.putRelation(Neighbour(Bath, "M", None, None, ParentsBdoor, "M", None, None, BathCdoor, "M"))
-    Relations.putRelation(Neighbour(Shower, "M", None, None, None, None, None, None, BathSdoor, "M"))
-    Relations.putRelation(Neighbour(Living, "L", None, None, LivingCdoor, "M"))
-    Relations.putRelation(Neighbour(Living, "M", None, None, KitchenLdoor, "M"))
-    Relations.putRelation(Neighbour(Kitchen, "M", Corridor3, "M", None, None, None, None, Living, "M"))
-    Relations.putRelation(Neighbour(Corridor1, "M", ParentsCdoor, "M", None, None, OfficeCdoor, "M", Corridor2, "M"))
-    Relations.putRelation(Neighbour(Corridor2, "L", None, None, None, None, BathCdoor, "M"))
-    Relations.putRelation(Neighbour(Corridor2, "M", Corridor3, "M", CellerCdoor, "M"))
-    Relations.putRelation(Neighbour(Corridor3, "M", None, None, KitchenCdoor, "M", Corridor2, "M", LivingCdoor, "L"))
+    Relations.putRelation(Neighbour(Office, None, None, None, OfficeCdoor))
+    Relations.putRelation(Neighbour(Parents1, None, ParentsCdoor))
+    Relations.putRelation(Neighbour(Parents2, None, None, None, ParentsBdoor))
+    Relations.putRelation(Neighbour(Bath1, None, None, BathSdoor))
+    Relations.putRelation(Neighbour(Bath2, None, BathCdoor, ParentsBdoor))
+    Relations.putRelation(Neighbour(Shower, None, None, None, BathSdoor))
+    Relations.putRelation(Neighbour(Living1, None, None, LivingCdoor))
+    Relations.putRelation(Neighbour(Living2, None, None, KitchenLdoor))
+    Relations.putRelation(Neighbour(Kitchen, Corridor4, None, None, KitchenLdoor))
+    Relations.putRelation(Neighbour(Corridor1, ParentsCdoor, None, OfficeCdoor, Corridor2))
+    Relations.putRelation(Neighbour(Corridor2, Corridor3, CellerCdoor))
+    Relations.putRelation(Neighbour(Corridor3, BathCdoor, Corridor2))
+    Relations.putRelation(Neighbour(Corridor4, None, KitchenCdoor, Corridor3, LivingCdoor))
 
-    Relations.putRelation(Neighbour(OfficeCdoor, "M", None, None, None, None, Office, "M", Corridor1, "M"))
-    Relations.putRelation(Neighbour(ParentsBdoor, "M", None, None, None, None, Parents, "M", Bath, "M"))
-    Relations.putRelation(Neighbour(ParentsCdoor, "M", Parents, "L", Corridor1, "M"))
-    Relations.putRelation(Neighbour(BathCdoor, "M", Bath, "M", Corridor2, "L"))
-    Relations.putRelation(Neighbour(BathSdoor, "M", None, None, None, None, None, None, Bath, "L"))
-    Relations.putRelation(Neighbour(CellerCdoor, "M", Corridor2, "M"))
-    Relations.putRelation(Neighbour(KitchenCdoor, "M", Corridor3, "M", Kitchen, "M"))
-    Relations.putRelation(Neighbour(KitchenLdoor, "M", None, None, None, None, Kitchen, "M", Living, "M"))
-    Relations.putRelation(Neighbour(LivingCdoor, "M", None, None, None, None, Corridor3, "M", Living, "L"))
+    Relations.putRelation(Neighbour(OfficeCdoor, None, None, Office, Corridor1))
+    Relations.putRelation(Neighbour(ParentsBdoor, None, None, Parents2, Bath))
+    Relations.putRelation(Neighbour(ParentsCdoor, Parents1, Corridor1))
+    Relations.putRelation(Neighbour(BathCdoor, Bath2, Corridor2))
+    Relations.putRelation(Neighbour(BathSdoor, None, None, None, Bath1))
+    Relations.putRelation(Neighbour(CellerCdoor, Corridor2))
+    Relations.putRelation(Neighbour(KitchenCdoor, Corridor4, Kitchen))
+    Relations.putRelation(Neighbour(KitchenLdoor, None, None, Kitchen, Living2))
+    Relations.putRelation(Neighbour(LivingCdoor, None, None, Corridor4, Living1))
 
-    Relations.putRelation(Neighbour(GroundFloor, "I", Office))
-    Relations.putRelation(Neighbour(GroundFloor, "I", Parents))
-    Relations.putRelation(Neighbour(GroundFloor, "I", Bath))
-    Relations.putRelation(Neighbour(GroundFloor, "I", Shower))
-    Relations.putRelation(Neighbour(GroundFloor, "I", Living))
-    Relations.putRelation(Neighbour(GroundFloor, "I", Kitchen))
+    Relations.putRelation(Neighbour(GroundFloor, Office))
+    Relations.putRelation(Neighbour(GroundFloor, Parents))
+    Relations.putRelation(Neighbour(GroundFloor, Bath))
+    Relations.putRelation(Neighbour(GroundFloor, Shower))
+    Relations.putRelation(Neighbour(GroundFloor, Living))
+    Relations.putRelation(Neighbour(GroundFloor, Kitchen))
+    Relations.putRelation(Neighbour(GroundFloor, Corridor))
 
-    Relations.putRelation(Neighbour(GroundFloor, "I", Corridor1))
-    Relations.putRelation(Neighbour(GroundFloor, "I", Corridor2))
-    Relations.putRelation(Neighbour(GroundFloor, "I", Corridor3))
+    Relations.putRelation(Neighbour(GroundFloor, OfficeCdoor))
+    Relations.putRelation(Neighbour(GroundFloor, ParentsBdoor))
+    Relations.putRelation(Neighbour(GroundFloor, ParentsCdoor))
+    Relations.putRelation(Neighbour(GroundFloor, BathSdoor))
+    Relations.putRelation(Neighbour(GroundFloor, BathCdoor))
+    Relations.putRelation(Neighbour(GroundFloor, CellerCdoor))
+    Relations.putRelation(Neighbour(GroundFloor, KitchenCdoor))
+    Relations.putRelation(Neighbour(GroundFloor, KitchenLdoor))
+    Relations.putRelation(Neighbour(GroundFloor, LivingCdoor))
 
-    Relations.putRelation(Neighbour(GroundFloor, "I", OfficeCdoor))
-    Relations.putRelation(Neighbour(GroundFloor, "I", ParentsBdoor))
-    Relations.putRelation(Neighbour(GroundFloor, "I", ParentsCdoor))
-    Relations.putRelation(Neighbour(GroundFloor, "I", BathSdoor))
-    Relations.putRelation(Neighbour(GroundFloor, "I", BathCdoor))
-    Relations.putRelation(Neighbour(GroundFloor, "I", CellerCdoor))
-    Relations.putRelation(Neighbour(GroundFloor, "I", KitchenCdoor))
-    Relations.putRelation(Neighbour(GroundFloor, "I", KitchenLdoor))
-    Relations.putRelation(Neighbour(GroundFloor, "I", LivingCdoor))
-
-    Relations.putRelation(Neighbour(Building, "I", GroundFloor))
-    Relations.putRelation(Neighbour(Building, "I", FirstFloor))
+    Relations.putRelation(Neighbour(Building, GroundFloor))
+    Relations.putRelation(Neighbour(Building, FirstFloor))
 
     count = 1
     # Endless loop of main program

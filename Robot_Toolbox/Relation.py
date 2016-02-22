@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 ###############################################################################
 # Class of Relations
-# Version:  2016.02.20
+# Version:  2016.02.22
 #
-# relations between regions
+# relations between regions respectively their parts
 #
 ###############################################################################
 
