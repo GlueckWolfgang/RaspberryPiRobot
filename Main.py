@@ -119,21 +119,24 @@ if __name__ == '__main__':
     Relations.putRelation(Neighbour(Shower, None, None, None, BathSdoor))
     Relations.putRelation(Neighbour(Living1, None, None, LivingCdoor))
     Relations.putRelation(Neighbour(Living2, None, None, KitchenLdoor))
-    Relations.putRelation(Neighbour(Kitchen, Corridor4, None, None, KitchenLdoor))
+    Relations.putRelation(Neighbour(Kitchen, KitchenCdoor, None, None, KitchenLdoor))
     Relations.putRelation(Neighbour(Corridor1, ParentsCdoor, None, OfficeCdoor, Corridor2))
-    Relations.putRelation(Neighbour(Corridor2, Corridor3, CellerCdoor))
+    Relations.putRelation(Neighbour(Corridor2, Corridor3, CellerCdoor, Corridor1, Corridor4))
     Relations.putRelation(Neighbour(Corridor3, BathCdoor, Corridor2))
-    Relations.putRelation(Neighbour(Corridor4, None, KitchenCdoor, Corridor3, LivingCdoor))
+    Relations.putRelation(Neighbour(Corridor4, None, KitchenCdoor, Corridor2, LivingCdoor))
 
     Relations.putRelation(Neighbour(OfficeCdoor, None, None, Office, Corridor1))
-    Relations.putRelation(Neighbour(ParentsBdoor, None, None, Parents2, Bath))
+    Relations.putRelation(Neighbour(ParentsBdoor, None, None, Parents2, Bath2))
     Relations.putRelation(Neighbour(ParentsCdoor, Parents1, Corridor1))
-    Relations.putRelation(Neighbour(BathCdoor, Bath2, Corridor2))
-    Relations.putRelation(Neighbour(BathSdoor, None, None, None, Bath1))
+    Relations.putRelation(Neighbour(BathCdoor, Bath2, Corridor3))
+    Relations.putRelation(Neighbour(BathSdoor, None, None, Shower, Bath1))
     Relations.putRelation(Neighbour(CellerCdoor, Corridor2))
     Relations.putRelation(Neighbour(KitchenCdoor, Corridor4, Kitchen))
     Relations.putRelation(Neighbour(KitchenLdoor, None, None, Kitchen, Living2))
     Relations.putRelation(Neighbour(LivingCdoor, None, None, Corridor4, Living1))
+
+    # Define hierarchical dependencies
+    ###########################################################################
 
     Relations.putRelation(Neighbour(GroundFloor, Office))
     Relations.putRelation(Neighbour(GroundFloor, Parents))
