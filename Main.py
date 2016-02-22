@@ -138,6 +138,17 @@ if __name__ == '__main__':
     # Define hierarchical dependencies
     ###########################################################################
 
+    Relations.putRelation(Neighbour(Parents, Parents1))
+    Relations.putRelation(Neighbour(Parents, Parents2))
+    Relations.putRelation(Neighbour(Bath, Bath1))
+    Relations.putRelation(Neighbour(Bath, Bath2))
+    Relations.putRelation(Neighbour(Living, Living1))
+    Relations.putRelation(Neighbour(Living, Living2))
+    Relations.putRelation(Neighbour(Corridor, Corridor1))
+    Relations.putRelation(Neighbour(Corridor, Corridor2))
+    Relations.putRelation(Neighbour(Corridor, Corridor3))
+    Relations.putRelation(Neighbour(Corridor, Corridor4))
+
     Relations.putRelation(Neighbour(GroundFloor, Office))
     Relations.putRelation(Neighbour(GroundFloor, Parents))
     Relations.putRelation(Neighbour(GroundFloor, Bath))
@@ -159,7 +170,6 @@ if __name__ == '__main__':
     Relations.putRelation(Neighbour(Building, GroundFloor))
     Relations.putRelation(Neighbour(Building, FirstFloor))
 
-    count = 1
     # Endless loop of main program
     while True:
         while not MQueue.empty():
