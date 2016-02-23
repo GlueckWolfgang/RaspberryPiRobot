@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ###############################################################################
 # Raspberry Robot Program
-# Version: 2016_02_21
+# Version: 2016_02_23
 # Creator: Wolfgang Glück
 ###############################################################################
 import multiprocessing as mp
@@ -19,6 +19,7 @@ from Robot_Toolbox.ProcessWebserver import *
 from Robot_Toolbox.Region import *
 from Robot_Toolbox.Room import *
 from Robot_Toolbox.Door import *
+from Robot_Toolbox.Corridor import *
 from Robot_Toolbox.Neighbour import *
 from Robot_Toolbox.Relation import *
 
@@ -77,10 +78,12 @@ if __name__ == '__main__':
     # deviation from north direction is 35.5 degrees
 
     Building = Region("I", 35.5, 0, 0, 1236, 920)
-    GroundFloor = Region("I", 35.5, 0, 0, 1236, 920)
-    FirstFloor = Region("I", 35.5, 0, 0, 1236, 920)
+    GroundFloor = Region("I", 35.5, 0, 0)
+    # First floor is empty
+    FirstFloor = Region("I", 35.5, 0, 0)
+    FirstFloor = Region("M", 35.5, 0, 0, 1236, 920)
 
-    Office = Room("M", 35.5, 148, 684, 295, 472)
+    Office = Room("M", 35.5, 0, 348, 295, 472)
     Parents = Room("I", 35.5, 35, 0)
     Parents1 = Room("M", 35.5, 35, 0, 349, 376)
     Parents2 = Room("M", 35.5, 428, 122, 65, 242)
@@ -92,11 +95,11 @@ if __name__ == '__main__':
     Living1 = Room("M", 35.5, 685, 70, 500, 501)
     Living2 = Room("M", 35.5, 900, 571, 299, 324)
     Kitchen = Room("M", 35.5, 694, 739, 330, 312)
-    Corridor = Room("I", 35.5, 309, 376)
-    Corridor1 = Room("M", 35.5, 309, 376, 95, 198)
-    Corridor2 = Room("M", 35.5, 404, 376, 189, 148)
-    Corridor3 = Room("M", 35.5, 473, 328, 89, 60)
-    Corridor4 = Room("M", 35.5, 562, 368, 111, 148)
+    Hall = Corridor("I", 35.5, 309, 376)
+    Corridor1 = Corridor("M", 35.5, 309, 376, 95, 198)
+    Corridor2 = Corridor("M", 35.5, 404, 376, 189, 148)
+    Corridor3 = Corridor("M", 35.5, 473, 328, 89, 60)
+    Corridor4 = Corridor("M", 35.5, 562, 368, 111, 148)
 
     OfficeCdoor = Door("M", 35.5, 301, 549, 12, 82)
     ParentsBdoor = Door("M", 35.5, 455, 184, 12, 77)
@@ -144,10 +147,10 @@ if __name__ == '__main__':
     Relations.putRelation(Neighbour(Bath, Bath2))
     Relations.putRelation(Neighbour(Living, Living1))
     Relations.putRelation(Neighbour(Living, Living2))
-    Relations.putRelation(Neighbour(Corridor, Corridor1))
-    Relations.putRelation(Neighbour(Corridor, Corridor2))
-    Relations.putRelation(Neighbour(Corridor, Corridor3))
-    Relations.putRelation(Neighbour(Corridor, Corridor4))
+    Relations.putRelation(Neighbour(Hall, Corridor1))
+    Relations.putRelation(Neighbour(Hall, Corridor2))
+    Relations.putRelation(Neighbour(Hall, Corridor3))
+    Relations.putRelation(Neighbour(Hall, Corridor4))
 
     Relations.putRelation(Neighbour(GroundFloor, Office))
     Relations.putRelation(Neighbour(GroundFloor, Parents))
@@ -155,7 +158,7 @@ if __name__ == '__main__':
     Relations.putRelation(Neighbour(GroundFloor, Shower))
     Relations.putRelation(Neighbour(GroundFloor, Living))
     Relations.putRelation(Neighbour(GroundFloor, Kitchen))
-    Relations.putRelation(Neighbour(GroundFloor, Corridor))
+    Relations.putRelation(Neighbour(GroundFloor, Hall))
 
     Relations.putRelation(Neighbour(GroundFloor, OfficeCdoor))
     Relations.putRelation(Neighbour(GroundFloor, ParentsBdoor))
@@ -169,6 +172,16 @@ if __name__ == '__main__':
 
     Relations.putRelation(Neighbour(Building, GroundFloor))
     Relations.putRelation(Neighbour(Building, FirstFloor))
+
+    R = []
+    Relations.getRegions(GroundFloor, R)
+
+    for i in range(0,len(R)):
+        print("M gefunden" +
+                str(R[i].angleM) + " " +
+                R[i].color + " " +
+                str(R[i].xM) + " "
+                + str(R[i].yM))
 
     # Endless loop of main program
     while True:

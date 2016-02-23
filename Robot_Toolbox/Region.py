@@ -16,7 +16,7 @@
 
 class Region:
     def __init__(self, dtype, anglem, p1=None, p2=None, p3=None, p4=None):
-        self.dtype = dtype
+        self.dType = dtype
         self.angleM = anglem
         self.color = "grey"
         # M
