@@ -177,7 +177,7 @@ if __name__ == '__main__':
     Relations.getRegions(GroundFloor, R)
 
     for i in range(0,len(R)):
-        print("M gefunden" +
+        print("M gefunden: " +
                 str(R[i].angleM) + " " +
                 R[i].color + " " +
                 str(R[i].xM) + " "
