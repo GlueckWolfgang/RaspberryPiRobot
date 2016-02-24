@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ###############################################################################
 # Class Prozess webserver
-# Version:  2016.02.16
+# Version:  2016.02.24
 #
 ###############################################################################
 import tornado.ioloop
@@ -11,7 +11,7 @@ import json
 
 class ProcessWebserver:
 
-    def Run(self, WLQueue, WPQueue, MQueue, LQueue, PQueue):
+    def Run(self, WLQueue, WPQueue, WMQueue, MQueue, LQueue, PQueue):
 
         class MainHandler(tornado.web.RequestHandler):
 
@@ -63,6 +63,7 @@ class ProcessWebserver:
                 self.MQueue = db[2]
                 self.PQueue = db[3]
                 self.WPQueue = db[4]
+                self.WMQueue = db[5]
 
             def get(self, url):
                 self.MQueue.put("I@ AjaxHandler" + url)
@@ -99,7 +100,17 @@ class ProcessWebserver:
                         self.write(output)
 
                 elif url.startswith("Map"):
-                    pass
+                    if url.endswith("/canvasRectData"):
+                        # acquire data
+                        self.MQueue.put("R@")
+                        output = json.dumps(self.WMQueue.get())
+                        self.write(output)
+                    else:
+                        command = url.split("/")
+                        pass
+                        dictionary = {"phantasy": "&nbsp;"}
+                        output = json.dumps(dictionary)
+                        self.write(output)
 
                 else:
                     self.write("Error 404: File '{}' not Found.".format(url))
@@ -111,7 +122,7 @@ class ProcessWebserver:
             return tornado.web.Application([
                 (r"/Robbi/(.*)", MainHandler, dict(db=MQueue)),
                 (r"/static/(.*)", StaticHandler, dict(db=MQueue)),
-                (r"/ajax/(.*)", AjaxHandler, dict(db=[LQueue, WLQueue, MQueue, PQueue, WPQueue]))
+                (r"/ajax/(.*)", AjaxHandler, dict(db=[LQueue, WLQueue, MQueue, PQueue, WPQueue, WMQueue]))
             ], **self.settings)
 
         app = make_app()

@@ -93,18 +93,18 @@ $(document).ready(function(){
                      
 });
 
-// 0.1s cycle
+// 1s cycle
 setInterval(function() {
-   PanelData()
-   console.log("1s cycle has been started")
-}, 500);
+    PanelData()
+    console.log("1s cycle has been started")
+}, 1000);
 
 // 2s cycle
 setInterval(function() {
-  AlarmlistData()
-   console.log("2s cycle has been started")
+    AlarmlistData()
+    console.log("2s cycle has been started")
+    MapCanvasRectData()
 }, 2000);
-
 
 // Ajax
 // Panel data
@@ -195,25 +195,53 @@ function PanelData(){
 
 // Alarmlist data
 function AlarmlistData(){
- var active = $('#tabs').tabs( "option", "active" );
- if  (active == 1) {
-    $.ajax({
-        type: 'GET',
-        url: '/ajax/Alarmlist/data',
-        async: true,
-        dataType: "JSON",
-        success: function(obj, textstatus, jqXhr) {
-            dictionary = eval("(" + jqXhr.responseText + ")");
-            $.each(dictionary, function(id,val) {
-                if (document.getElementById(id) !== null) {
-                  document.getElementById(id).innerHTML = val;
-                }
-            });
-        },
-        error: function (jqXhr, textStatus, errorThrown) {
-        }
-    });
- }
+    var active = $('#tabs').tabs( "option", "active" );
+    if  (active == 1) {
+        $.ajax({
+            type: 'GET',
+            url: '/ajax/Alarmlist/data',
+            async: true,
+            dataType: "JSON",
+            success: function(obj, textstatus, jqXhr) {
+                dictionary = eval("(" + jqXhr.responseText + ")");
+                $.each(dictionary, function(id,val) {
+                    if (document.getElementById(id) !== null) {
+                      document.getElementById(id).innerHTML = val;
+                    }
+                });
+            },
+            error: function (jqXhr, textStatus, errorThrown) {
+            }
+        });
+    }
+}
+
+// Map static data
+function MapCanvasRectData(){
+    var active = $('#tabs').tabs( "option", "active" );
+    if  (active == 2) {  
+        $.ajax({
+            type: 'GET',
+            url: '/ajax/Map/canvasRectData',
+            async: true,
+            dataType: "JSON",
+            success: function(obj, textstatus, jqXhr) {
+                table = eval("(" + jqXhr.responseText + ")");
+                var c = document.getElementById("Map");
+                var ctx = c.getContext("2d");
+                $.each(table, function(i,parameterList) {
+                    ctx.fillStyle = parameterList[0];
+                    ctx.fillRect(parameterList[1],
+                                 parameterList[2],
+                                 parameterList[3],
+                                 parameterList[4]);
+                });
+            },
+            error: function (jqXhr, textStatus, errorThrown) {
+                console.log("function Map called with error")
+            }
+        });
+    }
 }
 
 // Commands

@@ -1,11 +1,10 @@
 # -*- coding: utf-8 -*-
 ###############################################################################
 # Raspberry Robot Program
-# Version: 2016_02_23
+# Version: 2016_02_24
 # Creator: Wolfgang Glück
 ###############################################################################
 import multiprocessing as mp
-import time
 
 from Robot_Toolbox.MeasuredValueL import *
 from Robot_Toolbox.StatusL import *
@@ -51,6 +50,7 @@ if __name__ == '__main__':
     PQueue = mp.Queue()
     WLQueue = mp.Queue()
     WPQueue = mp.Queue()
+    WMQueue = mp.Queue()
 
     USBProcess = ProcessUSB()
     AudioProcess = ProcessAudio()
@@ -62,7 +62,7 @@ if __name__ == '__main__':
                    mp.Process(target=AudioProcess.Run, args=(MQueue, AQueue, CQueue, CommandList)),
                    mp.Process(target=STAndMVProcess.Run, args=(PQueue, AQueue, LQueue, MQueue, WPQueue, CQueue, StatusList, MeasuredValueList)),
                    mp.Process(target=AlarmProcess.Run, args=(LQueue, MQueue, WLQueue, AlarmList)),
-                   mp.Process(target=WebserverProcess.Run, args=(WLQueue, WPQueue, MQueue, LQueue, PQueue))]
+                   mp.Process(target=WebserverProcess.Run, args=(WLQueue, WPQueue, WMQueue,MQueue, LQueue, PQueue))]
 
     # starting child processes
     for i in range(0, len(processList)):
@@ -83,29 +83,29 @@ if __name__ == '__main__':
     FirstFloor = Region("I", 35.5, 0, 0)
     FirstFloor = Region("M", 35.5, 0, 0, 1236, 920)
 
-    Office = Room("M", 35.5, 0, 348, 295, 472)
+    Office = Room("M", 35.5, 148, 684, 295, 472)
     Parents = Room("I", 35.5, 35, 0)
-    Parents1 = Room("M", 35.5, 35, 0, 349, 376)
-    Parents2 = Room("M", 35.5, 428, 122, 65, 242)
+    Parents1 = Room("M", 35.5, 210, 188, 349, 376)
+    Parents2 = Room("M", 35.5, 417, 255, 65, 242)
     Bath = Room("I", 35.5, 500, 70)
-    Bath1 = Room("M", 35.5, 500, 70, 180, 122)
-    Bath2 = Room("M", 35.5, 461, 122, 194, 200)
-    Shower = Room("M", 35.5, 396, 0, 92, 122)
+    Bath1 = Room("M", 35.5, 580, 62, 178, 124)
+    Bath2 = Room("M", 35.5, 566, 219, 206, 192)
+    Shower = Room("M", 35.5, 442, 61, 92, 122)
     Living = Room("I", 35.5, 685, 70)
-    Living1 = Room("M", 35.5, 685, 70, 500, 501)
-    Living2 = Room("M", 35.5, 900, 571, 299, 324)
-    Kitchen = Room("M", 35.5, 694, 739, 330, 312)
+    Living1 = Room("M", 35.5, 932, 286, 502, 501)
+    Living2 = Room("M", 35.5, 1034, 698, 299, 324)
+    Kitchen = Room("M", 35.5, 694, 704, 352, 310)
     Hall = Corridor("I", 35.5, 309, 376)
-    Corridor1 = Corridor("M", 35.5, 309, 376, 95, 198)
-    Corridor2 = Corridor("M", 35.5, 404, 376, 189, 148)
-    Corridor3 = Corridor("M", 35.5, 473, 328, 89, 60)
-    Corridor4 = Corridor("M", 35.5, 562, 368, 111, 148)
+    Corridor1 = Corridor("M", 35.5, 355, 494, 96, 210)
+    Corridor2 = Corridor("M", 35.5, 497, 463, 189, 148)
+    Corridor3 = Corridor("M", 35.5, 513, 358, 101, 60)
+    Corridor4 = Corridor("M", 35.5, 630, 463, 77, 148)
 
     OfficeCdoor = Door("M", 35.5, 301, 549, 12, 82)
     ParentsBdoor = Door("M", 35.5, 455, 184, 12, 77)
     ParentsCdoor = Door("M", 35.5, 350, 382, 82, 12)
-    BathSdoor = Door("M", 35.5, 453, 96, 1, 52)
-    BathCdoor = Door("M", 35.5, 518, 322, 77, 12)
+    BathSdoor = Door("M", 35.5, 490, 96, 1, 52)
+    BathCdoor = Door("M", 35.5, 512, 322, 77, 12)
     CellerCdoor = Door("M", 35.5, 461, 542, 82, 12)
     KitchenCdoor = Door("M", 35.5, 627, 542, 77, 12)
     KitchenLdoor = Door("M", 35.5, 877, 751, 12, 77)
@@ -175,17 +175,10 @@ if __name__ == '__main__':
 
     R = []
     Relations.getRegions(GroundFloor, R)
-
-    for i in range(0,len(R)):
-        print("M gefunden: " +
-                str(R[i].angleM) + " " +
-                R[i].color + " " +
-                str(R[i].xM) + " "
-                + str(R[i].yM))
+    canvasRect = Relations.transformRegionsToCanvasRect(1.6, R)
 
     # Endless loop of main program
     while True:
-        while not MQueue.empty():
             result = MQueue.get()
 
             if result.find("I@") == 0:
@@ -193,6 +186,8 @@ if __name__ == '__main__':
                 result = result.replace("I@", "")
                 print (result)
 
-        time.sleep(1)
+            if result.find("R@") == 0:
+                # map data required
+                WMQueue.put(canvasRect)
 
     ###########################################################################
