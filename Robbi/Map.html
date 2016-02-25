@@ -7,11 +7,11 @@
     <meta name="description" content="Map" />
     <meta name="author" content="Wolfgang Glueck" />
     <meta name="editor" content="html-editor phase 5" />
-    
+    <link rel="stylesheet" href="../static/css/mapStyle.css" type="text/css"/>
     <style type="text/css">
     /*<![CDATA[*/
 
-     td.c-6 {width: 800px;}
+     td.c-6 {width: 450px;}
      td.c-5 {width: 15px;}
      td.c-4 {width: 50px;}
      td.c-3 {width: 30px;}
@@ -23,21 +23,20 @@
 
 <body>
     <div class="ui-widget-content ui-state-default ui-corner-top ui-corner-bottom">
-        <table border="0" cellpadding="1" cellspacing="1" summary="">
+        <table border="0" cellpadding="2" cellspacing="1" summary="">
     <tr>
-        <td class="imagesmal"> 
+        <td class="imagebig"> 
             <img src="../static/images/Robot.jpg" alt="Camera image" />  
         </td>
-        <td rowspan="2">
-            <canvas id="Map" width="450" height="450" style="border:1px solid #000000;"></canvas>
-       
+        <td rowspan="2" id="viewport" class="map">
+                <canvas id="Map" width="448" height="448" class="map"></canvas>
+                <canvas id="Path" width="448" height="448" class="map"></canvas>
+                <canvas id="RobotPosition" width="448" height="448" class="map"></canvas>
         </td>
     </tr>
     <tr>
         <td>Bedienelemente</td>
-
     </tr>
-
 </table>
     </div>
 </body>
