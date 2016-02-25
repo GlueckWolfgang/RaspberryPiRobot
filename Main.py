@@ -175,7 +175,7 @@ if __name__ == '__main__':
 
     R = []
     Relations.getRegions(GroundFloor, R)
-    canvasRect = Relations.transformRegionsToCanvasRect(1.6, R)
+    canvasRect = Relations.transformRegionsToCanvasRect(2.5, R)
 
     # Endless loop of main program
     while True:

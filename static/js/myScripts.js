@@ -231,10 +231,10 @@ function MapCanvasRectData(){
                 var ctx = c.getContext("2d");
                 $.each(table, function(i,parameterList) {
                     ctx.fillStyle = parameterList[0];
-                    ctx.fillRect(parameterList[1],
-                                 parameterList[2],
-                                 parameterList[3],
-                                 parameterList[4]);
+                    ctx.fillRect(parameterList[1][0],
+                                 parameterList[1][1],
+                                 parameterList[1][2],
+                                 parameterList[1][3]);
                 });
             },
             error: function (jqXhr, textStatus, errorThrown) {

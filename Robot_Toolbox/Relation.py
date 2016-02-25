@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ###############################################################################
 # Class of Relations
-# Version:  2016.02.24
+# Version:  2016.02.25
 #
 # relations between regions respectively their parts
 #
@@ -33,8 +33,8 @@ class Relation:
         result = []
         for i in range(0, len(table)):
             region = table[i]
-            result.append([region.color, round((region.xM - region.widthM / 2)/scale),
-                                         round((region.yM - region.heightM / 2) / scale),
-                                         round(region.widthM / scale),
-                                         round(region.heightM / scale)])
+            result.append([[region.color], [round((region.xM - region.widthM / 2)/ scale),
+                                            round((region.yM - region.heightM / 2) / scale),
+                                            round(region.widthM / scale),
+                                            round(region.heightM / scale)]])
         return result
