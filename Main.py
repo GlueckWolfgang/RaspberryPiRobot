@@ -74,6 +74,7 @@ if __name__ == '__main__':
 
     # Define regions
     ###########################################################################
+    # All values in cm , degrees
     # x/y = 35/0 is located at the inner left top corner of the building
     # deviation from north direction is 35.5 degrees
 

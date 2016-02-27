@@ -1,7 +1,7 @@
 // TABS
-// Version: 2016_02_14
+// Version: 2016_02_26
 $(document).ready(function(){
-    console.log("function tabs called")
+    console.log("function tabs called");
     $('#tabs').tabs({active: 1});
 
     $(document).on("click", '#Backnowledge', (function(event) {
@@ -91,19 +91,27 @@ $(document).ready(function(){
                           Send('Panel/S_13_Ec');
                      }));
                      
+    $("#tabs").on("tabsload", (function(event,ui) {
+        if (ui.panel.attr("id")==='ui-id-3') {
+            MapCanvasRectData();
+        }
+    }));
+            
 });
+
+
+
 
 // 1s cycle
 setInterval(function() {
-    PanelData()
-    console.log("1s cycle has been started")
+    PanelData();
+    console.log("1s cycle has been started");
 }, 1000);
 
 // 2s cycle
 setInterval(function() {
-    AlarmlistData()
-    console.log("2s cycle has been started")
-    MapCanvasRectData()
+    AlarmlistData();
+    console.log("2s cycle has been started");
 }, 2000);
 
 // Ajax
