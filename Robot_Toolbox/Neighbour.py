@@ -1,16 +1,18 @@
 # -*- coding: utf-8 -*-
 ###############################################################################
 # Class of Neighbour
-# Version:  2016.02.22
+# Version:  2016.02.29
 #
 # A region or Part of a region ("M") can have up to 4 neighbours
 # a neighbour is docked either on north, south, west or east of the region
+# hierachical dependencies will be put into inRegion
 #
 ###############################################################################
 
 
 class Neighbour:
-    def __init__(self, region, north=None, south=None, west=None, east=None,):
+    def __init__(self, region, innerRegion, north=None, south=None, west=None, east=None):
+        self.innerRegion = innerRegion
         self.region = region
         self.northN = north
         self.southN = south

@@ -21,6 +21,7 @@ from Robot_Toolbox.Door import *
 from Robot_Toolbox.Corridor import *
 from Robot_Toolbox.Neighbour import *
 from Robot_Toolbox.Relation import *
+from Robot_Toolbox.PositionL import *
 
 ###############################################################################
 # Main process
@@ -115,29 +116,29 @@ if __name__ == '__main__':
     # Define relations between regions respectively their parts
     ###########################################################################
     Relations = Relation()
-    Relations.putRelation(Neighbour(Office, None, None, None, OfficeCdoor))
-    Relations.putRelation(Neighbour(Parents1, None, ParentsCdoor, None, Parents2))
-    Relations.putRelation(Neighbour(Parents2, None, None, Parents1, ParentsBdoor))
-    Relations.putRelation(Neighbour(Bath1, None, Bath2, BathSdoor))
-    Relations.putRelation(Neighbour(Bath2, Bath1, BathCdoor, ParentsBdoor))
-    Relations.putRelation(Neighbour(Shower, None, None, None, BathSdoor))
-    Relations.putRelation(Neighbour(Living1, None, Living2, LivingCdoor))
-    Relations.putRelation(Neighbour(Living2, Living1, None, KitchenLdoor))
-    Relations.putRelation(Neighbour(Kitchen, KitchenCdoor, None, None, KitchenLdoor))
-    Relations.putRelation(Neighbour(Corridor1, ParentsCdoor, None, OfficeCdoor, Corridor2))
-    Relations.putRelation(Neighbour(Corridor2, Corridor3, CellerCdoor, Corridor1, Corridor4))
-    Relations.putRelation(Neighbour(Corridor3, BathCdoor, Corridor2))
-    Relations.putRelation(Neighbour(Corridor4, None, KitchenCdoor, Corridor2, LivingCdoor))
+    Relations.putRelation(Neighbour(Office, None, None, None, None, OfficeCdoor))
+    Relations.putRelation(Neighbour(Parents1, None, None, ParentsCdoor, None, Parents2))
+    Relations.putRelation(Neighbour(Parents2, None, None, None, Parents1, ParentsBdoor))
+    Relations.putRelation(Neighbour(Bath1, None, None, Bath2, BathSdoor))
+    Relations.putRelation(Neighbour(Bath2, None, Bath1, BathCdoor, ParentsBdoor))
+    Relations.putRelation(Neighbour(Shower, None, None, None, None, BathSdoor))
+    Relations.putRelation(Neighbour(Living1, None, None, Living2, LivingCdoor))
+    Relations.putRelation(Neighbour(Living2, None, Living1, None, KitchenLdoor))
+    Relations.putRelation(Neighbour(Kitchen, None, KitchenCdoor, None, None, KitchenLdoor))
+    Relations.putRelation(Neighbour(Corridor1, None, ParentsCdoor, None, OfficeCdoor, Corridor2))
+    Relations.putRelation(Neighbour(Corridor2, None, Corridor3, CellerCdoor, Corridor1, Corridor4))
+    Relations.putRelation(Neighbour(Corridor3, None, BathCdoor, Corridor2))
+    Relations.putRelation(Neighbour(Corridor4, None, None, KitchenCdoor, Corridor2, LivingCdoor))
 
-    Relations.putRelation(Neighbour(OfficeCdoor, None, None, Office, Corridor1))
-    Relations.putRelation(Neighbour(ParentsBdoor, None, None, Parents2, Bath2))
-    Relations.putRelation(Neighbour(ParentsCdoor, Parents1, Corridor1))
-    Relations.putRelation(Neighbour(BathCdoor, Bath2, Corridor3))
-    Relations.putRelation(Neighbour(BathSdoor, None, None, Shower, Bath1))
-    Relations.putRelation(Neighbour(CellerCdoor, Corridor2))
-    Relations.putRelation(Neighbour(KitchenCdoor, Corridor4, Kitchen))
+    Relations.putRelation(Neighbour(OfficeCdoor, None, None, None, Office, Corridor1))
+    Relations.putRelation(Neighbour(ParentsBdoor, None, None, None, Parents2, Bath2))
+    Relations.putRelation(Neighbour(ParentsCdoor, None, Parents1, Corridor1))
+    Relations.putRelation(Neighbour(BathCdoor, None, Bath2, Corridor3))
+    Relations.putRelation(Neighbour(BathSdoor, None, None, None, Shower, Bath1))
+    Relations.putRelation(Neighbour(CellerCdoor, None, Corridor2))
+    Relations.putRelation(Neighbour(KitchenCdoor, None, Corridor4, Kitchen))
     Relations.putRelation(Neighbour(KitchenLdoor, None, None, Kitchen, Living2))
-    Relations.putRelation(Neighbour(LivingCdoor, None, None, Corridor4, Living1))
+    Relations.putRelation(Neighbour(LivingCdoor, None, None, None, Corridor4, Living1))
 
     # Define hierarchical dependencies
     ###########################################################################
@@ -174,9 +175,20 @@ if __name__ == '__main__':
     Relations.putRelation(Neighbour(Building, GroundFloor))
     Relations.putRelation(Neighbour(Building, FirstFloor))
 
+    Scale = 2.5    # Scale 1/x between real cm and canvas px
+
     R = []
     Relations.getRegions(GroundFloor, R)
-    canvasRect = Relations.transformRegionsToCanvasRect(2.5, R)
+    canvasRect = Relations.transformRegionsToCanvasRect(Scale, R)
+
+    # Define positions
+    ###########################################################################
+
+    Positions = PositionL()
+    Positions.generatePositions(Relations, GroundFloor, Door)
+    Positions.generatePositions(Relations, GroundFloor, Room)
+    Positions.generatePositions(Relations, GroundFloor, Corridor)
+    canvasCircle = Positions.transformPositionsToCanvasCircle(Scale, Positions)
 
     # Endless loop of main program
     while True:
@@ -187,8 +199,14 @@ if __name__ == '__main__':
                 result = result.replace("I@", "")
                 print (result)
 
-            if result.find("R@") == 0:
+            elif result.find("R@") == 0:
                 # map data required
                 WMQueue.put(canvasRect)
 
+            elif result.find("C@") == 0:
+                # position data reqired
+                WMQueue.put(canvasCircle)
+
+            else:
+                print("Process main: Unknown message at MQueue: " + result)
     ###########################################################################

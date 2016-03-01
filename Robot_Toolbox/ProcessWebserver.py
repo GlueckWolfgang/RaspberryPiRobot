@@ -105,6 +105,11 @@ class ProcessWebserver:
                         self.MQueue.put("R@")
                         output = json.dumps(self.WMQueue.get())
                         self.write(output)
+                    elif url.endswith("/canvasCircleData"):
+                        self.MQueue.put("C@")
+                        output = json.dumps(self.WMQueue.get())
+                        self.write(output)
+
                     else:
                         command = url.split("/")
                         pass

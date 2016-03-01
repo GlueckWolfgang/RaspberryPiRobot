@@ -26,7 +26,17 @@ class Relation:
                 if self.list[i].region.dType == "M":
                     result.append(self.list[i].region)
                 else:
-                    self.getRegions(self.list[i].northN, result)
+                    self.getRegions(self.list[i].innerRegion, result)
+        return
+
+    def getRegionsByClass(self, region, Class, result):
+        for i in range(0, len(self.list)):
+            if self.list[i].region == region:
+                if self.list[i].region.dType == "M"\
+                and isinstance(self.list[i].region, Class):
+                    result.append(self.list[i].region)
+                else:
+                    self.getRegionsByClass(self.list[i].innerRegion, Class, result)
         return
 
     def transformRegionsToCanvasRect(self, scale, table):

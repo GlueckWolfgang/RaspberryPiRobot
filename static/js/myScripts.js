@@ -94,6 +94,7 @@ $(document).ready(function(){
     $("#tabs").on("tabsload", (function(event,ui) {
         if (ui.panel.attr("id")==='ui-id-3') {
             MapCanvasRectData();
+            MapCanvasCircleData();
         }
     }));
             
@@ -243,6 +244,36 @@ function MapCanvasRectData(){
                                  parameterList[1][1],
                                  parameterList[1][2],
                                  parameterList[1][3]);
+                });
+            },
+            error: function (jqXhr, textStatus, errorThrown) {
+                console.log("function Map called with error")
+            }
+        });
+    }
+}
+
+function MapCanvasCircleData(){
+    var active = $('#tabs').tabs( "option", "active" );
+    if  (active == 2) {
+        $.ajax({
+            type: 'GET',
+            url: '/ajax/Map/canvasCircleData',
+            async: true,
+            dataType: "JSON",
+            success: function(obj, textstatus, jqXhr) {
+                table = eval("(" + jqXhr.responseText + ")");
+                var c = document.getElementById("Map");
+                var ctx = c.getContext("2d");
+                $.each(table, function(i,parameterList) { 
+                    ctx.fillStyle = parameterList[0];            
+                    ctx.beginPath();
+                    ctx.arc(parameterList[1],
+                    parameterList[2],
+                    parameterList[3],
+                    parameterList[4],
+                    parameterList[5]);
+                    ctx.stroke();                    
                 });
             },
             error: function (jqXhr, textStatus, errorThrown) {
