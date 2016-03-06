@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ###############################################################################
 # Class of Relations
-# Version:  2016.02.25
+# Version:  2016.03.06
 #
 # relations between regions respectively their parts
 #
@@ -19,6 +19,13 @@ class Relation:
     def putRelation(self, relation):
         self.list.append(relation)
         return
+
+    def getRelation(self, Region):
+        for i in range(0, len(self.list)):
+            Relation = self.list[i]
+            if Relation.region == Region:
+                return self.list[i]
+        return None
 
     def getRegions(self, region, result):
         for i in range(0, len(self.list)):

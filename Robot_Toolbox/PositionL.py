@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ###############################################################################
 # Class of PositionL
-# Version:  2016.02.29
+# Version:  2016.03.06
 #
 #
 ###############################################################################
@@ -21,29 +21,40 @@ class PositionL:
         result = []
         Relations.getRegionsByClass(Region, Class, result)
         for i in range(0, len(result)):
+            # Region
             R = result[i]
+            # Relation
+            Relation = Relations.getRelation(R)
             if isinstance(R, Door):
                 if R.widthM < R.heightM:
                     # door direction is N/S
                     y = R.yM
                     x = R.xM - R.widthM / 2 - self.dw
                     position = Position(round(x), y)
-                    self.list.append(position)
+                    # east
+                    if Relation.eastN is not None:
+                        self.list.append(position)
 
                     x = R.xM + R.widthM / 2 + self.dw
                     position = Position(round(x), y)
-                    self.list.append(position)
+                    # west
+                    if Relation.westN is not None:
+                        self.list.append(position)
                 else:
                     # door direction is W/E
                     x = R.xM
 
                     y = R.yM - R.heightM / 2 - self.dw
                     position = Position(x, round(y))
-                    self.list.append(position)
+                    # north
+                    if Relation.northN is not None:
+                        self.list.append(position)
 
                     y = R.yM + R.heightM / 2 + self.dw
                     position = Position(x, round(y))
-                    self.list.append(position)
+                    # south
+                    if Relation.southN is not None:
+                        self.list.append(position)
 
             elif isinstance(R, Room):
                 pass

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ###############################################################################
 # Raspberry Robot Program
-# Version: 2016_02_24
+# Version: 2016_03_06
 # Creator: Wolfgang Glück
 ###############################################################################
 import multiprocessing as mp
@@ -112,6 +112,7 @@ if __name__ == '__main__':
     KitchenCdoor = Door("M", 35.5, 627, 542, 77, 12)
     KitchenLdoor = Door("M", 35.5, 877, 751, 12, 77)
     LivingCdoor = Door("M", 35.5, 674, 461, 12, 120)
+    LivingTdoor = Door("M", 33.5, 841, 41, 110, 12)
 
     # Define relations between regions respectively their parts
     ###########################################################################
@@ -122,7 +123,7 @@ if __name__ == '__main__':
     Relations.putRelation(Neighbour(Bath1, None, None, Bath2, BathSdoor))
     Relations.putRelation(Neighbour(Bath2, None, Bath1, BathCdoor, ParentsBdoor))
     Relations.putRelation(Neighbour(Shower, None, None, None, None, BathSdoor))
-    Relations.putRelation(Neighbour(Living1, None, None, Living2, LivingCdoor))
+    Relations.putRelation(Neighbour(Living1, None, LivingTdoor, Living2, LivingCdoor))
     Relations.putRelation(Neighbour(Living2, None, Living1, None, KitchenLdoor))
     Relations.putRelation(Neighbour(Kitchen, None, KitchenCdoor, None, None, KitchenLdoor))
     Relations.putRelation(Neighbour(Corridor1, None, ParentsCdoor, None, OfficeCdoor, Corridor2))
@@ -137,8 +138,9 @@ if __name__ == '__main__':
     Relations.putRelation(Neighbour(BathSdoor, None, None, None, Shower, Bath1))
     Relations.putRelation(Neighbour(CellerCdoor, None, Corridor2))
     Relations.putRelation(Neighbour(KitchenCdoor, None, Corridor4, Kitchen))
-    Relations.putRelation(Neighbour(KitchenLdoor, None, None, Kitchen, Living2))
+    Relations.putRelation(Neighbour(KitchenLdoor, None, None, None, Kitchen, Living2))
     Relations.putRelation(Neighbour(LivingCdoor, None, None, None, Corridor4, Living1))
+    Relations.putRelation(Neighbour(LivingTdoor, None, None, Living1, None, None))
 
     # Define hierarchical dependencies
     ###########################################################################
@@ -171,6 +173,8 @@ if __name__ == '__main__':
     Relations.putRelation(Neighbour(GroundFloor, KitchenCdoor))
     Relations.putRelation(Neighbour(GroundFloor, KitchenLdoor))
     Relations.putRelation(Neighbour(GroundFloor, LivingCdoor))
+    Relations.putRelation(Neighbour(GroundFloor, LivingTdoor))
+
 
     Relations.putRelation(Neighbour(Building, GroundFloor))
     Relations.putRelation(Neighbour(Building, FirstFloor))

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ###############################################################################
 # Class of Position
-# Version:  2016.02.29
+# Version:  2016.03.04
 #
 # x, y      the coordinates of the position
 #
@@ -14,6 +14,15 @@ class Position:
         self.r = 2.5
         self.x = x
         self.y = y
+        self.inRegion = None
+        self.localNorthOf = None
+        self.localSouthOf = None
+        self.localWestOf = None
+        self.localEastOf = None
+        self.localNorthSideOf = None
+        self.localSouthSideOf = None
+        self.localWestSideOf = None
+        self.localEastSideOf = None
 
     def __str__(self):
         nachricht = "Class position"
