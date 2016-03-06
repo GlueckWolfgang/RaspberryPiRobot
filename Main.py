@@ -112,7 +112,7 @@ if __name__ == '__main__':
     KitchenCdoor = Door("M", 35.5, 627, 542, 77, 12)
     KitchenLdoor = Door("M", 35.5, 877, 751, 12, 77)
     LivingCdoor = Door("M", 35.5, 674, 461, 12, 120)
-    LivingTdoor = Door("M", 33.5, 841, 41, 110, 12)
+    LivingTdoor = Door("M", 33.5, 841, 29, 110, 12)
 
     # Define relations between regions respectively their parts
     ###########################################################################

@@ -33,12 +33,14 @@ class PositionL:
                     position = Position(round(x), y)
                     # east
                     if Relation.eastN is not None:
+                        position.inRegion = Relation.eastN
                         self.list.append(position)
 
                     x = R.xM + R.widthM / 2 + self.dw
                     position = Position(round(x), y)
                     # west
                     if Relation.westN is not None:
+                        position.inRegion = Relation.westN
                         self.list.append(position)
                 else:
                     # door direction is W/E
@@ -48,12 +50,14 @@ class PositionL:
                     position = Position(x, round(y))
                     # north
                     if Relation.northN is not None:
+                        position.inRegion = Relation.northN
                         self.list.append(position)
 
                     y = R.yM + R.heightM / 2 + self.dw
                     position = Position(x, round(y))
                     # south
                     if Relation.southN is not None:
+                        position.inRegion = Relation.southN
                         self.list.append(position)
 
             elif isinstance(R, Room):
