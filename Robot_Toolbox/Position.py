@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ###############################################################################
 # Class of Position
-# Version:  2016.03.04
+# Version:  2016.03.08
 #
 # x, y      the coordinates of the position
 #
@@ -19,6 +19,7 @@ class Position:
         self.localSouthOf = None
         self.localWestOf = None
         self.localEastOf = None
+
         self.localNorthSideOf = None
         self.localSouthSideOf = None
         self.localWestSideOf = None

@@ -79,25 +79,24 @@ if __name__ == '__main__':
     # x/y = 35/0 is located at the inner left top corner of the building
     # deviation from north direction is 35.5 degrees
 
-    Building = Region("I", 35.5, 0, 0, 1236, 920)
+    Building = Region("I", 35.5, 618, 460, 1236, 920)
     GroundFloor = Region("I", 35.5, 0, 0)
     # First floor is empty
     FirstFloor = Region("I", 35.5, 0, 0)
-    FirstFloor = Region("M", 35.5, 0, 0, 1236, 920)
 
     Office = Room("M", 35.5, 148, 684, 295, 472)
-    Parents = Room("I", 35.5, 35, 0)
+    Parents = Room("I", 35.5, 0, 0)
     Parents1 = Room("M", 35.5, 210, 186, 349, 372)
     Parents2 = Room("M", 35.5, 417, 253, 65, 237)
-    Bath = Room("I", 35.5, 500, 70)
+    Bath = Room("I", 35.5, 0, 0)
     Bath1 = Room("M", 35.5, 580, 64, 178, 127)
     Bath2 = Room("M", 35.5, 566, 220, 206, 186)
     Shower = Room("M", 35.5, 442, 61, 92, 122)
-    Living = Room("I", 35.5, 685, 70)
+    Living = Room("I", 35.5, 0, 0)
     Living1 = Room("M", 35.5, 932, 286, 502, 501)
     Living2 = Room("M", 35.5, 1034, 698, 299, 324)
     Kitchen = Room("M", 35.5, 694, 704, 352, 310)
-    Hall = Corridor("I", 35.5, 309, 376)
+    Hall = Corridor("I", 35.5, 0, 0)
     Corridor1 = Corridor("M", 35.5, 355, 492, 96, 210)
     Corridor2 = Corridor("M", 35.5, 497, 461, 189, 148)
     Corridor3 = Corridor("M", 35.5, 513, 358, 101, 60)
@@ -174,7 +173,6 @@ if __name__ == '__main__':
     Relations.putRelation(Neighbour(GroundFloor, KitchenLdoor))
     Relations.putRelation(Neighbour(GroundFloor, LivingCdoor))
     Relations.putRelation(Neighbour(GroundFloor, LivingTdoor))
-
 
     Relations.putRelation(Neighbour(Building, GroundFloor))
     Relations.putRelation(Neighbour(Building, FirstFloor))
