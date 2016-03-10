@@ -266,7 +266,8 @@ function MapCanvasCircleData(){
                 var c = document.getElementById("Map");
                 var ctx = c.getContext("2d");
                 $.each(table, function(i,parameterList) { 
-                    ctx.fillStyle = parameterList[0];            
+                    ctx.fillStyle = parameterList[0]; 
+                    ctx.strokeStyle = parameterList[0];           
                     ctx.beginPath();
                     ctx.arc(parameterList[1],
                     parameterList[2],
