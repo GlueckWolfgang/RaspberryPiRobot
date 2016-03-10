@@ -66,15 +66,37 @@ class PositionL:
 
             elif isinstance(R, Room):
                 # R = result[i]
-                # get position pairs from self.list
+                # get positions from self.list
                 positions = []
                 for j in range(0, len(self.list)):
                     if self.list[j].inRegion == R:
                         # position for R found
                         positions.append(self.list[j])
-                pos = None
+
+                if len(positions) == 1:
+                    # R = result[i]
+                    # Relation = Relations.getRelation(R)
+                    # search for a neighbour region with class Room
+                    neighbourR = None
+                    if isinstance(Relation.northN, Room):
+                        neighbourR = Relation.northN
+                    elif isinstance(Relation.southN, Room):
+                        neighbourR = Relation.southN
+                    elif isinstance(Relation.westN, Room):
+                        neighbourR = Relation.westN
+                    elif isinstance(Relation.eastN, Room):
+                        neighbourR = Relation.eastN
+                    if neighbourR is not None:
+                        # neighbour room found
+                        # search for positions in neighbour room
+                        for k in range(0, len(self.list)):
+                            if self.list[k].inRegion == neighbourR:
+                                # position for neighbour found
+                                positions.append(self.list[k])
+
                 if len(positions) == 2:
-                    # 2 positions for R found
+                    pos = None
+                    # 2 positions for R or R and neighbour found
                     if positions[0].localNorthSideOf is not None\
                     and positions[1].localWestSideOf is not None:
                         # N/W
@@ -132,16 +154,15 @@ class PositionL:
                         pos = Position(x, y)
 
                     if pos is not None:
-                        pos.inRegion = R
+                        # select pos.inRegion *******************************
+                        if  (x >= R.xM - round(R.widthM / 2))\
+                        and (x <= R.xM + round(R.widthM / 2))\
+                        and (y >= R.yM - round(R.heightM / 2))\
+                        and (y <= R.yM + round(R.heightM / 2)):
+                            pos.inRegion = R
+                        else:
+                            pos.inRegion = neighbourR
                         self.list.append(pos)
-
-                if len(positions) == 1:
-                    pass
-
-
-
-
-
 
             elif isinstance(R, Corridor):
                 pass
