@@ -12,8 +12,8 @@
 
 class Neighbour:
     def __init__(self, region, innerRegion, north=None, south=None, west=None, east=None):
-        self.innerRegion = innerRegion
         self.region = region
+        self.innerRegion = innerRegion
         self.northN = north
         self.southN = south
         self.westN = west
