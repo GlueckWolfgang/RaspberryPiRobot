@@ -187,6 +187,11 @@ if __name__ == '__main__':
     ###########################################################################
 
     Positions = PositionL()
+    Base = Position(78, 684)
+    Base.r = 5
+    Base.inRegion = Office
+    Base.localSouthSideOf = Office
+    Positions.list.append(Base)
     Positions.generatePositions(Relations, GroundFloor, Door)
     Positions.generatePositions(Relations, GroundFloor, Room)
     Positions.generatePositions(Relations, GroundFloor, Corridor)

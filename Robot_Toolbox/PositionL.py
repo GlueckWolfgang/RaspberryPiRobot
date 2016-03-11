@@ -31,47 +31,47 @@ class PositionL:
 
                     # door direction is N/S
                     y = R.yM
-                    x = R.xM + R.widthM / 2 + self.dwr
-                    position = Position(round(x), y)
+                    x = R.xM + round(R.widthM / 2) + self.dwr
+                    position = Position(x, y)
                     # east
                     if Relation.eastN is not None:
                         position.inRegion = Relation.eastN
                         position.localWestSideOf = Relation.eastN
                         if isinstance(position.inRegion, Corridor):
-                            position.x = round(R.xM + R.widthM / 2 + self.dwc)
+                            position.x = R.xM + round(R.widthM / 2) + self.dwc
                         self.list.append(position)
 
-                    x = R.xM - R.widthM / 2 - self.dwr
-                    position = Position(round(x), y)
+                    x = R.xM - round(R.widthM / 2) - self.dwr
+                    position = Position(x, y)
                     # west
                     if Relation.westN is not None:
                         position.inRegion = Relation.westN
                         position.localEastSideOf = Relation.westN
                         if isinstance(position.inRegion, Corridor):
-                            position.x = round(R.xM - R.widthM / 2 - self.dwc)
+                            position.x = R.xM - round(R.widthM / 2) - self.dwc
                         self.list.append(position)
                 else:
                     # door direction is W/E
                     x = R.xM
 
-                    y = R.yM - R.heightM / 2 - self.dwr
-                    position = Position(x, round(y))
+                    y = R.yM - round(R.heightM / 2) - self.dwr
+                    position = Position(x, y)
                     # north
                     if Relation.northN is not None:
                         position.inRegion = Relation.northN
                         position.localSouthSideOf = Relation.northN
                         if isinstance(position.inRegion, Corridor):
-                            position.y = round(R.yM - R.heightM / 2 - self.dwc)
+                            position.y = R.yM - round(R.heightM / 2) - self.dwc
                         self.list.append(position)
 
-                    y = R.yM + R.heightM / 2 + self.dwr
-                    position = Position(x, round(y))
+                    y = R.yM + round(R.heightM / 2) + self.dwr
+                    position = Position(x, y)
                     # south
                     if Relation.southN is not None:
                         position.inRegion = Relation.southN
                         position.localNorthSideOf = Relation.southN
                         if isinstance(position.inRegion, Corridor):
-                            position.y = round(R.yM - R.heightM / 2 + self.dwc)
+                            position.y = R.yM + round(R.heightM / 2) + self.dwc
                         self.list.append(position)
 
             elif isinstance(R, Room):
