@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ###############################################################################
 # Raspberry Robot Program
-# Version: 2016_03_10
+# Version: 2016_03_11
 # Creator: Wolfgang Glück
 ###############################################################################
 import multiprocessing as mp
@@ -192,6 +192,7 @@ if __name__ == '__main__':
     Base.inRegion = Office
     Base.localSouthSideOf = Office
     Positions.list.append(Base)
+
     Positions.generatePositions(Relations, GroundFloor, Door)
     Positions.generatePositions(Relations, GroundFloor, Room)
     Positions.generatePositions(Relations, GroundFloor, Corridor)
