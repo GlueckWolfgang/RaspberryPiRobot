@@ -18,6 +18,34 @@ class PositionL:
         self.dwr = 61.0    # wall distance room(42cm furniture + 19cm Robot)
         self.dwc = 30.0    # wall distance corridor (30 cm Robot)
 
+    def generateLocalDirectionOf(self, Class, navpointList, Relations):
+            # generate navpoint relations "localDirectionOf"  neigbour regions
+            #*****************************************************************
+
+            for j in range(0, len(navpointList)):
+                # Region
+                R = navpointList[j]
+                if isinstance(R, Class):
+                    # Relation
+                    Relation = Relations.getRelation(R)
+
+                    # selected region is from Class
+                    for k in range(0, len(self.list)):
+                        if self.list[k].inRegion == R:
+                            # for all own navpoints
+                            # if neighbour is from same Class only
+                            if isinstance(Relation.northN, Class):
+                                self.list[k].localSouthOf = Relation.northN
+
+                            if isinstance(Relation.southN, Class):
+                                self.list[k].localNorthOf = Relation.southN
+
+                            if isinstance(Relation.westN, Class):
+                                self.list[k].localEastOf = Relation.westN
+
+                            if isinstance(Relation.eastN, Class):
+                                self.list[k].localWestOf = Relation.eastN
+
     def generatePositions(self, Relations, Region, Class):
         result = []
         Relations.getRegionsByClass(Region, Class, result)
@@ -164,29 +192,7 @@ class PositionL:
             # for room parts only
             #**********************************************************
 
-            for j in range(0, len(result)):
-                # Region
-                R = result[j]
-                if isinstance(R, Room):
-                    # Relation
-                    Relation = Relations.getRelation(R)
-
-                    # selected region is a room
-                    for k in range(0, len(self.list)):
-                        if self.list[k].inRegion == R:
-                            # for all own navpoints
-                            # if neighbour is a room too only
-                            if isinstance(Relation.northN, Room):
-                                self.list[k].localSouthOf = Relation.northN
-
-                            if isinstance(Relation.southN, Room):
-                                self.list[k].localNorthOf = Relation.southN
-
-                            if isinstance(Relation.westN, Room):
-                                self.list[k].localEastOf = Relation.westN
-
-                            if isinstance(Relation.eastN, Room):
-                                self.list[k].localWestOf = Relation.eastN
+            self.generateLocalDirectionOf(Room, result, Relations)
 
             # generate additional navpoints between room parts (N/S, W/E)
             # *********************************************************
@@ -434,29 +440,8 @@ class PositionL:
             # generate navpoint relations "localDirectionOf"  neigbour regions
             # for corrdidor parts only
             # *****************************************************************
-            for i in range(0, len(result)):
-                # Region
-                R = result[i]
-                if isinstance(R, Corridor):
-                    # Relation
-                    Relation = Relations.getRelation(R)
-                    # selected region is a corridor
-                    for j in range(0, len(self.list)):
-                        if self.list[j].inRegion == R:
-                            # for all own navpoints
-                            # if neighbour is a corridor too only
-                            if isinstance(Relation.northN, Corridor):
-                                self.list[j].localSouthOf = Relation.northN
 
-                            if isinstance(Relation.southN, Corridor):
-                                self.list[j].localNorthOf = Relation.southN
-
-                            if isinstance(Relation.westN, Corridor):
-                                self.list[j].localEastOf = Relation.westN
-
-                            if isinstance(Relation.eastN, Corridor):
-                                self.list[j].localWestOf = Relation.eastN
-
+            self.generateLocalDirectionOf(Corridor, result, Relations)
 
             # generate additional navpoints between corridor parts (N/S, W/E)
             # *****************************************************************

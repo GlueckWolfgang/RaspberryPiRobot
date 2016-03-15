@@ -79,39 +79,39 @@ if __name__ == '__main__':
     # x/y = 35/0 is located at the inner left top corner of the building
     # deviation from north direction is 35.5 degrees
 
-    Building = Region("I", 35.5, 618, 460, 1236, 920)
-    GroundFloor = Region("I", 35.5, 0, 0)
+    Building = Region("Building", "I", 35.5, 618, 460, 1236, 920)
+    GroundFloor = Region("Ground floor", "I", 35.5, 0, 0)
     # First floor is empty
-    FirstFloor = Region("I", 35.5, 0, 0)
+    FirstFloor = Region("First floor", "I", 35.5, 0, 0)
 
-    Office = Room("M", 35.5, 148, 684, 295, 472)
-    Parents = Room("I", 35.5, 0, 0)
-    Parents1 = Room("M", 35.5, 210, 186, 349, 372)
-    Parents2 = Room("M", 35.5, 417, 253, 65, 237)
-    Bath = Room("I", 35.5, 0, 0)
-    Bath1 = Room("M", 35.5, 580, 64, 178, 127)
-    Bath2 = Room("M", 35.5, 566, 220, 206, 186)
-    Shower = Room("M", 35.5, 442, 61, 92, 122)
-    Living = Room("I", 35.5, 0, 0)
-    Living1 = Room("M", 35.5, 932, 286, 502, 501)
-    Living2 = Room("M", 35.5, 1034, 698, 299, 324)
-    Kitchen = Room("M", 35.5, 694, 704, 352, 310)
-    Hall = Corridor("I", 35.5, 0, 0)
-    Corridor1 = Corridor("M", 35.5, 355, 492, 96, 210)
-    Corridor2 = Corridor("M", 35.5, 497, 461, 189, 148)
-    Corridor3 = Corridor("M", 35.5, 513, 358, 101, 60)
-    Corridor4 = Corridor("M", 35.5, 630, 461, 77, 148)
+    Office = Room("Office", "M", 35.5, 148, 684, 295, 472)
+    Parents = Room("Parents", "I", 35.5, 0, 0)
+    Parents1 = Room("Parents1", "M", 35.5, 210, 186, 349, 372)
+    Parents2 = Room("Parents2", "M", 35.5, 417, 253, 65, 237)
+    Bath = Room("Bath", "I", 35.5, 0, 0)
+    Bath1 = Room("Bath1", "M", 35.5, 580, 64, 178, 127)
+    Bath2 = Room("Bath2", "M", 35.5, 566, 220, 206, 186)
+    Shower = Room("Shower", "M", 35.5, 442, 61, 92, 122)
+    Living = Room("Living", "I", 35.5, 0, 0)
+    Living1 = Room("Living1", "M", 35.5, 932, 286, 502, 501)
+    Living2 = Room("Living1", "M", 35.5, 1034, 698, 299, 324)
+    Kitchen = Room("Kitchen", "M", 35.5, 694, 704, 352, 310)
+    Hall = Corridor("Hall", "I", 35.5, 0, 0)
+    Corridor1 = Corridor("Corridor1", "M", 35.5, 355, 492, 96, 210)
+    Corridor2 = Corridor("Corridor2", "M", 35.5, 497, 461, 189, 148)
+    Corridor3 = Corridor("Corridor3", "M", 35.5, 513, 358, 101, 60)
+    Corridor4 = Corridor("Corridor4", "M", 35.5, 630, 461, 77, 148)
 
-    OfficeCdoor = Door("M", 35.5, 301, 549, 12, 82)
-    ParentsBdoor = Door("M", 35.5, 455, 184, 12, 77)
-    ParentsCdoor = Door("M", 35.5, 350, 382, 82, 12)
-    BathSdoor = Door("M", 35.5, 490, 96, 3, 52)
-    BathCdoor = Door("M", 35.5, 512, 322, 77, 12)
-    CellerCdoor = Door("M", 35.5, 461, 542, 82, 12)
-    KitchenCdoor = Door("M", 35.5, 627, 542, 77, 12)
-    KitchenLdoor = Door("M", 35.5, 877, 751, 12, 77)
-    LivingCdoor = Door("M", 35.5, 674, 461, 12, 120)
-    LivingTdoor = Door("M", 33.5, 841, 29, 110, 12)
+    OfficeCdoor = Door("Office door", "M", 35.5, 301, 549, 12, 82)
+    ParentsBdoor = Door("Parents bath door", "M", 35.5, 455, 184, 12, 77)
+    ParentsCdoor = Door("Parents corridor door", "M", 35.5, 350, 382, 82, 12)
+    BathSdoor = Door("Bath shower door", "M", 35.5, 490, 96, 3, 52)
+    BathCdoor = Door("Bath corridor door", "M", 35.5, 512, 322, 77, 12)
+    CellerCdoor = Door("Celler door", "M", 35.5, 461, 542, 82, 12)
+    KitchenCdoor = Door("Kitchen corridor door", "M", 35.5, 627, 542, 77, 12)
+    KitchenLdoor = Door("Kitchen living door", "M", 35.5, 877, 751, 12, 77)
+    LivingCdoor = Door("Living corridor door", "M", 35.5, 674, 461, 12, 120)
+    LivingTdoor = Door("Living terrace door", "M", 33.5, 841, 29, 110, 12)
 
     # Define relations between regions respectively their parts
     ###########################################################################
@@ -197,6 +197,7 @@ if __name__ == '__main__':
     Positions.generatePositions(Relations, GroundFloor, Room)
     Positions.generatePositions(Relations, GroundFloor, Corridor)
     canvasCircle = Positions.transformPositionsToCanvasCircle(Scale, Positions)
+
 
     # Endless loop of main program
     while True:
