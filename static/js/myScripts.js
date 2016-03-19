@@ -1,5 +1,5 @@
 // TABS
-// Version: 2016_02_26
+// Version: 2016_03_19
 $(document).ready(function(){
     console.log("function tabs called");
     $('#tabs').tabs({active: 1});

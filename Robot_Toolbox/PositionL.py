@@ -238,24 +238,15 @@ class PositionL:
                             if len(positions) > 1:
                                 # find closest to the first point
                                 k = 1
-                                dx = positions[0].x - positions[1].x
-                                if dx < 0:
-                                    dx = dx * - 1
-                                dy = positions[0].y - positions[1].y
-                                if dy < 0:
-                                    dy = dy * - 1
+                                dx = abs(positions[0].x - positions[1].x)
+                                dy = abs(positions[0].y - positions[1].y)
                                 if (dx == 0) or (dy == 0):
                                     # point already on line for x or y
                                     positions = []
                                 else:
                                     for n in range(2, len(positions)):
-                                        dxl = positions[0].x - positions[n].x
-                                        if dxl < 0:
-                                            dxl = dxl * - 1
-                                        dyl = positions[0].y - positions[n].y
-                                        if dyl < 0:
-                                            dyl = dyl * - 1
-
+                                        dxl = abs(positions[0].x - positions[n].x)
+                                        dyl = abs(positions[0].y - positions[n].y)
                                         if  (dxl < dx)\
                                         or (dyl < dy):
                                             # closer point found
@@ -487,24 +478,15 @@ class PositionL:
                             if len(positions) > 1:
                                 # find closest to the first point
                                 k = 1
-                                dx = positions[0].x - positions[1].x
-                                if dx < 0:
-                                    dx = dx * - 1
-                                dy = positions[0].y - positions[1].y
-                                if dy < 0:
-                                    dy = dy * - 1
+                                dx = abs(positions[0].x - positions[1].x)
+                                dy = abs(positions[0].y - positions[1].y)
                                 if (dx == 0) or (dy == 0):
                                     # point already on line for x or y
                                     positions = []
                                 else:
                                     for n in range(2, len(positions)):
-                                        dxl = positions[0].x - positions[n].x
-                                        if dxl < 0:
-                                            dxl = dxl * - 1
-                                        dyl = positions[0].y - positions[n].y
-                                        if dyl < 0:
-                                            dyl = dyl * - 1
-
+                                        dxl = abs(positions[0].x - positions[n].x)
+                                        dyl = abs(positions[0].y - positions[n].y)
                                         if  (dxl < dx)\
                                         or (dyl < dy):
                                             # closer point found

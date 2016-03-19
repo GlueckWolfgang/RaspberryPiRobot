@@ -22,6 +22,8 @@ from Robot_Toolbox.Corridor import *
 from Robot_Toolbox.Neighbour import *
 from Robot_Toolbox.Relation import *
 from Robot_Toolbox.PositionL import *
+from Robot_Toolbox.EdgeL import *
+
 
 ###############################################################################
 # Main process
@@ -197,6 +199,11 @@ if __name__ == '__main__':
     Positions.generatePositions(Relations, GroundFloor, Room)
     Positions.generatePositions(Relations, GroundFloor, Corridor)
     canvasCircle = Positions.transformPositionsToCanvasCircle(Scale, Positions)
+
+    # Define edges
+    ###########################################################################
+    Edges = EdgeL()
+    Edges.generateEdges(Positions)
 
 
     # Endless loop of main program
