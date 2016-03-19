@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ###############################################################################
 # Class of PositionL
-# Version:  2016.03.15
+# Version:  2016.03.19
 #
 #
 ###############################################################################
@@ -17,6 +17,12 @@ class PositionL:
         self.list = []
         self.dwr = 61.0    # wall distance room(42cm furniture + 19cm Robot)
         self.dwc = 30.0    # wall distance corridor (30 cm Robot)
+
+
+    def reset(self):
+        for i in range(0, len(self.list)):
+            self.list[i].done = False
+        return
 
     def generateLocalDirectionOf(self, Class, navpointList, Relations):
             # generate navpoint relations "localDirectionOf"  neigbour regions
@@ -613,8 +619,20 @@ class PositionL:
         result = []
         for i in range(0, len(positions.list)):
             region = positions.list[i]
-            result.append([region.color,
-                           round(region.x / scale),
-                           round(region.y / scale),
-                           round(region.r / scale), 0, 2 * math.pi])
+            Buffer = []
+            if region.disabled:
+                # color for disabled
+                Buffer.append(region.disabledColor)
+            else:
+                Buffer.append(region.color)
+            Buffer.append(round(region.x / scale))
+            Buffer.append(round(region.y / scale))
+            if region.disabled:
+                # r for disabled
+                Buffer.append(round(region.disabledR / scale))
+            else:
+                Buffer.append(round(region.r / scale))
+            Buffer.append(0)
+            Buffer.append(2 * math.pi)
+            result.append(Buffer)
         return result
