@@ -63,37 +63,31 @@ class ProcessStatusAndMeasuredValue:
                 Message = Message.replace("C@", "")
                 status = Message.split("_")
                 operationModeManual = StatusList.getStatusByNumber(19)
-                operationModeExplore = StatusList.getStatusByNumber(20)
                 operationModeTargetMove = StatusList.getStatusByNumber(21)
                 forwardSlow = StatusList.getStatusByNumber(5)
                 forwardHalf = StatusList.getStatusByNumber(6)
                 forwardFull = StatusList.getStatusByNumber(7)
 
-                # stop is always allowed, transition to manual in addition
+                # stop is always allowed
                 if status[1] == "3":
-                        operationModeExplore.stStatus = 0
                         operationModeTargetMove.stStatus = 0
-                        operationModeManual.stStatus = 1
                         statusO = StatusList.getStatusByNumber(int(status[1]))
                         CQueue.put(statusO.stDescription + ": " + "1")
 
                 # change operation mode
-                # transition from explore or target move to manual is allowed
+                # transition from target move to manual is allowed
                 # stop will be sent in addition
                 elif status[1] == "19"\
-                and (operationModeExplore.stStatus == 1
-                or operationModeTargetMove.stStatus == 1):
-                    operationModeExplore.stStatus = 0
+                and operationModeTargetMove.stStatus == 1:
                     operationModeTargetMove.stStatus = 0
                     operationModeManual.stStatus = 1
                     statusO = StatusList.getStatusByNumber(3)
                     CQueue.put(statusO.stDescription + ": " + "1")
 
-                # transition from manual to explore or target move is allowed
+                # transition from manual to target move is allowed
                 elif status[1] == "20"\
                 and operationModeManual.stStatus == 1:
                     operationModeManual.stStatus = 0
-                    operationModeExplore.stStatus = 1
 
                 elif status[1] == "21"\
                 and operationModeManual.stStatus == 1:

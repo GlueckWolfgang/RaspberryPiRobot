@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ###############################################################################
 # Class of EdgeL
-# Version:  2016.03.19
+# Version:  2016.03.20
 #
 #
 ###############################################################################
@@ -54,6 +54,8 @@ class EdgeL:
                     for j in range(0, len(westList)):
                         if (position2.x - position.x) < (westList[j].x - position.x):
                             position2 = westList[j]
+                    # closest position west
+                    position2.angle = 270  # angle from position to position2
                     self.buffer.append(position2)
 
                 if position2 is not position\
@@ -66,6 +68,8 @@ class EdgeL:
                     for j in range(0, len(eastList)):
                         if (position2.x - position.x) > (eastList[j].x - position.x):
                             position2 = eastList[j]
+                    # closest position east
+                    position2.angle = 90  # angle from position to position2
                     self.buffer.append(position2)
 
             # search for closest in y direction N/S x = x'
@@ -80,8 +84,9 @@ class EdgeL:
                     for j in range(0, len(northList)):
                         if (position2.y - position.y) < (northList[j].y - position.y):
                             position2 = northList[j]
+                    # closest position north
+                    position2.angle = 0  # angle from position to position2
                     self.buffer.append(position2)
-
 
                 if position2 is not position\
                 and position2.x == position.x\
@@ -92,6 +97,8 @@ class EdgeL:
                     for j in range(0, len(southList)):
                         if (position2.y - position.y) < (southList[j].y - position.y):
                             position2 = southList[j]
+                    # closest position south
+                    position2.angle = 180  # angle from position to position2
                     self.buffer.append(position2)
 
             # process Buffer
@@ -105,5 +112,5 @@ class EdgeL:
                     weight = abs(position.y - self.buffer[j].y)
                 else:
                     weight = abs(position.x - self.buffer[j].x)
-                self.list.append(Edge(position, self.buffer[j], weight))
+                self.list.append(Edge(position, self.buffer[j], weight, self.buffer[j].angle))
         return

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ###############################################################################
 # Class of Edge
-# Version:  2016.03.16
+# Version:  2016.03.20
 #
 # fromP          from position
 # toP            to position
@@ -12,12 +12,12 @@
 
 
 class Edge:
-    def __init__(self, fromP, toP, weight):
+    def __init__(self, fromP, toP, weight, angle):
 
         self.fromP = fromP
         self.toP = toP
         self.weight = weight
-        self.relativeAngle = 0.0
+        self.relativeAngle = angle
 
     def __str__(self):
         nachricht = "Class edge"

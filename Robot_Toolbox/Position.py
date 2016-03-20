@@ -1,11 +1,12 @@
 # -*- coding: utf-8 -*-
 ###############################################################################
 # Class of Position
-# Version:  2016.03.19
+# Version:  2016.03.20
 #
 # x, y      The coordinates of the position
 # disabled  Position is temporarily not available
 # done      Tag for search algorithm to memorize "already done"
+# angle     relative angle (intermediate storage, finaly stored in edge)
 #
 ###############################################################################
 
@@ -30,6 +31,7 @@ class Position:
         self.localSouthSideOf = None
         self.localWestSideOf = None
         self.localEastSideOf = None
+        self.angle = 0
 
     def __str__(self):
         nachricht = "Class position"
