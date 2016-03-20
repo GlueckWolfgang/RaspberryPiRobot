@@ -114,3 +114,16 @@ class EdgeL:
                     weight = abs(position.x - self.buffer[j].x)
                 self.list.append(Edge(position, self.buffer[j], weight, self.buffer[j].angle))
         return
+
+    def transformEdgesToCanvasLine(self, scale):
+        result = []
+        for i in range(0, len(self.list)):
+            edge = self.list[i]
+            Buffer = []
+            Buffer.append(edge.roadColor)
+            Buffer.append(round(edge.fromP.x / scale))
+            Buffer.append(round(edge.fromP.y / scale))
+            Buffer.append(round(edge.toP.x / scale))
+            Buffer.append(round(edge.toP.y / scale))
+            result.append(Buffer)
+        return result

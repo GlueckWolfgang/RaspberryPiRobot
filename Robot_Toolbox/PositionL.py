@@ -597,10 +597,10 @@ class PositionL:
                                             self.list.append(pos)
         return
 
-    def transformPositionsToCanvasCircle(self, scale, positions):
+    def transformPositionsToCanvasCircle(self, scale):
         result = []
-        for i in range(0, len(positions.list)):
-            region = positions.list[i]
+        for i in range(0, len(self.list)):
+            region = self.list[i]
             Buffer = []
             if region.disabled:
                 # color for disabled

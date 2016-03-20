@@ -18,6 +18,8 @@ class Edge:
         self.toP = toP
         self.weight = weight
         self.relativeAngle = angle
+        self.roadColor = "#000000"
+        self.trackColor = "#FFFFFF"
 
     def __str__(self):
         nachricht = "Class edge"

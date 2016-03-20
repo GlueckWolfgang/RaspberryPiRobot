@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ###############################################################################
 # Raspberry Robot Program
-# Version: 2016_03_11
+# Version: 2016_03_20
 # Creator: Wolfgang Glück
 ###############################################################################
 import multiprocessing as mp
@@ -188,22 +188,23 @@ if __name__ == '__main__':
     # Define positions
     ###########################################################################
 
-    Positions = PositionL()
+    PositionsGf = PositionL()
     Base = Position(78, 684)
     Base.r = 5
     Base.inRegion = Office
     Base.localSouthSideOf = Office
-    Positions.list.append(Base)
+    PositionsGf.list.append(Base)
 
-    Positions.generatePositions(Relations, GroundFloor, Door)
-    Positions.generatePositions(Relations, GroundFloor, Room)
-    Positions.generatePositions(Relations, GroundFloor, Corridor)
-    canvasCircle = Positions.transformPositionsToCanvasCircle(Scale, Positions)
+    PositionsGf.generatePositions(Relations, GroundFloor, Door)
+    PositionsGf.generatePositions(Relations, GroundFloor, Room)
+    PositionsGf.generatePositions(Relations, GroundFloor, Corridor)
+    canvasCircle = PositionsGf.transformPositionsToCanvasCircle(Scale)
 
     # Define edges
     ###########################################################################
-    Edges = EdgeL()
-    Edges.generateEdges(Positions)
+    EdgesGf = EdgeL()
+    EdgesGf.generateEdges(PositionsGf)
+    canvasLine = EdgesGf.transformEdgesToCanvasLine(Scale)
 
 
     # Endless loop of main program
