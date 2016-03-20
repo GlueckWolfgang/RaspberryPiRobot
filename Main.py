@@ -206,7 +206,6 @@ if __name__ == '__main__':
     EdgesGf.generateEdges(PositionsGf)
     canvasLine = EdgesGf.transformEdgesToCanvasLine(Scale)
 
-
     # Endless loop of main program
     while True:
             result = MQueue.get()
@@ -223,6 +222,10 @@ if __name__ == '__main__':
             elif result.find("C@") == 0:
                 # position data reqired
                 WMQueue.put(canvasCircle)
+
+            elif result.find("L@") == 0:
+                 # edge data reqired
+                 WMQueue.put(canvasLine)
 
             else:
                 print("Process main: Unknown message at MQueue: " + result)

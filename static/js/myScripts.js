@@ -95,6 +95,7 @@ $(document).ready(function(){
         if (ui.panel.attr("id")==='ui-id-3') {
             MapCanvasRectData();
             MapCanvasCircleData();
+            MapCanvasLineData();
         }
     }));
             
@@ -267,7 +268,8 @@ function MapCanvasCircleData(){
                 var ctx = c.getContext("2d");
                 $.each(table, function(i,parameterList) { 
                     ctx.fillStyle = parameterList[0]; 
-                    ctx.strokeStyle = parameterList[0];           
+                    ctx.strokeStyle = parameterList[0];
+                    ctx.lineWidth= 1;           
                     ctx.beginPath();
                     ctx.arc(parameterList[1],
                     parameterList[2],
@@ -275,6 +277,35 @@ function MapCanvasCircleData(){
                     parameterList[4],
                     parameterList[5]);
                     ctx.stroke();                    
+                });
+            },
+            error: function (jqXhr, textStatus, errorThrown) {
+                console.log("function Map called with error")
+            }
+        });
+    }
+}
+
+function MapCanvasLineData(){
+    var active = $('#tabs').tabs( "option", "active" );
+    if  (active == 2) {
+        $.ajax({
+            type: 'GET',
+            url: '/ajax/Map/canvasLineData',
+            async: true,
+            dataType: "JSON",
+            success: function(obj, textstatus, jqXhr) {
+                table = eval("(" + jqXhr.responseText + ")");
+                var c = document.getElementById("Map");
+                var ctx = c.getContext("2d");
+                $.each(table, function(i,parameterList) {
+                    ctx.fillStyle = parameterList[0];
+                    ctx.strokeStyle = parameterList[0];
+                    ctx.lineWidth= 1;
+                    ctx.beginPath();
+                    ctx.moveTo(parameterList[1], parameterList[2])
+                    ctx.lineTo(parameterList[3], parameterList[4])
+                    ctx.stroke();
                 });
             },
             error: function (jqXhr, textStatus, errorThrown) {

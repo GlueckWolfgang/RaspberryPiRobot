@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ###############################################################################
 # Class Prozess webserver
-# Version:  2016.02.24
+# Version:  2016.03.20
 #
 ###############################################################################
 import tornado.ioloop
@@ -109,6 +109,11 @@ class ProcessWebserver:
                         self.MQueue.put("C@")
                         output = json.dumps(self.WMQueue.get())
                         self.write(output)
+                    elif url.endswith("/canvasLineData"):
+                        self.MQueue.put("L@")
+                        output = json.dumps(self.WMQueue.get())
+                        self.write(output)
+
 
                     else:
                         command = url.split("/")

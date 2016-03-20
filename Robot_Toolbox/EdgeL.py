@@ -35,7 +35,7 @@ class EdgeL:
 
         while len(self.stack) > 0:
             position = self.getNextfromStack()
-            position.done = True
+            position.done = True          # done!
             westList = []
             eastList = []
             northList = []
@@ -49,28 +49,12 @@ class EdgeL:
                 and position2.x - position.x < 0:
                     # position found in west direction
                     westList.append(position2)
-                if len(westList) > 0:
-                    position2 = westList[0]
-                    for j in range(0, len(westList)):
-                        if (position2.x - position.x) < (westList[j].x - position.x):
-                            position2 = westList[j]
-                    # closest position west
-                    position2.angle = 270  # angle from position to position2
-                    self.buffer.append(position2)
 
                 if position2 is not position\
                 and position2.y == position.y\
                 and position2.x - position.x > 0:
                     # position found in east direction
                     eastList.append(position2)
-                if len(eastList) > 0:
-                    position2 = eastList[0]
-                    for j in range(0, len(eastList)):
-                        if (position2.x - position.x) > (eastList[j].x - position.x):
-                            position2 = eastList[j]
-                    # closest position east
-                    position2.angle = 90  # angle from position to position2
-                    self.buffer.append(position2)
 
             # search for closest in y direction N/S x = x'
             for i in range(0, len(Positions.list)):
@@ -80,26 +64,48 @@ class EdgeL:
                 and position2.y - position.y < 0:
                     # position found in north direction
                     northList.append(position2)
-                if len(northList) > 0:
-                    for j in range(0, len(northList)):
-                        if (position2.y - position.y) < (northList[j].y - position.y):
-                            position2 = northList[j]
-                    # closest position north
-                    position2.angle = 0  # angle from position to position2
-                    self.buffer.append(position2)
 
                 if position2 is not position\
                 and position2.x == position.x\
                 and position2.y - position.y > 0:
                     # position found in south direction
                     southList.append(position2)
-                if len(southList) > 0:
-                    for j in range(0, len(southList)):
-                        if (position2.y - position.y) < (southList[j].y - position.y):
-                            position2 = southList[j]
-                    # closest position south
-                    position2.angle = 180  # angle from position to position2
-                    self.buffer.append(position2)
+
+            if len(westList) > 0:
+                position2 = westList[0]
+                for j in range(0, len(westList)):
+                    if (position2.x - position.x) < (westList[j].x - position.x):
+                        position2 = westList[j]
+                # closest position west
+                position2.angle = 270  # angle from position to position2
+                self.buffer.append(position2)
+
+            if len(eastList) > 0:
+                position2 = eastList[0]
+                for j in range(0, len(eastList)):
+                    if (position2.x - position.x) > (eastList[j].x - position.x):
+                        position2 = eastList[j]
+                # closest position east
+                position2.angle = 90  # angle from position to position2
+                self.buffer.append(position2)
+
+            if len(northList) > 0:
+                for j in range(0, len(northList)):
+                    position2 = northList[0]
+                    if (position2.y - position.y) < (northList[j].y - position.y):
+                        position2 = northList[j]
+                # closest position north
+                position2.angle = 0  # angle from position to position2
+                self.buffer.append(position2)
+
+            if len(southList) > 0:
+                for j in range(0, len(southList)):
+                    position2 = southList[0]
+                    if (position2.y - position.y) < (southList[j].y - position.y):
+                        position2 = southList[j]
+                # closest position south
+                position2.angle = 180  # angle from position to position2
+                self.buffer.append(position2)
 
             # process Buffer
             for j in range (0, len(self.buffer)):
@@ -112,6 +118,18 @@ class EdgeL:
                     weight = abs(position.y - self.buffer[j].y)
                 else:
                     weight = abs(position.x - self.buffer[j].x)
+                # check if buffer[j] is in the same region
+                #       or in a neighbour region from same type
+                #       or buffer[j] has same neighbour door as position
+
+
+
+
+
+
+
+
+
                 self.list.append(Edge(position, self.buffer[j], weight, self.buffer[j].angle))
         return
 
