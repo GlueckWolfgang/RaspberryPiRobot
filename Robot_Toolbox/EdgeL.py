@@ -1,12 +1,11 @@
 # -*- coding: utf-8 -*-
 ###############################################################################
 # Class of EdgeL
-# Version:  2016.03.20
+# Version:  2016.03.21
 #
 #
 ###############################################################################
 from Robot_Toolbox.Edge import *
-
 
 class EdgeL:
     def __init__(self):
@@ -29,7 +28,7 @@ class EdgeL:
         self.roadMap = []
         return
 
-    def generateEdges(self, Positions):
+    def generateEdges(self, Positions, Relations):
         Positions.reset()                 # clear done tag
         self.putStack(Positions.list[0])  # Base as Start Position
 
@@ -101,7 +100,7 @@ class EdgeL:
             if len(southList) > 0:
                 for j in range(0, len(southList)):
                     position2 = southList[0]
-                    if (position2.y - position.y) < (southList[j].y - position.y):
+                    if (position2.y - position.y) > (southList[j].y - position.y):
                         position2 = southList[j]
                 # closest position south
                 position2.angle = 180  # angle from position to position2
@@ -118,19 +117,28 @@ class EdgeL:
                     weight = abs(position.y - self.buffer[j].y)
                 else:
                     weight = abs(position.x - self.buffer[j].x)
-                # check if buffer[j] is in the same region
-                #       or in a neighbour region from same type
+                # check if points are in the same region
+                #       or in a neighbour region
                 #       or buffer[j] has same neighbour door as position
+                positionRel = Relations.getRelation(position.inRegion)
+                bufferRel = Relations.getRelation(self.buffer[j].inRegion)
+                bufferRelList =[]
+                if bufferRel.northN is not None:
+                    bufferRelList.append(bufferRel.northN)
+                if bufferRel.southN is not None:
+                    bufferRelList.append(bufferRel.southN)
+                if bufferRel.westN is not None:
+                    bufferRelList.append(bufferRel.westN)
+                if bufferRel.eastN is not None:
+                    bufferRelList.append(bufferRel.eastN)
 
-
-
-
-
-
-
-
-
-                self.list.append(Edge(position, self.buffer[j], weight, self.buffer[j].angle))
+                if position.inRegion == self.buffer[j].inRegion\
+                or position.inRegion in bufferRelList\
+                or positionRel.northN in bufferRelList\
+                or positionRel.southN in bufferRelList\
+                or positionRel.westN in bufferRelList\
+                or positionRel.eastN in bufferRelList:
+                    self.list.append(Edge(position, self.buffer[j], weight, self.buffer[j].angle))
         return
 
     def transformEdgesToCanvasLine(self, scale):

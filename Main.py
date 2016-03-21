@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ###############################################################################
 # Raspberry Robot Program
-# Version: 2016_03_20
+# Version: 2016_03_21
 # Creator: Wolfgang Glück
 ###############################################################################
 import multiprocessing as mp
@@ -101,7 +101,7 @@ if __name__ == '__main__':
     Hall = Corridor("Hall", "I", 35.5, 0, 0)
     Corridor1 = Corridor("Corridor1", "M", 35.5, 355, 492, 96, 210)
     Corridor2 = Corridor("Corridor2", "M", 35.5, 497, 461, 189, 148)
-    Corridor3 = Corridor("Corridor3", "M", 35.5, 513, 358, 101, 60)
+    Corridor3 = Corridor("Corridor3", "M", 35.5, 512, 358, 101, 60)
     Corridor4 = Corridor("Corridor4", "M", 35.5, 630, 461, 77, 148)
 
     OfficeCdoor = Door("Office door", "M", 35.5, 301, 549, 12, 82)
@@ -109,8 +109,8 @@ if __name__ == '__main__':
     ParentsCdoor = Door("Parents corridor door", "M", 35.5, 350, 382, 82, 12)
     BathSdoor = Door("Bath shower door", "M", 35.5, 490, 96, 3, 52)
     BathCdoor = Door("Bath corridor door", "M", 35.5, 512, 322, 77, 12)
-    CellerCdoor = Door("Celler door", "M", 35.5, 461, 542, 82, 12)
-    KitchenCdoor = Door("Kitchen corridor door", "M", 35.5, 627, 542, 77, 12)
+    CellerCdoor = Door("Celler door", "M", 35.5, 461, 541, 82, 12)
+    KitchenCdoor = Door("Kitchen corridor door", "M", 35.5, 627, 541, 77, 12)
     KitchenLdoor = Door("Kitchen living door", "M", 35.5, 877, 751, 12, 77)
     LivingCdoor = Door("Living corridor door", "M", 35.5, 674, 461, 12, 120)
     LivingTdoor = Door("Living terrace door", "M", 33.5, 841, 29, 110, 12)
@@ -203,7 +203,7 @@ if __name__ == '__main__':
     # Define edges
     ###########################################################################
     EdgesGf = EdgeL()
-    EdgesGf.generateEdges(PositionsGf)
+    EdgesGf.generateEdges(PositionsGf, Relations)
     canvasLine = EdgesGf.transformEdgesToCanvasLine(Scale)
 
     # Endless loop of main program
