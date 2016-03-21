@@ -206,6 +206,10 @@ if __name__ == '__main__':
     EdgesGf.generateEdges(PositionsGf, Relations)
     canvasLine = EdgesGf.transformEdgesToCanvasLine(Scale)
 
+    for k in range(0, len(EdgesGf.list)):
+        print(EdgesGf.list[k].forward, " ", EdgesGf.list[k].fromP.inRegion.name, " ", EdgesGf.list[k].fromP.x, " ", EdgesGf.list[k].fromP.y, " ",
+            EdgesGf.list[k].toP.inRegion.name, " ", EdgesGf.list[k].toP.x, " ", EdgesGf.list[k].toP.y, " ",)
+
     # Endless loop of main program
     while True:
             result = MQueue.get()

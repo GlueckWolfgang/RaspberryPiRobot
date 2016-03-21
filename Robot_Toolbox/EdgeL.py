@@ -89,8 +89,8 @@ class EdgeL:
                 self.buffer.append(position2)
 
             if len(northList) > 0:
+                position2 = northList[0]
                 for j in range(0, len(northList)):
-                    position2 = northList[0]
                     if (position2.y - position.y) < (northList[j].y - position.y):
                         position2 = northList[j]
                 # closest position north
@@ -138,18 +138,26 @@ class EdgeL:
                 or positionRel.southN in bufferRelList\
                 or positionRel.westN in bufferRelList\
                 or positionRel.eastN in bufferRelList:
-                    self.list.append(Edge(position, self.buffer[j], weight, self.buffer[j].angle))
+
+                    # check if forward or backward edge
+                    if self.buffer[j].done is False:
+                        # Forward edge
+                        self.list.append(Edge(position, self.buffer[j], weight, self.buffer[j].angle, True))
+                    else:
+                        # Backward edge
+                        self.list.append(Edge(position, self.buffer[j], weight, self.buffer[j].angle, False))
         return
 
     def transformEdgesToCanvasLine(self, scale):
         result = []
         for i in range(0, len(self.list)):
             edge = self.list[i]
-            Buffer = []
-            Buffer.append(edge.roadColor)
-            Buffer.append(round(edge.fromP.x / scale))
-            Buffer.append(round(edge.fromP.y / scale))
-            Buffer.append(round(edge.toP.x / scale))
-            Buffer.append(round(edge.toP.y / scale))
-            result.append(Buffer)
+            if edge.forward is True:
+                Buffer = []
+                Buffer.append(edge.roadColor)
+                Buffer.append(round(edge.fromP.x / scale))
+                Buffer.append(round(edge.fromP.y / scale))
+                Buffer.append(round(edge.toP.x / scale))
+                Buffer.append(round(edge.toP.y / scale))
+                result.append(Buffer)
         return result
