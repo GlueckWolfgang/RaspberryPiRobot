@@ -16,7 +16,7 @@ class MeasuredValueL:
 
     def __init__(self):
         self.list = []                      # List of measured value objects
-        self.template_M = dict()            # template for dictionary of Panel.html with all id= "M_...)
+        self.template_Panel = dict()        # template for dictionary of Panel.html with all id= "M_...)
 
         def get_ids(html_file, regular_expression):
             ids = dict()
@@ -33,35 +33,35 @@ class MeasuredValueL:
             return ids
 
         # create dictionary
-        self.template_M = get_ids("Robbi/Panel.html", r"M_+")
+        self.template_Panel = get_ids("Robbi/Panel.html", r"M_+")
 
     def __str__(self):
         nachricht = " List of measured values"
         return nachricht
 
-    def getData(self, MQueue):
-        for key in self.template_M:
+    def getPanelData(self, MQueue):
+        for key in self.template_Panel:
             mvid = key.split("_")  # M, mvNo, code
             MV = self.getMeasuredValueByNumber(int(mvid[1]))
             if mvid[2] == "D":
-                self.template_M[key] = MV.mvDescription
+                self.template_Panel[key] = MV.mvDescription
             elif mvid[2] == "Dim":
-                self.template_M[key] = MV.mvDimension
+                self.template_Panel[key] = MV.mvDimension
             elif mvid[2] == "V":
-                self.template_M[key] = str(MV.value)
+                self.template_Panel[key] = str(MV.value)
             elif mvid[2] == "Cv":
                 if MV.UlAbove == 0\
                 and MV.LlBelow == 0:
-                    self.template_M[key] = "black"
+                    self.template_Panel[key] = "black"
                 elif MV.UlAbove == 1:
-                    self.template_M[key] = "red"
+                    self.template_Panel[key] = "red"
                 elif MV.LlBelow == 1:
-                    self.template_M[key] = "yellow"
+                    self.template_Panel[key] = "yellow"
             elif mvid[2] == "Ul":
-                self.template_M[key] = str(MV.Ul)
+                self.template_Panel[key] = str(MV.Ul)
             elif mvid[2] == "Ll":
-                self.template_M[key] = str(MV.Ll)
-        return self.template_M
+                self.template_Panel[key] = str(MV.Ll)
+        return self.template_Panel
 
     def putMeasuredValue(self, measuredValue):
         self.list.append(measuredValue)     # index = mvNumber

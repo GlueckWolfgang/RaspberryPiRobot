@@ -36,23 +36,33 @@ class ProcessStatusAndMeasuredValue:
                 # Put measured value
                 MeasuredValueList.putValue(Message, AQueue, LQueue, MQueue)
 
-            elif Message.find("R@") == 0:
+            elif Message.find("R@Panel") == 0:
                 # request for data (Panel.html)
 
                 # get measured values
                 dictionary1 = dict()
-                dictionary1 = MeasuredValueList.getData(MQueue)
+                dictionary1 = MeasuredValueList.getPanelData(MQueue)
                 # MQueue.put("I@ MVdic:" + json.dumps(dictionary1))
 
                 # get status values
                 dictionary2 = dict()
-                dictionary2 = StatusList.getData(MQueue)
+                dictionary2 = StatusList.getPanelData(MQueue)
                 # MQueue.put("I@ STdic:" + json.dumps(dictionary2))
 
                 # mixup both dicts
                 dictionary = dict()
                 dictionary.update(dictionary1)
                 dictionary.update(dictionary2)
+
+                # send to webserver
+                output = json.dumps(dictionary)
+                WPQueue.put(output)
+
+            elif Message.find("R@Map") == 0:
+                # request for data (Map.html)
+                # get status values
+                dictionary = dict()
+                dictionary = StatusList.getMapData(MQueue)
 
                 # send to webserver
                 output = json.dumps(dictionary)

@@ -17,7 +17,8 @@ class StatusL:
 
     def __init__(self):
         self.list = []                      # List of status objects
-        self.template_S = dict()
+        self.template_Panel = dict()
+        self.template_Map = dict()
 
         def get_ids(html_file, regular_expression):
             ids = dict()
@@ -50,35 +51,60 @@ class StatusL:
             return ids
 
         # create dictionary
-        self.template_S = get_ids("Robbi/Panel.html", r"S_+")
+        self.template_Panel = get_ids("Robbi/Panel.html", r"S_+")
+        self.template_Map = get_ids("Robbi/Map.html", r"S_+")
 
     def __str__(self):
         nachricht = "List of stati"
         return nachricht
 
-    def getData(self, MQueue):
-        for key in self.template_S:
+    def getPanelData(self, MQueue):
+        for key in self.template_Panel:
             stid = key.split("_")  # S, stNo, code
             ST = self.getStatusByNumber(int(stid[1]))
             if stid[2] == "D":
-                self.template_S[key] = ST.stDescription
+                self.template_Panel[key] = ST.stDescription
             elif stid[2] == "St":
                 if ST.stStatus == 1:
-                   self.template_S[key] = "on"
+                   self.template_Panel[key] = "on"
                 else:
-                    self.template_S[key] = "off"
+                    self.template_Panel[key] = "off"
             elif stid[2] == "Cc":
                 if ST.stStatus == 1:
-                   self.template_S[key] = " bgred"
+                   self.template_Panel[key] = " bgred"
                 else:
-                   self.template_S[key] = " bgwhite"
+                   self.template_Panel[key] = " bgwhite"
             elif stid[2] == "Cl":
                 if ST.stStatus == 1:
-                   self.template_S[key] = " green"
+                   self.template_Panel[key] = " green"
                 else:
-                   self.template_S[key] = " red"
+                   self.template_Panel[key] = " red"
 
-        return self.template_S
+        return self.template_Panel
+
+    def getMapData(self, MQueue):
+        for key in self.template_Map:
+            stid = key.split("_")  # S, stNo, code
+            ST = self.getStatusByNumber(int(stid[1]))
+            if stid[2] == "D":
+                self.template_Map[key] = ST.stDescription
+            elif stid[2] == "St":
+                if ST.stStatus == 1:
+                   self.template_Map[key] = "on"
+                else:
+                    self.template_Map[key] = "off"
+            elif stid[2] == "Cc":
+                if ST.stStatus == 1:
+                   self.template_Map[key] = " bgred"
+                else:
+                   self.template_Map[key] = " bgwhite"
+            elif stid[2] == "Cl":
+                if ST.stStatus == 1:
+                   self.template_Map[key] = " green"
+                else:
+                   self.template_Map[key] = " red"
+
+        return self.template_Map
 
 
     def putStatus(self, Status):

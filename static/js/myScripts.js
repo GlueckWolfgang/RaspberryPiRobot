@@ -1,5 +1,5 @@
 // TABS
-// Version: 2016_03_19
+// Version: 2016_03_22
 $(document).ready(function(){
     console.log("function tabs called");
     $('#tabs').tabs({active: 1});
@@ -107,6 +107,7 @@ $(document).ready(function(){
 // 1s cycle
 setInterval(function() {
     PanelData();
+    MapData();
     console.log("1s cycle has been started");
 }, 1000);
 
@@ -310,6 +311,92 @@ function MapCanvasLineData(){
             },
             error: function (jqXhr, textStatus, errorThrown) {
                 console.log("function Map called with error")
+            }
+        });
+    }
+}
+
+// Map dynamic data
+function MapData(){
+    var active = $('#tabs').tabs( "option", "active" );
+    if  (active == 2) {
+        $.ajax({
+            type: 'GET',
+            url: '/ajax/Map/data',
+            async: true,
+            dataType: "JSON",
+            success: function(obj, textstatus, jqXhr) {
+                dictionary = eval("(" + jqXhr.responseText + ")");
+                $.each(dictionary, function(id,val) {
+                    idc = null
+                    if (document.getElementById(id) !== null) {
+                      // id read from dictionary, found in document
+                      if (!id.endsWith("_Ec") && (!id.endsWith("El"))) {
+                          // change value except empty id types
+                          document.getElementById(id).innerHTML = val;
+                          if (id.endsWith("_V")) {
+                              idc = id.replace("_V","_Cv")
+                              // new style for value
+                              val = dictionary[idc]
+                          }
+                      }
+                      else if (id.endsWith("_Ec")) {
+                              idc = id.replace("_Ec", "_Cc")
+                              // new style for button
+                              val = dictionary [idc]
+                      }
+                      else if (id.endsWith("_El")){
+                              idc = id.replace("_El", "_Cl")
+                              // new style for lamp
+                              val = dictionary [idc]
+                      }
+                    }
+                    if (idc) {
+                        // remove old and add new style
+                        document.getElementById(id).className =
+                        document.getElementById(id).className.replace
+                        ( /(?:^|\s)black(?!\S)/g , " x" )
+
+                        document.getElementById(id).className =
+                        document.getElementById(id).className.replace
+                        ( /(?:^|\s)red(?!\S)/g , " x" )
+
+                        document.getElementById(id).className =
+                        document.getElementById(id).className.replace
+                        ( /(?:^|\s)yellow(?!\S)/g , " x" )
+
+                        document.getElementById(id).className =
+                        document.getElementById(id).className.replace
+                        ( /(?:^|\s)green(?!\S)/g , " x" )
+
+                        document.getElementById(id).className =
+                        document.getElementById(id).className.replace
+                        ( /(?:^|\s)bggreen(?!\S)/g , " x" )
+
+                        document.getElementById(id).className =
+                        document.getElementById(id).className.replace
+                        ( /(?:^|\s)bggrey(?!\S)/g , " x" )
+
+                        document.getElementById(id).className =
+                        document.getElementById(id).className.replace
+                        ( /(?:^|\s)bgred(?!\S)/g , " x" )
+
+                        document.getElementById(id).className =
+                        document.getElementById(id).className.replace
+                        ( /(?:^|\s)white(?!\S)/g , " x" )
+
+                        document.getElementById(id).className =
+                        document.getElementById(id).className.replace
+                        ( /(?:^|\s)bgwhite(?!\S)/g , " x" )
+
+                        document.getElementById(id).className =
+                        document.getElementById(id).className.replace
+                        ( /(?:^|\s)x(?!\S)/g , val )
+                    }
+
+                });
+            },
+            error: function (jqXhr, textStatus, errorThrown) {
             }
         });
     }

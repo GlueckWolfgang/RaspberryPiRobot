@@ -19,31 +19,95 @@ canvas {
     border:1px solid #000000;
 }
 
-.imagebig {
-    width: 448px;
-    height: 336px;
-    vertical-align: middle;
-    text-align: center;
-}
-
 .map {
     width: 448px;
     height: 448px;
     vertical-align: top;
 }
-.button1 {
+
+.red {
+    color:#FF0000;
+
+}
+
+.yellow {
+    color:#FFD700;
+}
+
+.green {
+    color:#00FF00;
+}
+
+.gray {
+    color:#AAAAAA;
+}
+
+.orange {
+    color:#FFAA00;
+}
+
+.black {
+    color:#000000;
+}
+
+.white {
+    color:#FFFFFF;
+}
+
+.bggreen {
+    background-color:#00FF00;
+}
+
+.bgblack {
+    background-color:#000000;
+}
+
+.bggray {
+    color:#AAAAAA;
+}
+
+.bgwhite {
+    background-color:#FFFFFF;
+}
+
+.bgred {
+    background-color:#FF0000;
+}
+
+.right {
+    text-align: right;
+}
+
+.left {
+    text-align: left;
+}
+
+.mv {
+    border: 1px solid #000000;
+}
+
+.space {
+    height: 20px;
+}
+
+.button3 {
     display: block;
     margin: auto;
     min-width: 70px;
     text-align: center;
-    
+
 }
-.button2 {
+
+.button4 {
     display: block;
     margin: auto;
     min-width: 150px;
     text-align: center;
 }
-.bggray {
-    color:#AAAAAA;
+
+.imagebig {
+        width: 448px;
+        height: 336px;
+        vertical-align: middle;
+        text-align: center;
 }

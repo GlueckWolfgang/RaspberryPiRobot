@@ -89,7 +89,7 @@ class ProcessWebserver:
                 elif url.startswith("Panel"):
                     if url.endswith("/data"):
                         # acquire data
-                        self.PQueue.put("R@")
+                        self.PQueue.put("R@Panel")
                         output = self.WPQueue.get()
                         self.write(output)
                     else:
@@ -113,11 +113,14 @@ class ProcessWebserver:
                         self.MQueue.put("L@")
                         output = json.dumps(self.WMQueue.get())
                         self.write(output)
-
-
+                    elif url.endswith("/data"):
+                        # acquire data
+                        self.PQueue.put("R@Map")
+                        output = self.WPQueue.get()
+                        self.write(output)
                     else:
                         command = url.split("/")
-                        pass
+                        self.PQueue.put("C@" + command[1])
                         dictionary = {"phantasy": "&nbsp;"}
                         output = json.dumps(dictionary)
                         self.write(output)
