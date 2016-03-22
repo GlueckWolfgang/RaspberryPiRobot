@@ -86,13 +86,10 @@ class ProcessStatusAndMeasuredValue:
 
                 # change operation mode
                 # transition from target move to manual is allowed
-                # stop will be sent in addition
                 elif status[1] == "19"\
                 and operationModeTargetMove.stStatus == 1:
                     operationModeTargetMove.stStatus = 0
                     operationModeManual.stStatus = 1
-                    statusO = StatusList.getStatusByNumber(3)
-                    CQueue.put(statusO.stDescription + ": " + "1")
 
                 # transition from manual to target move is allowed
                 elif status[1] == "20"\

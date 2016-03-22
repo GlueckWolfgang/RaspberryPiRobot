@@ -33,6 +33,11 @@ $(document).ready(function(){
                           console.log("manual click.");
                           Send('Panel/S_19_Ec');
                      }));
+                          
+    $(document).on("click", '#S_21_Ec', (function(event) {
+                          console.log("automatic click.");
+                          Send('Map/S_21_Ec');
+                     }));
     $(document).on("click", '#S_3_Ec', (function(event) {
                           console.log("stop click.");
                           Send('Panel/S_3_Ec');
