@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ###############################################################################
 # Class of status list
-# Version:  2016.02.16
+# Version:  2016.03.22
 ###############################################################################
 from Robot_Toolbox.Status import *
 from Robot_Toolbox.Alarm import *
@@ -189,12 +189,16 @@ class StatusL:
         self.putStatus(StatusO)
         StatusO = Status(20, "Explore", False, True)
         self.putStatus(StatusO)
-        StatusO = Status(21, "Target move", False, True)
+        StatusO = Status(21, "Automatic Operation", False, True)
         self.putStatus(StatusO)
         StatusO = Status(22, "Align", False, True)
         self.putStatus(StatusO)
         StatusO = Status(23, "Steering ahead", False, True)
         self.putStatus(StatusO)
-
-
+        StatusO = Status(24, "Start Endposition", False, True)
+        self.putStatus(StatusO)
+        StatusO = Status(25, "Tag", False, True)
+        self.putStatus(StatusO)
+        StatusO = Status(26, "Run", False, True)
+        self.putStatus(StatusO)
         return
