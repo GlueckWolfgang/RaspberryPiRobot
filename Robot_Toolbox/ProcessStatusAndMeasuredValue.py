@@ -80,7 +80,6 @@ class ProcessStatusAndMeasuredValue:
 
                 # stop is always allowed
                 if status[1] == "3":
-                        operationModeTargetMove.stStatus = 0
                         statusO = StatusList.getStatusByNumber(int(status[1]))
                         CQueue.put(statusO.stDescription + ": " + "1")
 
@@ -92,10 +91,6 @@ class ProcessStatusAndMeasuredValue:
                     operationModeManual.stStatus = 1
 
                 # transition from manual to target move is allowed
-                elif status[1] == "20"\
-                and operationModeManual.stStatus == 1:
-                    operationModeManual.stStatus = 0
-
                 elif status[1] == "21"\
                 and operationModeManual.stStatus == 1:
                     operationModeManual.stStatus = 0
@@ -117,7 +112,6 @@ class ProcessStatusAndMeasuredValue:
                 # other driving commands allowed if operation mode is manual
                 elif operationModeManual.stStatus == 1\
                     and(status[1] != "19"
-                    or status[1] != "20"
                     or status[1] != "21"
                     or status[1] != "22"
                     or status[1] != "23"
