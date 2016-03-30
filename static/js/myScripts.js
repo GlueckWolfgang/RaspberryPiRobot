@@ -1,5 +1,5 @@
 // TABS
-// Version: 2016_03_22
+// Version: 2016_03_30
 $(document).ready(function(){
     console.log("function tabs called");
     $('#tabs').tabs({active: 1});
@@ -101,6 +101,14 @@ $(document).ready(function(){
             window.setTimeout( MapCanvasRectData(), 2 );
             window.setTimeout( MapCanvasCircleData(), 2 );
             window.setTimeout( MapCanvasLineData(), 2 );
+            
+            var canvas = document.getElementById('RobotPosition');
+            var context = canvas.getContext('2d');
+            canvas.addEventListener('mousemove', function(evt) {
+            var mousePos = getMousePos(canvas, evt);
+            var message = 'Mouse position in real coordinates x: ' + Math.round(mousePos.x * 2.5) + '  y: ' + Math.round(mousePos.y * 2.5);
+            writeMessage(canvas, message);
+            }, false);
         }
     }));
             
@@ -406,6 +414,21 @@ function MapData(){
         });
     }
 }
+
+function getMousePos(canvas, evt) {
+var rect = canvas.getBoundingClientRect();
+return {
+  x: Math.round(evt.clientX - rect.left),
+  y: Math.round(evt.clientY - rect.top)
+};
+}
+function writeMessage(canvas, message) {
+        var context = canvas.getContext('2d');
+        context.clearRect(0, 0, canvas.width, canvas.height);
+        context.font = '14pt Calibri';
+        context.fillStyle = 'black';
+        context.fillText(message, 10, 420);
+      }
 
 // Commands
 function Send(command) {
