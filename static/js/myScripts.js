@@ -98,9 +98,9 @@ $(document).ready(function(){
                      
     $("#tabs").on("tabsload", (function(event,ui) {
         if (ui.panel.attr("id")==='ui-id-3') {
-            MapCanvasRectData();
-            MapCanvasCircleData();
-            MapCanvasLineData();
+            window.setTimeout( MapCanvasRectData(), 2 );
+            window.setTimeout( MapCanvasCircleData(), 2 );
+            window.setTimeout( MapCanvasLineData(), 2 );
         }
     }));
             
@@ -136,7 +136,7 @@ function PanelData(){
                 dictionary = eval("(" + jqXhr.responseText + ")");
                 $.each(dictionary, function(id,val) {
                     idc = null
-                    if (document.getElementById(id) !== null) {
+                    if (document.getElementById(id)!== null) {
                       // id read from dictionary, found in document
                       if (!id.endsWith("_Ec") && (!id.endsWith("El"))) {
                           // change value except empty id types
@@ -182,7 +182,7 @@ function PanelData(){
                         
                         document.getElementById(id).className =
                         document.getElementById(id).className.replace
-                        ( /(?:^|\s)bggrey(?!\S)/g , " x" )
+                        ( /(?:^|\s)bggray(?!\S)/g , " x" )
                         
                         document.getElementById(id).className =
                         document.getElementById(id).className.replace
@@ -334,7 +334,7 @@ function MapData(){
                 dictionary = eval("(" + jqXhr.responseText + ")");
                 $.each(dictionary, function(id,val) {
                     idc = null
-                    if (document.getElementById(id) !== null) {
+                    if (document.getElementById(id)!== null) {
                       // id read from dictionary, found in document
                       if (!id.endsWith("_Ec") && (!id.endsWith("El"))) {
                           // change value except empty id types
@@ -380,7 +380,7 @@ function MapData(){
 
                         document.getElementById(id).className =
                         document.getElementById(id).className.replace
-                        ( /(?:^|\s)bggrey(?!\S)/g , " x" )
+                        ( /(?:^|\s)bggray(?!\S)/g , " x" )
 
                         document.getElementById(id).className =
                         document.getElementById(id).className.replace
