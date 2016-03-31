@@ -164,12 +164,12 @@ class EdgeL:
                 result.append(Buffer)
         return result
 
-    def setStartPositition(self, position):
+    def setStartPosition(self, position):
         if position is not None:
-            pass
+            self.startPosition = position
         return
 
-    def setTargetPositition(self, position):
+    def setTargetPosition(self, position):
         if position is not None:
-            pass
+            self.targetPosition = position
         return
