@@ -74,12 +74,24 @@ class ProcessStatusAndMeasuredValue:
                 status = Message.split("_")
                 operationModeManual = StatusList.getStatusByNumber(19)
                 operationModeTargetMove = StatusList.getStatusByNumber(21)
+                startEndposition = StatusList.getStatusByNumber(24)
+                tag = StatusList.getStatusByNumber(25)
+
                 forwardSlow = StatusList.getStatusByNumber(5)
                 forwardHalf = StatusList.getStatusByNumber(6)
                 forwardFull = StatusList.getStatusByNumber(7)
 
+                if status[0] == "mouse":
+                    if operationModeTargetMove == 1:
+                        # mouse click allowed
+                        if startEndposition == 1:
+                            MQueue.put("M@startEndposition_" + status[1] +"_" + status[2] + "_" + status[3])
+                        elif tag == 1:
+                            MQueue.put("M@tag_" + status[1] +"_" + status[2] + "_" + status[3])
+
+
                 # stop is always allowed
-                if status[1] == "3":
+                elif status[1] == "3":
                         statusO = StatusList.getStatusByNumber(int(status[1]))
                         CQueue.put(statusO.stDescription + ": " + "1")
 

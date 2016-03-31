@@ -1,5 +1,5 @@
 // TABS
-// Version: 2016_03_30
+// Version: 2016_03_31
 $(document).ready(function(){
     console.log("function tabs called");
     $('#tabs').tabs({active: 1});
@@ -100,14 +100,31 @@ $(document).ready(function(){
         if (ui.panel.attr("id")==='ui-id-3') {
             window.setTimeout( MapCanvasRectData(), 2 );
             window.setTimeout( MapCanvasCircleData(), 2 );
-            window.setTimeout( MapCanvasLineData(), 2 );
+            window.setTimeout( MapCanvasLineData(), 50 );
             
-            var canvas = document.getElementById('RobotPosition');
+            // On mouse move over canvas show mouse position in real coordinates
+            var canvas = document.getElementById('MousePosition');
             var context = canvas.getContext('2d');
             canvas.addEventListener('mousemove', function(evt) {
             var mousePos = getMousePos(canvas, evt);
-            var message = 'Mouse position in real coordinates x: ' + Math.round(mousePos.x * 2.5) + '  y: ' + Math.round(mousePos.y * 2.5);
+            var message = 'Mouse position in real coordinates (cm)   x: ' + Math.round(mousePos.x * 2.5) + ',  y: ' + Math.round(mousePos.y * 2.5);
             writeMessage(canvas, message);
+            }, false);
+            
+            // On mouse click in canvas send mouse position and key left/right to webserver
+            canvas.addEventListener('mousedown', function (e){
+            var key = "left";
+            if(e.button < 2) var key = "left";
+            else if(e.button === 2) var key = "right";       
+            var mousePos = getMousePos(canvas, e);
+            Send("Map/" + "mouse_" + key + "_" + String(Math.round(mousePos.x)) + "_" + String(Math.round(mousePos.y)));
+            
+            // Actualize tags
+            window.setTimeout( MapCanvasCircleData(), 2 );
+            // Actualize track
+            // to be done
+            
+                  
             }, false);
         }
     }));
@@ -120,7 +137,7 @@ $(document).ready(function(){
 // 1s cycle
 setInterval(function() {
     PanelData();
-    MapData();
+    window.setTimeout(MapData(), 2);
     console.log("1s cycle has been started");
 }, 1000);
 
@@ -278,8 +295,9 @@ function MapCanvasCircleData(){
             dataType: "JSON",
             success: function(obj, textstatus, jqXhr) {
                 table = eval("(" + jqXhr.responseText + ")");
-                var c = document.getElementById("Map");
+                var c = document.getElementById("Positions");
                 var ctx = c.getContext("2d");
+                ctx.clearRect(0, 0, c.width, c.height);
                 $.each(table, function(i,parameterList) { 
                     ctx.fillStyle = parameterList[0]; 
                     ctx.strokeStyle = parameterList[0];
@@ -422,12 +440,13 @@ return {
   y: Math.round(evt.clientY - rect.top)
 };
 }
+
 function writeMessage(canvas, message) {
         var context = canvas.getContext('2d');
         context.clearRect(0, 0, canvas.width, canvas.height);
         context.font = '14pt Calibri';
         context.fillStyle = 'black';
-        context.fillText(message, 10, 420);
+        context.fillText(message, 5, 440);
       }
 
 // Commands

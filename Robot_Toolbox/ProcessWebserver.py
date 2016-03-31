@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ###############################################################################
 # Class Prozess webserver
-# Version:  2016.03.20
+# Version:  2016.03.30
 #
 ###############################################################################
 import tornado.ioloop
@@ -66,7 +66,7 @@ class ProcessWebserver:
                 self.WMQueue = db[5]
 
             def get(self, url):
-                self.MQueue.put("I@ AjaxHandler" + url)
+                self.MQueue.put("I@ AjaxHandler " + url)
                 if url.startswith("Alarmlist"):
                     if url.endswith("/data"):
                         # acquire data
@@ -119,7 +119,9 @@ class ProcessWebserver:
                         output = self.WPQueue.get()
                         self.write(output)
                     else:
+                        # command
                         command = url.split("/")
+                        # button or mouse click
                         self.PQueue.put("C@" + command[1])
                         dictionary = {"phantasy": "&nbsp;"}
                         output = json.dumps(dictionary)
