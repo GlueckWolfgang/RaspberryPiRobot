@@ -34,10 +34,6 @@ $(document).ready(function(){
                           Send('Panel/S_19_Ec');
                      }));
                           
-    $(document).on("click", '#S_21_Ec', (function(event) {
-                          console.log("automatic click.");
-                          Send('Map/S_21_Ec');
-                     }));
     $(document).on("click", '#S_3_Ec', (function(event) {
                           console.log("stop click.");
                           Send('Panel/S_3_Ec');
@@ -96,6 +92,21 @@ $(document).ready(function(){
                           Send('Panel/S_13_Ec');
                      }));
                      
+    $(document).on("click", '#S_21_Ec', (function(event) {
+                          console.log("Target move click.");
+                          Send('Map/S_21_Ec');
+                     }));
+                     
+    $(document).on("click", '#S_24_Ec', (function(event) {
+                          console.log("Start end position click.");
+                          Send('Map/S_24_Ec');
+                     }));
+                     
+    $(document).on("click", '#S_25_Ec', (function(event) {
+                          console.log("Tag click.");
+                          Send('Map/S_25_Ec');
+                     }));
+                     
     $("#tabs").on("tabsload", (function(event,ui) {
         if (ui.panel.attr("id")==='ui-id-3') {
             window.setTimeout( MapCanvasRectData(), 2 );
@@ -105,6 +116,10 @@ $(document).ready(function(){
             // On mouse move over canvas show mouse position in real coordinates
             var canvas = document.getElementById('MousePosition');
             var context = canvas.getContext('2d');
+            
+            // disable context menu
+            $('body').on('contextmenu', 'canvas', function(e){ return false; });
+            
             canvas.addEventListener('mousemove', function(evt) {
             var mousePos = getMousePos(canvas, evt);
             var message = 'Mouse position in real coordinates (cm)   x: ' + Math.round(mousePos.x * 2.5) + ',  y: ' + Math.round(mousePos.y * 2.5);
@@ -114,6 +129,7 @@ $(document).ready(function(){
             // On mouse click in canvas send mouse position and key left/right to webserver
             canvas.addEventListener('mousedown', function (e){
             var key = "left";
+            
             if(e.button < 2) var key = "left";
             else if(e.button === 2) var key = "right";       
             var mousePos = getMousePos(canvas, e);

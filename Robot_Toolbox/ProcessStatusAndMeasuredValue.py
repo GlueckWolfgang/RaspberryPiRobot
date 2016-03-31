@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ###############################################################################
 # Class Prozess status and measured value
-# Version:  2016.02.16
+# Version:  2016.03.31
 #
 # PQueue             = queue to listen
 # AQueue.............= process Audio queue
@@ -76,31 +76,39 @@ class ProcessStatusAndMeasuredValue:
                 operationModeTargetMove = StatusList.getStatusByNumber(21)
                 startEndposition = StatusList.getStatusByNumber(24)
                 tag = StatusList.getStatusByNumber(25)
+                run = StatusList.getStatusByNumber(26)
 
                 forwardSlow = StatusList.getStatusByNumber(5)
                 forwardHalf = StatusList.getStatusByNumber(6)
                 forwardFull = StatusList.getStatusByNumber(7)
 
                 if status[0] == "mouse":
-                    if operationModeTargetMove == 1:
+                    if operationModeTargetMove.stStatus == 1:
                         # mouse click allowed
-                        if startEndposition == 1:
+                        if startEndposition.stStatus == 1:
                             MQueue.put("M@startEndposition_" + status[1] +"_" + status[2] + "_" + status[3])
-                        elif tag == 1:
+                        elif tag.stStatus == 1:
                             MQueue.put("M@tag_" + status[1] +"_" + status[2] + "_" + status[3])
 
 
                 # stop is always allowed
                 elif status[1] == "3":
-                        statusO = StatusList.getStatusByNumber(int(status[1]))
-                        CQueue.put(statusO.stDescription + ": " + "1")
+                    run.stStatus = 0
+                    statusO = StatusList.getStatusByNumber(int(status[1]))
+                    CQueue.put(statusO.stDescription + ": " + "1")
 
                 # change operation mode
-                # transition from target move to manual is allowed
-                elif status[1] == "19"\
-                and operationModeTargetMove.stStatus == 1:
+                # manual is allowed always
+                elif status[1] == "19":
                     operationModeTargetMove.stStatus = 0
+                    startEndposition.stStatus = 0
+                    tag.stStatus = 0
+                    run.stStatus = 0
                     operationModeManual.stStatus = 1
+                    # Stop command
+                    statusO = StatusList.getStatusByNumber(3)
+                    CQueue.put(statusO.stDescription + ": " + "1")
+
 
                 # transition from manual to target move is allowed
                 elif status[1] == "21"\
@@ -121,6 +129,26 @@ class ProcessStatusAndMeasuredValue:
                     statusO = StatusList.getStatusByNumber(int(status[1]))
                     CQueue.put(statusO.stDescription + ": " + "1")
 
+                # Start end position allowed if operation mode is target move
+                elif operationModeTargetMove.stStatus == 1\
+                and(status[1] == "24"):
+                    # toggle status
+                    startEndposition.stStatus = startEndposition.stStatus ^ 1
+                    tag.stStatus = 0
+
+                elif operationModeTargetMove.stStatus == 1\
+                and(status[1] == "25"):
+                    # toggle status
+                    tag.stStatus = tag.stStatus ^ 1
+                    startEndposition.stStatus = 0
+
+                elif operationModeTargetMove.stStatus == 1\
+                and(status[1] == "26"):
+                    # run
+                    tag.stStatus = 0
+                    startEndposition.stStatus = 0
+                    run.stStatus = 1
+
                 # other driving commands allowed if operation mode is manual
                 elif operationModeManual.stStatus == 1\
                     and(status[1] != "19"
@@ -128,9 +156,13 @@ class ProcessStatusAndMeasuredValue:
                     or status[1] != "22"
                     or status[1] != "23"
                     or status[1] != "8"
-                    or status[1] != "9"):
+                    or status[1] != "9"
+                    or status[1] != "24"
+                    or status[1] != "25"
+                    or status[1] != "26"):
                         statusO = StatusList.getStatusByNumber(int(status[1]))
                         CQueue.put(statusO.stDescription + ": " + "1")
+
 
             else:
                 MQueue.put("I@Process status and measured value: Unknown message at PQueue: " + Message)

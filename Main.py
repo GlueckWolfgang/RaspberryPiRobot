@@ -71,7 +71,7 @@ if __name__ == '__main__':
     for i in range(0, len(processList)):
         processList[i].start()
 
-    # set default manual operation and stop
+    # set defaults manual operation, stop
     PQueue.put("S@Manual Operation: 1")
     PQueue.put("S@Stop: 1")
 
