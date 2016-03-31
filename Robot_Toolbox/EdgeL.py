@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ###############################################################################
 # Class of EdgeL
-# Version:  2016.03.21
+# Version:  2016.03.31
 #
 #
 ###############################################################################
@@ -13,6 +13,8 @@ class EdgeL:
         self.stack = []
         self.buffer = []
         self.roadMap = []
+        self.startPosition = None
+        self.targetPosition = None
 
     def putStack(self, element):
         self.stack.append(element)
@@ -161,3 +163,13 @@ class EdgeL:
                 Buffer.append(round(edge.toP.y / scale))
                 result.append(Buffer)
         return result
+
+    def setStartPositition(self, position):
+        if position is not None:
+            pass
+        return
+
+    def setTargetPositition(self, position):
+        if position is not None:
+            pass
+        return

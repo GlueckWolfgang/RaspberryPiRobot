@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ###############################################################################
 # Class of PositionL
-# Version:  2016.03.19
+# Version:  2016.03.31
 #
 #
 ###############################################################################
@@ -618,3 +618,21 @@ class PositionL:
             Buffer.append(2 * math.pi)
             result.append(Buffer)
         return result
+
+    def setTag(self, x, y):
+        position = self.findPosition(x, y)
+        if position is not None:
+            position.disabled = position.disabled ^ True
+        return
+
+    def findPosition(self, x, y):
+        position = None
+        for i in range(0, len(self.list)):
+            if x > (self.list[i].x - 7)\
+            and x < (self.list[i].x + 7)\
+            and y > (self.list[i].y - 7)\
+            and y < (self.list[i].y + 7):
+                # Position found +- 7 cm
+                position = self.list[i]
+                break
+        return position

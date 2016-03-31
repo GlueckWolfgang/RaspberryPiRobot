@@ -109,8 +109,8 @@ $(document).ready(function(){
                      
     $("#tabs").on("tabsload", (function(event,ui) {
         if (ui.panel.attr("id")==='ui-id-3') {
-            window.setTimeout( MapCanvasRectData(), 2 );
-            window.setTimeout( MapCanvasCircleData(), 2 );
+            window.setTimeout( MapCanvasRectData(), 20 );
+            window.setTimeout( MapCanvasCircleData(), 20 );
             window.setTimeout( MapCanvasLineData(), 50 );
             
             // On mouse move over canvas show mouse position in real coordinates
@@ -135,8 +135,7 @@ $(document).ready(function(){
             var mousePos = getMousePos(canvas, e);
             Send("Map/" + "mouse_" + key + "_" + String(Math.round(mousePos.x)) + "_" + String(Math.round(mousePos.y)));
             
-            // Actualize tags
-            window.setTimeout( MapCanvasCircleData(), 2 );
+            
             // Actualize track
             // to be done
             
@@ -154,6 +153,7 @@ $(document).ready(function(){
 setInterval(function() {
     PanelData();
     window.setTimeout(MapData(), 2);
+    setTimeout(MapCanvasCircleData(), 0);
     console.log("1s cycle has been started");
 }, 1000);
 

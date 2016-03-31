@@ -198,7 +198,7 @@ if __name__ == '__main__':
     PositionsGf.generatePositions(Relations, GroundFloor, Door)
     PositionsGf.generatePositions(Relations, GroundFloor, Room)
     PositionsGf.generatePositions(Relations, GroundFloor, Corridor)
-    canvasCircle = PositionsGf.transformPositionsToCanvasCircle(Scale)
+
 
     # Define edges
     ###########################################################################
@@ -221,11 +221,34 @@ if __name__ == '__main__':
 
             elif result.find("C@") == 0:
                 # position data reqired
+                canvasCircle = PositionsGf.transformPositionsToCanvasCircle(Scale)
                 WMQueue.put(canvasCircle)
 
             elif result.find("L@") == 0:
-                 # edge data reqired
-                 WMQueue.put(canvasLine)
+                # edge data reqired
+                WMQueue.put(canvasLine)
+
+            elif result.find("M@") == 0:
+                # Mouse click received
+                result = result.replace("M@", "")
+                variant = result.split("_")
+                if variant[0] == "startEndposition":
+                    if variant[1] == "left":
+                        # Find start position based on mouse coordinates
+                        EdgesGf.setStartPosition(PositionsGf.findPosition(int(variant[2]) * Scale, int(variant[3]) * Scale))
+
+                    else:
+                        # Find target position based on mouse coordinates
+                        EdgesGf.setTargetPosition(PositionsGf.findPosition(int(variant[2]) * Scale, int(variant[3]) * Scale))
+
+                    if EdgesGf.startPosition is not None\
+                    and EdgesGf.startPosition != EdgesGf.targetPosition:
+                        # start != target
+                        # calculate new path
+                        pass
+
+                elif variant[0] == "tag":
+                    PositionsGf.setTag(int(variant[2]) * Scale, int(variant[3]) * Scale)
 
             else:
                 print("Process main: Unknown message at MQueue: " + result)
