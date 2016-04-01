@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ###############################################################################
 # Class of PositionL
-# Version:  2016.03.31
+# Version:  2016.04.01
 #
 #
 ###############################################################################
@@ -597,21 +597,31 @@ class PositionL:
                                             self.list.append(pos)
         return
 
-    def transformPositionsToCanvasCircle(self, scale):
+    def transformPositionsToCanvasCircle(self, scale, Edges):
         result = []
         for i in range(0, len(self.list)):
             region = self.list[i]
             Buffer = []
             if region.disabled:
-                # color for disabled
+                # color for disabled tag
                 Buffer.append(region.disabledColor)
+            elif region == Edges.startPosition:
+                # color for strat position tag
+                Buffer.append(region.startColor)
+            elif region == Edges.targetPosition:
+                # color for target position tag
+                Buffer.append(region.targetColor)
             else:
+                # color for position
                 Buffer.append(region.color)
             Buffer.append(round(region.x / scale))
             Buffer.append(round(region.y / scale))
             if region.disabled:
-                # r for disabled
+                # r for disabled tag
                 Buffer.append(round(region.disabledR / scale))
+            elif region == Edges.startPosition\
+            or region == Edges.targetPosition:
+                Buffer.append(round(region.startTargetR / scale))
             else:
                 Buffer.append(round(region.r / scale))
             Buffer.append(0)

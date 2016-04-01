@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ###############################################################################
 # Raspberry Robot Program
-# Version: 2016_03_21
+# Version: 2016_04_01
 # Creator: Wolfgang Glück
 ###############################################################################
 import multiprocessing as mp
@@ -221,7 +221,7 @@ if __name__ == '__main__':
 
             elif result.find("C@") == 0:
                 # position data reqired
-                canvasCircle = PositionsGf.transformPositionsToCanvasCircle(Scale)
+                canvasCircle = PositionsGf.transformPositionsToCanvasCircle(Scale, EdgesGf)
                 WMQueue.put(canvasCircle)
 
             elif result.find("L@") == 0:

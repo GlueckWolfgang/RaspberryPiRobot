@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ###############################################################################
 # Class of Position
-# Version:  2016.03.20
+# Version:  2016.04.01
 #
 # x, y      The coordinates of the position
 # disabled  Position is temporarily not available
@@ -15,8 +15,11 @@ class Position:
     def __init__(self, x, y):
         self.color = "#000000"
         self.disabledColor = "#FF0000"
+        self.startColor = "#0000FF"
+        self.targetColor = "#FF00FF"
         self.r = 2.5
         self.disabledR = 7.5
+        self.startTargetR = 10.0
         self.x = x
         self.y = y
         self.disabled = False
