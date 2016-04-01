@@ -16,7 +16,7 @@ class Position:
         self.color = "#000000"
         self.disabledColor = "#FF0000"
         self.startColor = "#0000FF"
-        self.targetColor = "#FF00FF"
+        self.targetColor = "#FF8000"
         self.r = 2.5
         self.disabledR = 7.5
         self.startTargetR = 10.0
