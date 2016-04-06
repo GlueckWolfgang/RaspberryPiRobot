@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ###############################################################################
 # Raspberry Robot Program
-# Version: 2016_04_01
+# Version: 2016_04_06
 # Creator: Wolfgang Glück
 ###############################################################################
 import multiprocessing as mp
@@ -242,10 +242,11 @@ if __name__ == '__main__':
                         EdgesGf.setTargetPosition(PositionsGf.findPosition(int(variant[2]) * Scale, int(variant[3]) * Scale))
 
                     if EdgesGf.startPosition is not None\
+                    and EdgesGf.targetPosition is not None\
                     and EdgesGf.startPosition != EdgesGf.targetPosition:
                         # start != target
                         # calculate new path
-                        pass
+                        EdgesGf.calculateNewPath(PositionsGf)
 
                 elif variant[0] == "tag":
                     PositionsGf.setTag(int(variant[2]) * Scale, int(variant[3]) * Scale)

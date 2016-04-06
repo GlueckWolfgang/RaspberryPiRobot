@@ -1,10 +1,11 @@
 # -*- coding: utf-8 -*-
 ###############################################################################
 # Class of EdgeL
-# Version:  2016.03.31
+# Version:  2016.04.06
 #
 #
 ###############################################################################
+import copy
 from Robot_Toolbox.Edge import *
 
 class EdgeL:
@@ -172,4 +173,69 @@ class EdgeL:
     def setTargetPosition(self, position):
         if position is not None:
             self.targetPosition = position
+        return
+
+    def calculateNewPath(self, Positions):
+        self.putStack(self.startPosition)  # Start Position to stack
+        Positions.reset()                  # clear done tag
+        Buffer = []
+        Buffer.append([self.startPosition])
+
+        while len(self.stack) > 0:
+            position = self.getNextfromStack()
+            print ("Stack: x ",position.x, " y ", position.y)
+            for i in range(0, len(self.list)):
+                if self.list[i].fromP == position:
+                    # edge with from position == position found
+                    position.done = True   # done!
+                    # if toP not done, and not disabled and not target
+                    if self.list[i].toP.done is False\
+                    and self.list[i].toP.disabled is False\
+                    and self.list[i].toP != self.targetPosition:
+                        # put toP to stack
+                        self.putStack(self.list[i].toP)
+
+
+                    # search for  lines in buffer with position at the end
+                    lineFound = False
+                    for j in range(0, len(Buffer)):
+                        line = Buffer[j]
+                        if line[len(line) - 1] == position:
+                            # found stack position at the end
+                            lineFound = True
+                            Buffer[j].append(self.list[i].toP)
+                            #print("Buffer existing lines after append:")
+                            #for k in range(0, len(Buffer)):
+                                #print("\n")
+                                #for l in range (0, len(Buffer[k])):
+                                    #print("x ", Buffer[k][l].x, " y ", Buffer[k][l].y)
+
+                    # create new line
+                    if lineFound is False:
+                        for j in range(0, len(Buffer)):
+                            line = Buffer[j]
+                            if line[len(line) - 2] == position:
+                                # found stack position at end -1
+                                newline = copy.copy(Buffer[j])
+                                newline.pop(len(newline) - 1)
+                                newline.append(self.list[i].toP)
+                                Buffer.append(newline)
+                                #print("Buffer new line after append:")
+                                #for k in range(0, len(Buffer)):
+                                    #print("\n")
+                                    #for l in range (0, len(Buffer[k])):
+                                        #print("x ", Buffer[k][l].x, " y ", Buffer[k][l].y)
+                                break
+        # check if a solution exists and note sum of edge length
+
+        # no solution
+        # store status "No path found" C
+        # delete path
+
+        # find solution with shortest edge length
+
+        # store path
+        # store length of path as a measured value
+        # store status "No path found" G
+
         return
