@@ -154,6 +154,7 @@ setInterval(function() {
     PanelData();
     window.setTimeout(MapData(), 2);
     setTimeout(MapCanvasCircleData(), 0);
+    MapCanvasPathData();
     console.log("1s cycle has been started");
 }, 1000);
 
@@ -350,6 +351,36 @@ function MapCanvasLineData(){
                     ctx.fillStyle = parameterList[0];
                     ctx.strokeStyle = parameterList[0];
                     ctx.lineWidth= 1;
+                    ctx.beginPath();
+                    ctx.moveTo(parameterList[1], parameterList[2])
+                    ctx.lineTo(parameterList[3], parameterList[4])
+                    ctx.stroke();
+                });
+            },
+            error: function (jqXhr, textStatus, errorThrown) {
+                console.log("function Map called with error")
+            }
+        });
+    }
+}
+
+function MapCanvasPathData(){
+    var active = $('#tabs').tabs( "option", "active" );
+    if  (active == 2) {
+        $.ajax({
+            type: 'GET',
+            url: '/ajax/Map/canvasPathData',
+            async: true,
+            dataType: "JSON",
+            success: function(obj, textstatus, jqXhr) {
+                table = eval("(" + jqXhr.responseText + ")");
+                var c = document.getElementById("Path");
+                var ctx = c.getContext("2d");
+                ctx.clearRect(0, 0, c.width, c.height);
+                $.each(table, function(i,parameterList) {
+                    ctx.fillStyle = parameterList[0];
+                    ctx.strokeStyle = parameterList[0];
+                    ctx.lineWidth= 2;
                     ctx.beginPath();
                     ctx.moveTo(parameterList[1], parameterList[2])
                     ctx.lineTo(parameterList[3], parameterList[4])

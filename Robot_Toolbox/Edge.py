@@ -20,7 +20,7 @@ class Edge:
         self.weight = weight
         self.relativeAngle = angle
         self.roadColor = "#000000"
-        self.trackColor = "#FFFFFF"
+        self.pathColor = "#FFFFFF"
 
     def __str__(self):
         nachricht = "Class edge"

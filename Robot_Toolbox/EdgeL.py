@@ -159,13 +159,21 @@ class EdgeL:
                         self.list.append(Edge(position, self.buffer[j], weight, self.buffer[j].angle, False))
         return
 
-    def transformEdgesToCanvasLine(self, scale):
+    def transformEdgesToCanvasLine(self, modus, scale):
         result = []
-        for i in range(0, len(self.list)):
-            edge = self.list[i]
-            if edge.forward is True:
+        if modus == "All":
+            source = self.list
+        else:
+            source = self.path
+        for i in range(0, len(source)):
+            edge = source[i]
+            if edge.forward is True\
+            or modus == "Path":
                 Buffer = []
-                Buffer.append(edge.roadColor)
+                if modus == "Path":
+                    Buffer.append(edge.pathColor)
+                else:
+                    Buffer.append(edge.roadColor)
                 Buffer.append(round(edge.fromP.x / scale))
                 Buffer.append(round(edge.fromP.y / scale))
                 Buffer.append(round(edge.toP.x / scale))
@@ -249,8 +257,8 @@ class EdgeL:
             if Buffer[i][len(Buffer[i]) - 1] == self.targetPosition:
                 solution = True
                 length = 0
+                edge = []
                 for j in range(0, len(Buffer[i]) - 1):
-                    edge = []
                     edge.append(self.getEdge(Buffer[i][j], Buffer[i][j + 1]))
                     length = length + edge[len(edge) - 1].weight
                 edge.append(length)

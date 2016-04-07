@@ -113,6 +113,10 @@ class ProcessWebserver:
                         self.MQueue.put("L@")
                         output = json.dumps(self.WMQueue.get())
                         self.write(output)
+                    elif url.endswith("/canvasPathData"):
+                        self.MQueue.put("P@")
+                        output = json.dumps(self.WMQueue.get())
+                        self.write(output)
                     elif url.endswith("/data"):
                         # acquire data
                         self.PQueue.put("R@Map")

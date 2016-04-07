@@ -204,7 +204,7 @@ if __name__ == '__main__':
     ###########################################################################
     EdgesGf = EdgeL()
     EdgesGf.generateEdges(PositionsGf, Relations)
-    canvasLine = EdgesGf.transformEdgesToCanvasLine(Scale)
+    canvasLine = EdgesGf.transformEdgesToCanvasLine("All", Scale)
 
     # Endless loop of main program
     while True:
@@ -228,6 +228,10 @@ if __name__ == '__main__':
                 # edge data reqired
                 WMQueue.put(canvasLine)
 
+            elif result.find("P@") == 0:
+                # path data required
+                WMQueue.put(EdgesGf.transformEdgesToCanvasLine("Path", Scale))
+
             elif result.find("M@") == 0:
                 # Mouse click received
                 result = result.replace("M@", "")
@@ -250,6 +254,7 @@ if __name__ == '__main__':
 
                 elif variant[0] == "tag":
                     PositionsGf.setTag(int(variant[2]) * Scale, int(variant[3]) * Scale)
+                    EdgesGf.calculateNewPath(PositionsGf, PQueue)
 
             else:
                 print("Process main: Unknown message at MQueue: " + result)
