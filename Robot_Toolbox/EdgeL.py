@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ###############################################################################
 # Class of EdgeL
-# Version:  2016.04.06
+# Version:  2016.04.07
 #
 #
 ###############################################################################
@@ -13,7 +13,7 @@ class EdgeL:
         self.list = []                # list of position edges
         self.stack = []
         self.buffer = []
-        self.roadMap = []
+        self.path = []
         self.startPosition = None
         self.targetPosition = None
 
@@ -27,9 +27,17 @@ class EdgeL:
         else:
             return None
 
-    def emptyRoadmap(self):
-        self.roadMap = []
+    def emptyPath(self):
+        self.path = []
         return
+
+    def getEdge(self, fromP, toP):
+        for i in range(0, len(self.list)):
+            if self.list[i].fromP == fromP\
+            and self.list[i].toP == toP:
+                return self.list[i]
+                break
+        return None
 
     def generateEdges(self, Positions, Relations):
         Positions.reset()                 # clear done tag
@@ -175,7 +183,7 @@ class EdgeL:
             self.targetPosition = position
         return
 
-    def calculateNewPath(self, Positions):
+    def calculateNewPath(self, Positions, PQueue):
         self.putStack(self.startPosition)  # Start Position to stack
         Positions.reset()                  # clear done tag
         Buffer = []
@@ -183,7 +191,7 @@ class EdgeL:
 
         while len(self.stack) > 0:
             position = self.getNextfromStack()
-            print ("Stack: x ",position.x, " y ", position.y)
+            # print ("Stack: x ",position.x, " y ", position.y)
             for i in range(0, len(self.list)):
                 if self.list[i].fromP == position:
                     # edge with from position == position found
@@ -226,16 +234,44 @@ class EdgeL:
                                     #for l in range (0, len(Buffer[k])):
                                         #print("x ", Buffer[k][l].x, " y ", Buffer[k][l].y)
                                 break
-        # check if a solution exists and note sum of edge length
-
-        # no solution
-        # store status "No path found" C
-        # delete path
-
-        # find solution with shortest edge length
-
-        # store path
-        # store length of path as a measured value
         # store status "No path found" G
+        PQueue.put("S@Target not reachable: " + str(0))
+        # delete path
+        self.emptyPath()
+
+        # delete path length
+        PQueue.put("MV@Path lenght: V " + str(0))
+
+        # check if a solution exists and note sum of edge length
+        solution = False
+        Buffer2 = []
+        for i in range(0, len(Buffer)):
+            if Buffer[i][len(Buffer[i]) - 1] == self.targetPosition:
+                solution = True
+                length = 0
+                for j in range(0, len(Buffer[i]) - 1):
+                    edge = []
+                    edge.append(self.getEdge(Buffer[i][j], Buffer[i][j + 1]))
+                    length = length + edge[len(edge) - 1].weight
+                edge.append(length)
+                Buffer2.append(edge)
+
+        if solution is False:
+            # no solution
+            # store status "No path found" C
+            PQueue.put("S@Target not reachable: " + str(1))
+        else:
+            # find solution with shortest path length
+            shortest = Buffer2[0]
+            for j in range(0, len(Buffer2)):
+                if Buffer2[j][len(Buffer2[j]) - 1] < shortest[len(shortest) - 1]:
+                    shortest = Buffer2[j]
+            pathLength = shortest.pop(len(shortest) - 1)
+            # store path length as a measured value
+            PQueue.put("MV@Path lenght: V " + str(int(pathLength)))
+
+            # store path
+            self.path = shortest
+
 
         return

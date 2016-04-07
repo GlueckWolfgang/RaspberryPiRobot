@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ###############################################################################
 # Class of Measured Value List
-# Version:  2016.02.18
+# Version:  2016.04.07
 ###############################################################################
 from Robot_Toolbox.MeasuredValue import *
 from Robot_Toolbox.Alarm import *
@@ -215,6 +215,8 @@ class MeasuredValueL:
         MValue = MeasuredValue(21, "Actual value", "Integer", "cm", "Distance up", False, False)
         self.putMeasuredValue(MValue)
         MValue = MeasuredValue(22, "Actual value", "Integer", "cm", "Distance down", True, False)
+        self.putMeasuredValue(MValue)
+        MValue = MeasuredValue(23, "Actual value", "Integer", "cm", "Path lenght", False, False)
         self.putMeasuredValue(MValue)
 
         return

@@ -43,7 +43,7 @@ class ProcessUSB:
         # continuous process
         while True:
             try:
-                # get messages from USB interface and append to MQueue
+                # get messages from USB interface and append to PQueue
                 result = (self.ser.readline())
                 result = result.decode("utf-8")  # see except UnicodeDecodeError
                 if result is not None\

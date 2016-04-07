@@ -227,4 +227,6 @@ class StatusL:
         self.putStatus(StatusO)
         StatusO = Status(26, "Run", False, True)
         self.putStatus(StatusO)
+        StatusO = Status(27, "Target not reachable", True, False)
+        self.putStatus(StatusO)
         return
