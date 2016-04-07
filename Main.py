@@ -251,6 +251,8 @@ if __name__ == '__main__':
                         # start != target
                         # calculate new path
                         EdgesGf.calculateNewPath(PositionsGf, PQueue)
+                    else:
+                        EdgesGf.emptyPath()
 
                 elif variant[0] == "tag":
                     PositionsGf.setTag(int(variant[2]) * Scale, int(variant[3]) * Scale)
