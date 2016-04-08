@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ###############################################################################
 # Class Prozess status and measured value
-# Version:  2016.03.31
+# Version:  2016.04.08
 #
 # PQueue             = queue to listen
 # AQueue.............= process Audio queue
@@ -83,7 +83,8 @@ class ProcessStatusAndMeasuredValue:
                 forwardFull = StatusList.getStatusByNumber(7)
 
                 if status[0] == "mouse":
-                    if operationModeTargetMove.stStatus == 1:
+                    if operationModeTargetMove.stStatus == 1\
+                    and run != 1:
                         # mouse click allowed
                         if startEndposition.stStatus == 1:
                             MQueue.put("M@startEndposition_" + status[1] +"_" + status[2] + "_" + status[3])
