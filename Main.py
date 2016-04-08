@@ -255,12 +255,21 @@ if __name__ == '__main__':
                         # start != target
                         # calculate new path
                         EdgesGf.calculateNewPath(PositionsGf, PQueue)
+                        # store start coordinates as robot position in case of path has been set manually
+                        EdgesGf.robotPositionX = EdgesGf.path[0].fromP.x
+                        EdgesGf.robotPositionY = EdgesGf.path[0].fromP.y
                     else:
                         EdgesGf.emptyPath()
+                        EdgesGf.robotPositionX = 0
+                        EdgesGf.robotPositionY = 0
 
                 elif variant[0] == "tag":
                     PositionsGf.setTag(int(variant[2]) * Scale, int(variant[3]) * Scale)
                     EdgesGf.calculateNewPath(PositionsGf, PQueue)
+
+                    # store start coordinates as robot position in case of path has been set manually
+                    EdgesGf.robotPositionX = EdgesGf.path[0].fromP.x
+                    EdgesGf.robotPositionY = EdgesGf.path[0].fromP.y
 
             else:
                 print("Process main: Unknown message at MQueue: " + result)

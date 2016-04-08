@@ -154,7 +154,7 @@ setInterval(function() {
     window.setTimeout(MapData(), 2);
     setTimeout(MapCanvasCircleData(), 0);
     MapCanvasPathData();
-    MapCanvasRobotData();
+    setTimeout(MapCanvasRobotData(), 50);
     console.log("1s cycle has been started");
 }, 1000);
 
@@ -410,13 +410,16 @@ function MapCanvasRobotData(){
                 var ctx = c.getContext("2d");
                 ctx.clearRect(0, 0, c.width, c.height);
                 $.each(table, function(i,parameterList) {
-                    ctx.lineWidth= 1;
-                    ctx.strokeStyle = parameterList[0];
-                    ctx.rect(parameterList[1][0],
-                             parameterList[1][1],
-                             parameterList[1][2],
-                             parameterList[1][3]);
-                    ctx.stroke();
+                    if (parameterList != []){
+                        ctx.beginPath();                        
+                        ctx.lineWidth= 1;
+                        ctx.strokeStyle = parameterList[0][0];
+                        ctx.rect(parameterList[1][0],
+                                 parameterList[1][1],
+                                 parameterList[1][2],
+                                 parameterList[1][3]);
+                        ctx.stroke();
+                    }
                 });
             },
             error: function (jqXhr, textStatus, errorThrown) {
