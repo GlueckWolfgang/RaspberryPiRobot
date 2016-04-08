@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ###############################################################################
 # Class Prozess webserver
-# Version:  2016.03.30
+# Version:  2016.04.08
 #
 ###############################################################################
 import tornado.ioloop
@@ -115,6 +115,10 @@ class ProcessWebserver:
                         self.write(output)
                     elif url.endswith("/canvasPathData"):
                         self.MQueue.put("P@")
+                        output = json.dumps(self.WMQueue.get())
+                        self.write(output)
+                    elif url.endswith("/canvasRobotData"):
+                        self.MQueue.put("RP@")
                         output = json.dumps(self.WMQueue.get())
                         self.write(output)
                     elif url.endswith("/data"):

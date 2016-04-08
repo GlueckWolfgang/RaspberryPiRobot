@@ -1,5 +1,5 @@
 // TABS
-// Version: 2016_03_31
+// Version: 2016_04_08
 $(document).ready(function(){
     console.log("function tabs called");
     $('#tabs').tabs({active: 1});
@@ -110,7 +110,6 @@ $(document).ready(function(){
     $("#tabs").on("tabsload", (function(event,ui) {
         if (ui.panel.attr("id")==='ui-id-3') {
             window.setTimeout( MapCanvasRectData(), 20 );
-            window.setTimeout( MapCanvasCircleData(), 20 );
             window.setTimeout( MapCanvasLineData(), 50 );
             
             // On mouse move over canvas show mouse position in real coordinates
@@ -155,6 +154,7 @@ setInterval(function() {
     window.setTimeout(MapData(), 2);
     setTimeout(MapCanvasCircleData(), 0);
     MapCanvasPathData();
+    MapCanvasRobotData();
     console.log("1s cycle has been started");
 }, 1000);
 
@@ -302,38 +302,6 @@ function MapCanvasRectData(){
     }
 }
 
-function MapCanvasCircleData(){
-    var active = $('#tabs').tabs( "option", "active" );
-    if  (active == 2) {
-        $.ajax({
-            type: 'GET',
-            url: '/ajax/Map/canvasCircleData',
-            async: true,
-            dataType: "JSON",
-            success: function(obj, textstatus, jqXhr) {
-                table = eval("(" + jqXhr.responseText + ")");
-                var c = document.getElementById("Positions");
-                var ctx = c.getContext("2d");
-                ctx.clearRect(0, 0, c.width, c.height);
-                $.each(table, function(i,parameterList) { 
-                    ctx.fillStyle = parameterList[0]; 
-                    ctx.strokeStyle = parameterList[0];
-                    ctx.lineWidth= 1;           
-                    ctx.beginPath();
-                    ctx.arc(parameterList[1],
-                    parameterList[2],
-                    parameterList[3],
-                    parameterList[4],
-                    parameterList[5]);
-                    ctx.stroke();                    
-                });
-            },
-            error: function (jqXhr, textStatus, errorThrown) {
-                console.log("function Map called with error")
-            }
-        });
-    }
-}
 
 function MapCanvasLineData(){
     var active = $('#tabs').tabs( "option", "active" );
@@ -354,6 +322,40 @@ function MapCanvasLineData(){
                     ctx.beginPath();
                     ctx.moveTo(parameterList[1], parameterList[2])
                     ctx.lineTo(parameterList[3], parameterList[4])
+                    ctx.stroke();
+                });
+            },
+            error: function (jqXhr, textStatus, errorThrown) {
+                console.log("function Map called with error")
+            }
+        });
+    }
+}
+
+// Map dynamic data
+function MapCanvasCircleData(){
+    var active = $('#tabs').tabs( "option", "active" );
+    if  (active == 2) {
+        $.ajax({
+            type: 'GET',
+            url: '/ajax/Map/canvasCircleData',
+            async: true,
+            dataType: "JSON",
+            success: function(obj, textstatus, jqXhr) {
+                table = eval("(" + jqXhr.responseText + ")");
+                var c = document.getElementById("Positions");
+                var ctx = c.getContext("2d");
+                ctx.clearRect(0, 0, c.width, c.height);
+                $.each(table, function(i,parameterList) {
+                    ctx.fillStyle = parameterList[0];
+                    ctx.strokeStyle = parameterList[0];
+                    ctx.lineWidth= 1;
+                    ctx.beginPath();
+                    ctx.arc(parameterList[1],
+                    parameterList[2],
+                    parameterList[3],
+                    parameterList[4],
+                    parameterList[5]);
                     ctx.stroke();
                 });
             },
@@ -394,7 +396,36 @@ function MapCanvasPathData(){
     }
 }
 
-// Map dynamic data
+function MapCanvasRobotData(){
+    var active = $('#tabs').tabs( "option", "active" );
+    if  (active == 2) {
+        $.ajax({
+            type: 'GET',
+            url: '/ajax/Map/canvasRobotData',
+            async: true,
+            dataType: "JSON",
+            success: function(obj, textstatus, jqXhr) {
+                table = eval("(" + jqXhr.responseText + ")");
+                var c = document.getElementById("RobotPosition");
+                var ctx = c.getContext("2d");
+                ctx.clearRect(0, 0, c.width, c.height);
+                $.each(table, function(i,parameterList) {
+                    ctx.lineWidth= 1;
+                    ctx.strokeStyle = parameterList[0];
+                    ctx.rect(parameterList[1][0],
+                             parameterList[1][1],
+                             parameterList[1][2],
+                             parameterList[1][3]);
+                    ctx.stroke();
+                });
+            },
+            error: function (jqXhr, textStatus, errorThrown) {
+                console.log("function Map called with error")
+            }
+        });
+    }
+}
+
 function MapData(){
     var active = $('#tabs').tabs( "option", "active" );
     if  (active == 2) {

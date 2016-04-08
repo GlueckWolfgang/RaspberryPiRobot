@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ###############################################################################
 # Raspberry Robot Program
-# Version: 2016_04_07
+# Version: 2016_04_08
 # Creator: Wolfgang Glück
 ###############################################################################
 import multiprocessing as mp
@@ -231,6 +231,10 @@ if __name__ == '__main__':
             elif result.find("P@") == 0:
                 # path data required
                 WMQueue.put(EdgesGf.transformEdgesToCanvasLine("Path", Scale))
+
+            elif result.find("RP@") == 0:
+                # robot position required
+                WMQueue.put(EdgesGf.transformRobotPositionToCanvasRect(Scale))
 
             elif result.find("M@") == 0:
                 # Mouse click received

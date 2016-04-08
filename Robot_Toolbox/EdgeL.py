@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ###############################################################################
 # Class of EdgeL
-# Version:  2016.04.07
+# Version:  2016.04.08
 #
 #
 ###############################################################################
@@ -16,6 +16,11 @@ class EdgeL:
         self.path = []
         self.startPosition = None
         self.targetPosition = None
+        self.robotPositionX = 0
+        self.robotPositionY = 0
+        self.robotSquareWidth = 30
+        self.robotSquareHeight = 30
+        self.robotSquareColor = "#0000FF"
 
     def putStack(self, element):
         self.stack.append(element)
@@ -181,6 +186,15 @@ class EdgeL:
                 result.append(Buffer)
         return result
 
+    def transformRobotPositionToCanvasRect(self, scale):
+        Buffer = []
+        Buffer.append([[self.robotSquareColor],
+                      [round((self.robotPositionX - self.robotSquareWidth / 2) / scale),
+                       round((self.robotPositionY - self.robotSquareHeight / 2) / scale),
+                       round(self.robotSquareWidth / scale),
+                       round(self.robotSquareHeight / scale)]])
+        return Buffer
+
     def setStartPosition(self, position):
         if position is not None:
             self.startPosition = position
@@ -246,6 +260,8 @@ class EdgeL:
         PQueue.put("S@Target not reachable: " + str(0))
         # delete path
         self.emptyPath()
+        self.robotPositionX = 0
+        self.robotPositionY = 0
 
         # delete path length
         PQueue.put("MV@Path lenght: V " + str(0))
@@ -281,5 +297,8 @@ class EdgeL:
             # store path
             self.path = shortest
 
+            # store start coordinates as robot position
+            self.robotPositionX = self.path[0].fromP.x
+            self.robotPositionY = self.path[0].fromP.y
 
         return
