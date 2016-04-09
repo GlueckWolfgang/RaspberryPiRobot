@@ -1,10 +1,11 @@
 # -*- coding: utf-8 -*-
 ###############################################################################
 # Raspberry Robot Program
-# Version: 2016_04_08
+# Version: 2016_04_09
 # Creator: Wolfgang Glück
 ###############################################################################
 import multiprocessing as mp
+import threading
 
 from Robot_Toolbox.MeasuredValueL import *
 from Robot_Toolbox.StatusL import *
@@ -74,6 +75,13 @@ if __name__ == '__main__':
     # set defaults manual operation, stop
     PQueue.put("S@Manual Operation: 1")
     PQueue.put("S@Stop: 1")
+
+    # setup 200ms timer
+    def Cycle():
+        MQueue.put("CB@")
+        threading.Timer(0.2, Cycle).start()
+
+    Cycle()
 
     # Define regions
     ###########################################################################
@@ -207,6 +215,7 @@ if __name__ == '__main__':
     canvasLine = EdgesGf.transformEdgesToCanvasLine("All", Scale)
 
     # Endless loop of main program
+    ###########################################################################
     while True:
             result = MQueue.get()
 
@@ -214,6 +223,10 @@ if __name__ == '__main__':
                 # internal message
                 result = result.replace("I@", "")
                 print (result)
+
+            elif result.find("CB@") == 0:
+                # 200 ms timer call back
+                pass
 
             elif result.find("R@") == 0:
                 # map data required
