@@ -226,7 +226,42 @@ if __name__ == '__main__':
 
             elif result.find("CB@") == 0:
                 # 200 ms timer call back
-                pass
+                if EdgesGf.runStatus == "Idle":
+                    pass
+
+                elif EdgesGf.runStatus == "Turn":
+                    # set turn ready to 0 (status will be set to 1 by Arduino)
+                    # send command turn robot to target direction (angle)
+                    # set runStatus to "Wait for turn has finished"
+                    pass
+
+                elif EdgesGf.runStatus == "Wait for turn has finished":
+                    # if turn ready == 1
+                    #     send command reset encounters
+                    #     set runStatus to "Run"
+                    pass
+
+                elif EdgesGf.runStatus == "Run":
+                    # if target achieved or not reachable
+                    #     send stop command
+                    #     set runStatus to "Idle"
+
+                    # if rest distance has an obstruction
+                    #     send stop command
+                    #     put tag to target position
+                    #     calculate new path
+                    #     set first edge
+                    #     set runStatus to "Turn"
+
+                    # if target position of edge reached
+                    #     send stop command
+                    #     next edge
+                    #     set runStatus to "Turn"
+
+                    # if runStatus == "Run"
+                    #     actualize robot position
+                    #     forward slow command
+                    pass
 
             elif result.find("R@") == 0:
                 # map data required

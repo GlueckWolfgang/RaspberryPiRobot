@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ###############################################################################
 # Class of EdgeL
-# Version:  2016.04.08
+# Version:  2016.04.09
 #
 #
 ###############################################################################
@@ -21,6 +21,7 @@ class EdgeL:
         self.robotSquareWidth = 30
         self.robotSquareHeight = 30
         self.robotSquareColor = "#0000FF"
+        self.runStatus = "Idle"
 
     def putStack(self, element):
         self.stack.append(element)
