@@ -287,6 +287,7 @@ function MapCanvasRectData(){
                 table = eval("(" + jqXhr.responseText + ")");
                 var c = document.getElementById("Map");
                 var ctx = c.getContext("2d");
+                ctx.beginPath();
                 $.each(table, function(i,parameterList) {
                     ctx.fillStyle = parameterList[0];
                     ctx.fillRect(parameterList[1][0],
@@ -294,6 +295,7 @@ function MapCanvasRectData(){
                                  parameterList[1][2],
                                  parameterList[1][3]);
                 });
+                ctx.stroke();
             },
             error: function (jqXhr, textStatus, errorThrown) {
                 console.log("function Map called with error")
@@ -315,15 +317,15 @@ function MapCanvasLineData(){
                 table = eval("(" + jqXhr.responseText + ")");
                 var c = document.getElementById("Map");
                 var ctx = c.getContext("2d");
+                ctx.beginPath();
                 $.each(table, function(i,parameterList) {
                     ctx.fillStyle = parameterList[0];
                     ctx.strokeStyle = parameterList[0];
-                    ctx.lineWidth= 1;
-                    ctx.beginPath();
+                    ctx.lineWidth= 1;          
                     ctx.moveTo(parameterList[1], parameterList[2])
-                    ctx.lineTo(parameterList[3], parameterList[4])
-                    ctx.stroke();
+                    ctx.lineTo(parameterList[3], parameterList[4])      
                 });
+                ctx.stroke();
             },
             error: function (jqXhr, textStatus, errorThrown) {
                 console.log("function Map called with error")
@@ -350,7 +352,7 @@ function MapCanvasCircleData(){
                     ctx.fillStyle = parameterList[0];
                     ctx.strokeStyle = parameterList[0];
                     ctx.lineWidth= 1;
-                    ctx.beginPath();
+                    ctx.beginPath();              
                     ctx.arc(parameterList[1],
                     parameterList[2],
                     parameterList[3],
@@ -379,15 +381,15 @@ function MapCanvasPathData(){
                 var c = document.getElementById("Path");
                 var ctx = c.getContext("2d");
                 ctx.clearRect(0, 0, c.width, c.height);
+                ctx.beginPath();
                 $.each(table, function(i,parameterList) {
                     ctx.fillStyle = parameterList[0];
                     ctx.strokeStyle = parameterList[0];
                     ctx.lineWidth= 2;
-                    ctx.beginPath();
                     ctx.moveTo(parameterList[1], parameterList[2])
                     ctx.lineTo(parameterList[3], parameterList[4])
-                    ctx.stroke();
                 });
+                ctx.stroke();
             },
             error: function (jqXhr, textStatus, errorThrown) {
                 console.log("function Map called with error")
@@ -409,18 +411,18 @@ function MapCanvasRobotData(){
                 var c = document.getElementById("RobotPosition");
                 var ctx = c.getContext("2d");
                 ctx.clearRect(0, 0, c.width, c.height);
+                ctx.beginPath();
                 $.each(table, function(i,parameterList) {
-                    if (parameterList != []){
-                        ctx.beginPath();                        
+                    if (parameterList != []){                        
                         ctx.lineWidth= 1;
                         ctx.strokeStyle = parameterList[0][0];
                         ctx.rect(parameterList[1][0],
                                  parameterList[1][1],
                                  parameterList[1][2],
                                  parameterList[1][3]);
-                        ctx.stroke();
                     }
                 });
+                ctx.stroke();
             },
             error: function (jqXhr, textStatus, errorThrown) {
                 console.log("function Map called with error")
