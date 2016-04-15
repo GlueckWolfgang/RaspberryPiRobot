@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ###############################################################################
 # Class of EdgeL
-# Version:  2016.04.09
+# Version:  2016.04.12
 #
 #
 ###############################################################################
@@ -22,6 +22,7 @@ class EdgeL:
         self.robotSquareHeight = 30
         self.robotSquareColor = "#0000FF"
         self.runStatus = "Idle"
+        self.edgepointer = 0
 
     def putStack(self, element):
         self.stack.append(element)
@@ -93,7 +94,7 @@ class EdgeL:
                     if (position2.x - position.x) < (westList[j].x - position.x):
                         position2 = westList[j]
                 # closest position west
-                position2.angle = 270  # angle from position to position2
+                position2.angle = 2700  # angle from position to position2
                 self.buffer.append(position2)
 
             if len(eastList) > 0:
@@ -102,7 +103,7 @@ class EdgeL:
                     if (position2.x - position.x) > (eastList[j].x - position.x):
                         position2 = eastList[j]
                 # closest position east
-                position2.angle = 90  # angle from position to position2
+                position2.angle = 900  # angle from position to position2
                 self.buffer.append(position2)
 
             if len(northList) > 0:
@@ -120,7 +121,7 @@ class EdgeL:
                     if (position2.y - position.y) > (southList[j].y - position.y):
                         position2 = southList[j]
                 # closest position south
-                position2.angle = 180  # angle from position to position2
+                position2.angle = 1800  # angle from position to position2
                 self.buffer.append(position2)
 
             # process Buffer

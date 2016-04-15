@@ -1,5 +1,5 @@
 // TABS
-// Version: 2016_04_08
+// Version: 2016_04_14
 $(document).ready(function(){
     console.log("function tabs called");
     $('#tabs').tabs({active: 1});
@@ -105,6 +105,11 @@ $(document).ready(function(){
     $(document).on("click", '#S_25_Ec', (function(event) {
                           console.log("Tag click.");
                           Send('Map/S_25_Ec');
+                     }));
+                     
+    $(document).on("click", '#S_26_Ec', (function(event) {
+                          console.log("Tag click.");
+                          Send('Map/S_26_Ec');
                      }));
                      
     $("#tabs").on("tabsload", (function(event,ui) {

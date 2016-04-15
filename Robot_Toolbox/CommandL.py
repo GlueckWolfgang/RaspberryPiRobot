@@ -72,4 +72,6 @@ class CommandL:
         self.putCommand(CommandO)
         CommandO = Command(14, "Align")                  # Process Explore, TargetMove
         self.putCommand(CommandO)
+        CommandO = Command(15, "Turn slow to")           # Main process
+        self.putCommand(CommandO)
         return

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ###############################################################################
 # Class of status list
-# Version:  2016.03.22
+# Version:  2016.04.14
 ###############################################################################
 from Robot_Toolbox.Status import *
 from Robot_Toolbox.Alarm import *
@@ -221,12 +221,14 @@ class StatusL:
         self.putStatus(StatusO)
         StatusO = Status(23, "Steering ahead", False, True)
         self.putStatus(StatusO)
-        StatusO = Status(24, "Start Endposition", False, True)
+        StatusO = Status(24, "Start Target position", False, True)
         self.putStatus(StatusO)
         StatusO = Status(25, "Tag", False, True)
         self.putStatus(StatusO)
         StatusO = Status(26, "Run", False, True)
         self.putStatus(StatusO)
         StatusO = Status(27, "Target not reachable", True, False)
+        self.putStatus(StatusO)
+        StatusO = Status(28, "Turn slow to", False, True)
         self.putStatus(StatusO)
         return

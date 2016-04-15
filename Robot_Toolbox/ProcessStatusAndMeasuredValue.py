@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ###############################################################################
 # Class Prozess status and measured value
-# Version:  2016.04.08
+# Version:  2016.04.14
 #
 # PQueue             = queue to listen
 # AQueue.............= process Audio queue
@@ -22,7 +22,7 @@ class ProcessStatusAndMeasuredValue:
         nachricht = "Process Status and measured value"
         return nachricht
 
-    def Run(self, PQueue, AQueue, LQueue, MQueue, WPQueue, CQueue, StatusList, MeasuredValueList):
+    def Run(self, PQueue, AQueue, LQueue, MQueue, WPQueue, CQueue, SMQueue, StatusList, MeasuredValueList):
 
         while True:
             Message = PQueue.get()
@@ -68,6 +68,12 @@ class ProcessStatusAndMeasuredValue:
                 output = json.dumps(dictionary)
                 WPQueue.put(output)
 
+            elif Message.find("MS@") == 0:
+                Message = Message.replace("MS@", "")
+                statusNo = int(Message)
+                status = StatusList.getStatusByNumber(statusNo)
+                SMQueue.put(str(status.stStatus))
+
             elif Message.find("C@") == 0:
                 # Manual command to be sent with interlocking conditions
                 Message = Message.replace("C@", "")
@@ -77,6 +83,8 @@ class ProcessStatusAndMeasuredValue:
                 startEndposition = StatusList.getStatusByNumber(24)
                 tag = StatusList.getStatusByNumber(25)
                 run = StatusList.getStatusByNumber(26)
+                usbDisturbance = StatusList.getStatusByNumber(2)
+                emergencyStop = StatusList.getStatusByNumber(4)
 
                 forwardSlow = StatusList.getStatusByNumber(5)
                 forwardHalf = StatusList.getStatusByNumber(6)
@@ -144,11 +152,22 @@ class ProcessStatusAndMeasuredValue:
                     startEndposition.stStatus = 0
 
                 elif operationModeTargetMove.stStatus == 1\
+                and usbDisturbance.stStatus == 0\
+                and emergencyStop.stStatus == 0\
                 and(status[1] == "26"):
                     # run
                     tag.stStatus = 0
                     startEndposition.stStatus = 0
                     run.stStatus = 1
+                    # start run sequence
+                    MQueue.put("SR@")
+
+                elif operationModeTargetMove.stStatus == 1\
+                and(status[1] == "28"):
+                    # turn slow to
+                    statusO = StatusList.getStatusByNumber(int(status[1]))
+                    CQueue.put(statusO.stDescription + ": "+ status[2])
+
 
                 # other driving commands allowed if operation mode is manual
                 elif operationModeManual.stStatus == 1\

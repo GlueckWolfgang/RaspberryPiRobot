@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ###############################################################################
 # Raspberry Robot Program
-# Version: 2016_04_09
+# Version: 2016_04_14
 # Creator: Wolfgang Glück
 ###############################################################################
 import multiprocessing as mp
@@ -55,6 +55,7 @@ if __name__ == '__main__':
     WLQueue = mp.Queue()
     WPQueue = mp.Queue()
     WMQueue = mp.Queue()
+    SMQueue = mp.Queue()
 
     USBProcess = ProcessUSB()
     AudioProcess = ProcessAudio()
@@ -64,7 +65,7 @@ if __name__ == '__main__':
 
     processList = [mp.Process(target=USBProcess.Run, args=(MQueue, CQueue, PQueue)),
                    mp.Process(target=AudioProcess.Run, args=(MQueue, AQueue, CQueue, CommandList)),
-                   mp.Process(target=STAndMVProcess.Run, args=(PQueue, AQueue, LQueue, MQueue, WPQueue, CQueue, StatusList, MeasuredValueList)),
+                   mp.Process(target=STAndMVProcess.Run, args=(PQueue, AQueue, LQueue, MQueue, WPQueue, CQueue, SMQueue, StatusList, MeasuredValueList)),
                    mp.Process(target=AlarmProcess.Run, args=(LQueue, MQueue, WLQueue, AlarmList)),
                    mp.Process(target=WebserverProcess.Run, args=(WLQueue, WPQueue, WMQueue,MQueue, LQueue, PQueue))]
 
@@ -87,41 +88,41 @@ if __name__ == '__main__':
     ###########################################################################
     # All values in cm , degrees
     # x/y = 35/0 is located at the inner left top corner of the building
-    # deviation from north direction is 35.5 degrees
+    # deviation from north direction (top) is 125.5 degrees
 
-    Building = Region("Building", "I", 35.5, 618, 460, 1236, 920)
-    GroundFloor = Region("Ground floor", "I", 35.5, 0, 0)
+    Building = Region("Building", "I", 1255, 618, 460, 1236, 920)
+    GroundFloor = Region("Ground floor", "I", 1255, 0, 0)
     # First floor is empty
-    FirstFloor = Region("First floor", "I", 35.5, 0, 0)
+    FirstFloor = Region("First floor", "I", 1255, 0, 0)
 
-    Office = Room("Office", "M", 35.5, 148, 684, 295, 472)
-    Parents = Room("Parents", "I", 35.5, 0, 0)
-    Parents1 = Room("Parents1", "M", 35.5, 210, 186, 349, 372)
-    Parents2 = Room("Parents2", "M", 35.5, 417, 253, 65, 237)
-    Bath = Room("Bath", "I", 35.5, 0, 0)
-    Bath1 = Room("Bath1", "M", 35.5, 580, 64, 178, 127)
-    Bath2 = Room("Bath2", "M", 35.5, 566, 220, 206, 186)
-    Shower = Room("Shower", "M", 35.5, 442, 61, 92, 122)
-    Living = Room("Living", "I", 35.5, 0, 0)
-    Living1 = Room("Living1", "M", 35.5, 932, 286, 502, 501)
-    Living2 = Room("Living1", "M", 35.5, 1034, 698, 299, 324)
-    Kitchen = Room("Kitchen", "M", 35.5, 694, 704, 352, 310)
-    Hall = Corridor("Hall", "I", 35.5, 0, 0)
-    Corridor1 = Corridor("Corridor1", "M", 35.5, 355, 492, 96, 210)
-    Corridor2 = Corridor("Corridor2", "M", 35.5, 497, 461, 189, 148)
-    Corridor3 = Corridor("Corridor3", "M", 35.5, 512, 358, 101, 60)
-    Corridor4 = Corridor("Corridor4", "M", 35.5, 630, 461, 77, 148)
+    Office = Room("Office", "M", 1255, 148, 684, 295, 472)
+    Parents = Room("Parents", "I", 1255, 0, 0)
+    Parents1 = Room("Parents1", "M", 1255, 210, 186, 349, 372)
+    Parents2 = Room("Parents2", "M", 125.5, 417, 253, 65, 237)
+    Bath = Room("Bath", "I", 1255, 0, 0)
+    Bath1 = Room("Bath1", "M", 1255, 580, 64, 178, 127)
+    Bath2 = Room("Bath2", "M", 1255, 566, 220, 206, 186)
+    Shower = Room("Shower", "M", 1255, 442, 61, 92, 122)
+    Living = Room("Living", "I", 1255, 0, 0)
+    Living1 = Room("Living1", "M", 1255, 932, 286, 502, 501)
+    Living2 = Room("Living1", "M", 1255, 1034, 698, 299, 324)
+    Kitchen = Room("Kitchen", "M", 1255, 694, 704, 352, 310)
+    Hall = Corridor("Hall", "I", 1255, 0, 0)
+    Corridor1 = Corridor("Corridor1", "M", 1255, 355, 492, 96, 210)
+    Corridor2 = Corridor("Corridor2", "M", 1255, 497, 461, 189, 148)
+    Corridor3 = Corridor("Corridor3", "M", 1255, 512, 358, 101, 60)
+    Corridor4 = Corridor("Corridor4", "M", 1255, 630, 461, 77, 148)
 
-    OfficeCdoor = Door("Office door", "M", 35.5, 301, 549, 12, 82)
-    ParentsBdoor = Door("Parents bath door", "M", 35.5, 455, 184, 12, 77)
-    ParentsCdoor = Door("Parents corridor door", "M", 35.5, 350, 382, 82, 12)
-    BathSdoor = Door("Bath shower door", "M", 35.5, 490, 96, 3, 52)
-    BathCdoor = Door("Bath corridor door", "M", 35.5, 512, 322, 77, 12)
-    CellerCdoor = Door("Celler door", "M", 35.5, 461, 541, 82, 12)
-    KitchenCdoor = Door("Kitchen corridor door", "M", 35.5, 627, 541, 77, 12)
-    KitchenLdoor = Door("Kitchen living door", "M", 35.5, 877, 751, 12, 77)
-    LivingCdoor = Door("Living corridor door", "M", 35.5, 674, 461, 12, 120)
-    LivingTdoor = Door("Living terrace door", "M", 33.5, 841, 29, 110, 12)
+    OfficeCdoor = Door("Office door", "M", 1255, 301, 549, 12, 82)
+    ParentsBdoor = Door("Parents bath door", "M", 1255, 455, 184, 12, 77)
+    ParentsCdoor = Door("Parents corridor door", "M", 1255, 350, 382, 82, 12)
+    BathSdoor = Door("Bath shower door", "M", 1255, 490, 96, 3, 52)
+    BathCdoor = Door("Bath corridor door", "M", 1255, 512, 322, 77, 12)
+    CellerCdoor = Door("Celler door", "M", 1255, 461, 541, 82, 12)
+    KitchenCdoor = Door("Kitchen corridor door", "M", 1255, 627, 541, 77, 12)
+    KitchenLdoor = Door("Kitchen living door", "M", 1255, 877, 751, 12, 77)
+    LivingCdoor = Door("Living corridor door", "M", 1255, 674, 461, 12, 120)
+    LivingTdoor = Door("Living terrace door", "M", 1255, 841, 29, 110, 12)
 
     # Define relations between regions respectively their parts
     ###########################################################################
@@ -187,7 +188,7 @@ if __name__ == '__main__':
     Relations.putRelation(Neighbour(Building, GroundFloor))
     Relations.putRelation(Neighbour(Building, FirstFloor))
 
-    Scale = 2.5    # Scale 1/x between real cm and canvas px
+    Scale = 2.5    # 1/Scale between real cm and canvas px
 
     R = []
     Relations.getRegions(GroundFloor, R)
@@ -224,43 +225,80 @@ if __name__ == '__main__':
                 result = result.replace("I@", "")
                 print (result)
 
+            elif result.find("SR@") == 0:
+                # start run sequence
+                if EdgesGf.startPosition is not None\
+                and EdgesGf.targetPosition is not None\
+                and EdgesGf.startPosition != EdgesGf.targetPosition:
+                    EdgesGf.edgePointer = 0
+                    EdgesGf.runStatus = "Turn"
+                    print("Start run sequence")
+
             elif result.find("CB@") == 0:
                 # 200 ms timer call back
-                if EdgesGf.runStatus == "Idle":
-                    pass
 
-                elif EdgesGf.runStatus == "Turn":
-                    # set turn ready to 0 (status will be set to 1 by Arduino)
-                    # send command turn robot to target direction (angle)
-                    # set runStatus to "Wait for turn has finished"
+                # read stati
+                PQueue.put("MS@" + str(4))
+                #    emergency stop
+                emergencyStop = int(SMQueue.get())
+                #    usb disturbance
+                PQueue.put("MS@" + str(2))
+                usbDisturbance = int(SMQueue.get())
+                if emergencyStop == 1\
+                or usbDisturbance == 1:
+                    EdgesGf.runStatus = "Idle"
+                    # reset run command
+                    PQueue.put("S@Run: 0")
+
+                if EdgesGf.runStatus == "Turn":
+                    # set turn finished to 0 (status will be set to 1 via Arduino)
+                    PQueue.put("S@Turn finished: 0")
+
+                    # angle absolute = (deviation from north (Region) + edge angle relative) % 3600
+                    edge = EdgesGf.path[EdgesGf.edgepointer]
+                    angle = (edge.fromP.inRegion.angleM + edge.relativeAngle) % 3600
+                    # send command turn to angle
+
+                    # EdgesGf.runStatus = "Wait for turn has finished"
+
+                    print("Turn ", str(angle))
                     pass
 
                 elif EdgesGf.runStatus == "Wait for turn has finished":
-                    # if turn ready == 1
+                    # get turn finished
+                    # SMQueue.get()
+                    # if turn finished == 1
                     #     send command reset encounters
-                    #     set runStatus to "Run"
+                    #     EdgesGf.runStatus = "Run"
+                    print("Wait for turn has finished")
                     pass
 
                 elif EdgesGf.runStatus == "Run":
-                    # if target achieved or not reachable
-                    #     send stop command
-                    #     set runStatus to "Idle"
-
+                    # get measured value distance front
+                    # SMQueue.get()
                     # if rest distance has an obstruction
                     #     send stop command
                     #     put tag to target position
+                    #     set start position to actual position
+                    #     set robot position to actual position
                     #     calculate new path
-                    #     set first edge
-                    #     set runStatus to "Turn"
+                    #     EdgesGf.edgePointer = 0
+                    #     EdgesGf.runStatus = "Turn"
 
                     # if target position of edge reached
                     #     send stop command
-                    #     next edge
-                    #     set runStatus to "Turn"
+                    #     if target achieved or not reachable
+                    #         reset run command
+                    #         EdgesGf.runStatus = "Idle"
+                    #     else
+                    #         EdgesGf.edgePointer = EdgesGf.edgePointer + 1
+                    #         EdgesGf.runStatus = "Turn"
 
                     # if runStatus == "Run"
                     #     actualize robot position
+                    #     encounter rounds * 0.058433611 cm / round
                     #     forward slow command
+                    print("Run")
                     pass
 
             elif result.find("R@") == 0:
@@ -316,8 +354,9 @@ if __name__ == '__main__':
                     EdgesGf.calculateNewPath(PositionsGf, PQueue)
 
                     # store start coordinates as robot position in case of path has been set manually
-                    EdgesGf.robotPositionX = EdgesGf.path[0].fromP.x
-                    EdgesGf.robotPositionY = EdgesGf.path[0].fromP.y
+                    if EdgesGf.path != []:
+                        EdgesGf.robotPositionX = EdgesGf.path[0].fromP.x
+                        EdgesGf.robotPositionY = EdgesGf.path[0].fromP.y
 
             else:
                 print("Process main: Unknown message at MQueue: " + result)
