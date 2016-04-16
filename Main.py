@@ -257,21 +257,20 @@ if __name__ == '__main__':
                     # angle absolute = (deviation from north (Region) + edge angle relative) % 3600
                     edge = EdgesGf.path[EdgesGf.edgepointer]
                     angle = (edge.fromP.inRegion.angleM + edge.relativeAngle) % 3600
-                    # send command turn to angle
-
-                    # EdgesGf.runStatus = "Wait for turn has finished"
-
+                    # send command turn slow to angle
+                    PQueue.put("C@S_28_" + str(angle))
+                    EdgesGf.runStatus = "Wait for turn has finished"
                     print("Turn ", str(angle))
-                    pass
 
                 elif EdgesGf.runStatus == "Wait for turn has finished":
                     # get turn finished
-                    # SMQueue.get()
-                    # if turn finished == 1
-                    #     send command reset encounters
-                    #     EdgesGf.runStatus = "Run"
+                    PQueue.put("MS@" + str(0))
+                    turnFinished = int(SMQueue.get())
+                    if turnFinished == 1:
+                        # send command Encounter reset
+                        PQueue.put("C@S_29_")
+                        EdgesGf.runStatus = "Run"
                     print("Wait for turn has finished")
-                    pass
 
                 elif EdgesGf.runStatus == "Run":
                     # get measured value distance front
@@ -299,7 +298,6 @@ if __name__ == '__main__':
                     #     encounter rounds * 0.058433611 cm / round
                     #     forward slow command
                     print("Run")
-                    pass
 
             elif result.find("R@") == 0:
                 # map data required

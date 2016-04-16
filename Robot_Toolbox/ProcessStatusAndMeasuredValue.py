@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ###############################################################################
 # Class Prozess status and measured value
-# Version:  2016.04.14
+# Version:  2016.04.15
 #
 # PQueue             = queue to listen
 # AQueue.............= process Audio queue
@@ -99,7 +99,7 @@ class ProcessStatusAndMeasuredValue:
                         elif tag.stStatus == 1:
                             MQueue.put("M@tag_" + status[1] +"_" + status[2] + "_" + status[3])
 
-
+                # status[0] == "S"
                 # stop is always allowed
                 elif status[1] == "3":
                     run.stStatus = 0
@@ -167,6 +167,12 @@ class ProcessStatusAndMeasuredValue:
                     # turn slow to
                     statusO = StatusList.getStatusByNumber(int(status[1]))
                     CQueue.put(statusO.stDescription + ": "+ status[2])
+
+                elif operationModeTargetMove.stStatus == 1\
+                and(status[1] == "29"):
+                    # Encounter reset
+                    statusO = StatusList.getStatusByNumber(int(status[1]))
+                    CQueue.put(statusO.stDescription)
 
 
                 # other driving commands allowed if operation mode is manual

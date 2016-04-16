@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ###############################################################################
 # Class of status list
-# Version:  2016.04.14
+# Version:  2016.04.15
 ###############################################################################
 from Robot_Toolbox.Status import *
 from Robot_Toolbox.Alarm import *
@@ -230,5 +230,7 @@ class StatusL:
         StatusO = Status(27, "Target not reachable", True, False)
         self.putStatus(StatusO)
         StatusO = Status(28, "Turn slow to", False, True)
+        self.putStatus(StatusO)
+        StatusO = Status(29, "Encoder reset", False, True)
         self.putStatus(StatusO)
         return

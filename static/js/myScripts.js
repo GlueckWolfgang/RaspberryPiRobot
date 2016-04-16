@@ -108,7 +108,7 @@ $(document).ready(function(){
                      }));
                      
     $(document).on("click", '#S_26_Ec', (function(event) {
-                          console.log("Tag click.");
+                          console.log("Run click.");
                           Send('Map/S_26_Ec');
                      }));
                      
