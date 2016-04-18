@@ -90,6 +90,7 @@ canvas {
     height: 20px;
 }
 
+
 .button3 {
     display: block;
     margin: auto;
@@ -102,6 +103,13 @@ canvas {
     display: block;
     margin: auto;
     min-width: 150px;
+    text-align: center;
+}
+
+.button5 {
+    display: block;
+    margin: auto;
+    min-width: 50px;
     text-align: center;
 }
 

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ###############################################################################
 # Class of PositionL
-# Version:  2016.04.01
+# Version:  2016.04.18
 #
 #
 ###############################################################################
@@ -15,8 +15,8 @@ from Robot_Toolbox.Corridor import *
 class PositionL:
     def __init__(self):
         self.list = []
-        self.dwr = 61.0    # wall distance room(42cm furniture + 19cm Robot)
-        self.dwc = 30.0    # wall distance corridor (30 cm Robot)
+        self.dwr = 51.0    # wall distance room(42cm furniture + 19cm Robot)
+        self.dwc = 40.0    # wall distance corridor
 
 
     def reset(self):

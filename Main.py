@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ###############################################################################
 # Raspberry Robot Program
-# Version: 2016_04_14
+# Version: 2016_04_18
 # Creator: Wolfgang Glück
 ###############################################################################
 import multiprocessing as mp
@@ -24,6 +24,8 @@ from Robot_Toolbox.Neighbour import *
 from Robot_Toolbox.Relation import *
 from Robot_Toolbox.PositionL import *
 from Robot_Toolbox.EdgeL import *
+
+
 
 
 ###############################################################################
@@ -86,43 +88,68 @@ if __name__ == '__main__':
 
     # Define regions
     ###########################################################################
-    # All values in cm , degrees
+    # All values in cm , degrees/10
     # x/y = 35/0 is located at the inner left top corner of the building
-    # deviation from north direction (top) is 125.5 degrees
+    # deviation according to deviation table per region
 
-    Building = Region("Building", "I", 1255, 618, 460, 1236, 920)
-    GroundFloor = Region("Ground floor", "I", 1255, 0, 0)
+    Building = Region("Building", "I", 618, 460, 1236, 920)
+    GroundFloor = Region("Ground floor", "I", 0, 0)
     # First floor is empty
-    FirstFloor = Region("First floor", "I", 1255, 0, 0)
+    FirstFloor = Region("First floor", "I", 0, 0)
 
-    Office = Room("Office", "M", 1255, 148, 684, 295, 472)
-    Parents = Room("Parents", "I", 1255, 0, 0)
-    Parents1 = Room("Parents1", "M", 1255, 210, 186, 349, 372)
-    Parents2 = Room("Parents2", "M", 125.5, 417, 253, 65, 237)
-    Bath = Room("Bath", "I", 1255, 0, 0)
-    Bath1 = Room("Bath1", "M", 1255, 580, 64, 178, 127)
-    Bath2 = Room("Bath2", "M", 1255, 566, 220, 206, 186)
-    Shower = Room("Shower", "M", 1255, 442, 61, 92, 122)
-    Living = Room("Living", "I", 1255, 0, 0)
-    Living1 = Room("Living1", "M", 1255, 932, 286, 502, 501)
-    Living2 = Room("Living1", "M", 1255, 1034, 698, 299, 324)
-    Kitchen = Room("Kitchen", "M", 1255, 694, 704, 352, 310)
-    Hall = Corridor("Hall", "I", 1255, 0, 0)
-    Corridor1 = Corridor("Corridor1", "M", 1255, 355, 492, 96, 210)
-    Corridor2 = Corridor("Corridor2", "M", 1255, 497, 461, 189, 148)
-    Corridor3 = Corridor("Corridor3", "M", 1255, 512, 358, 101, 60)
-    Corridor4 = Corridor("Corridor4", "M", 1255, 630, 461, 77, 148)
+    OfficeDeviation = Deviation(1255, 1255, 1255, 1255)
+    Office = Room("Office", "M",148, 684, 295, 472)
 
-    OfficeCdoor = Door("Office door", "M", 1255, 301, 549, 12, 82)
-    ParentsBdoor = Door("Parents bath door", "M", 1255, 455, 184, 12, 77)
-    ParentsCdoor = Door("Parents corridor door", "M", 1255, 350, 382, 82, 12)
-    BathSdoor = Door("Bath shower door", "M", 1255, 490, 96, 3, 52)
-    BathCdoor = Door("Bath corridor door", "M", 1255, 512, 322, 77, 12)
-    CellerCdoor = Door("Celler door", "M", 1255, 461, 541, 82, 12)
-    KitchenCdoor = Door("Kitchen corridor door", "M", 1255, 627, 541, 77, 12)
-    KitchenLdoor = Door("Kitchen living door", "M", 1255, 877, 751, 12, 77)
-    LivingCdoor = Door("Living corridor door", "M", 1255, 674, 461, 12, 120)
-    LivingTdoor = Door("Living terrace door", "M", 1255, 841, 29, 110, 12)
+    Parents = Room("Parents", "I", 0, 0)
+    Parents1Deviation = Deviation(1255, 1255, 1255, 1255)
+    Parents1 = Room("Parents1", "M", 210, 186, 349, 372)
+
+    Parents2Deviation = Deviation(1255, 1255, 1255, 1255)
+    Parents2 = Room("Parents2", "M", 417, 253, 65, 237)
+
+    Bath = Room("Bath", "I", 0, 0)
+    Bath1Deviation = Deviation(1255, 1255, 1255, 1255)
+    Bath1 = Room("Bath1", "M", 580, 64, 178, 127)
+
+    Bath2Deviation = Deviation(1255, 1255, 1255, 1255)
+    Bath2 = Room("Bath2", "M", 566, 220, 206, 186)
+
+    ShowerDeviation = Deviation(1255, 1255, 1255, 1255)
+    Shower = Room("Shower", "M", 442, 61, 92, 122)
+
+    Living = Room("Living", "I", 0, 0)
+    Living1Deviation = Deviation(1255, 1255, 1255, 1255)
+    Living1 = Room("Living1", "M", 932, 286, 502, 501)
+
+    Living2Deviation = Deviation(1255, 1255, 1255, 1255)
+    Living2 = Room("Living1", "M", 1034, 698, 299, 324)
+
+    KitchenDeviation = Deviation(1255, 1255, 1255, 1255)
+    Kitchen = Room("Kitchen", "M", 694, 704, 352, 310)
+
+    Hall = Corridor("Hall", "I", 0, 0)
+    Corridor1Deviation = Deviation(1255, 1255, 1255, 1255)
+    Corridor1 = Corridor("Corridor1", "M", 355, 492, 96, 210)
+
+    Corridor2Deviation = Deviation(1255, 1255, 1255, 1255)
+    Corridor2 = Corridor("Corridor2", "M", 497, 461, 189, 148)
+
+    Corridor3Deviation = Deviation(1255, 1255, 1255, 1255)
+    Corridor3 = Corridor("Corridor3", "M", 512, 358, 101, 60)
+
+    Corridor4Deviation = Deviation(1255, 1255, 1255, 1255)
+    Corridor4 = Corridor("Corridor4", "M", 630, 461, 77, 148)
+
+    OfficeCdoor = Door("Office door", "M", 301, 549, 12, 77)
+    ParentsBdoor = Door("Parents bath door", "M", 455, 184, 12, 77)
+    ParentsCdoor = Door("Parents corridor door", "M", 347, 382, 77, 12)
+    BathSdoor = Door("Bath shower door", "M", 490, 96, 3, 52)
+    BathCdoor = Door("Bath corridor door", "M", 512, 322, 77, 12)
+    CellerCdoor = Door("Celler door", "M", 461, 541, 77, 12)
+    KitchenCdoor = Door("Kitchen corridor door", "M", 627, 541, 77, 12)
+    KitchenLdoor = Door("Kitchen living door", "M", 877, 751, 12, 77)
+    LivingCdoor = Door("Living corridor door", "M", 674, 461, 12, 120)
+    LivingTdoor = Door("Living terrace door", "M", 841, 29, 110, 12)
 
     # Define relations between regions respectively their parts
     ###########################################################################
@@ -256,11 +283,11 @@ if __name__ == '__main__':
 
                     # angle absolute = (deviation from north (Region) + edge angle relative) % 3600
                     edge = EdgesGf.path[EdgesGf.edgepointer]
-                    angle = (edge.fromP.inRegion.angleM + edge.relativeAngle) % 3600
+
                     # send command turn slow to angle
-                    PQueue.put("C@S_28_" + str(angle))
+                    PQueue.put("C@S_28_" + str(edge.bearing))
                     EdgesGf.runStatus = "Wait for turn has finished"
-                    print("Turn ", str(angle))
+                    print("Turn ", str(edge.bearing))
 
                 elif EdgesGf.runStatus == "Wait for turn has finished":
                     # get turn finished
