@@ -90,54 +90,34 @@ if __name__ == '__main__':
     ###########################################################################
     # All values in cm , degrees/10
     # x/y = 35/0 is located at the inner left top corner of the building
-    # deviation according to deviation table per region
 
     Building = Region("Building", "I", 618, 460, 1236, 920)
     GroundFloor = Region("Ground floor", "I", 0, 0)
     # First floor is empty
     FirstFloor = Region("First floor", "I", 0, 0)
 
-    OfficeDeviation = Deviation(1255, 1255, 1255, 1255)
     Office = Room("Office", "M",148, 684, 295, 472)
 
     Parents = Room("Parents", "I", 0, 0)
-    Parents1Deviation = Deviation(1255, 1255, 1255, 1255)
     Parents1 = Room("Parents1", "M", 210, 186, 349, 372)
-
-    Parents2Deviation = Deviation(1255, 1255, 1255, 1255)
     Parents2 = Room("Parents2", "M", 417, 253, 65, 237)
 
     Bath = Room("Bath", "I", 0, 0)
-    Bath1Deviation = Deviation(1255, 1255, 1255, 1255)
     Bath1 = Room("Bath1", "M", 580, 64, 178, 127)
-
-    Bath2Deviation = Deviation(1255, 1255, 1255, 1255)
     Bath2 = Room("Bath2", "M", 566, 220, 206, 186)
 
-    ShowerDeviation = Deviation(1255, 1255, 1255, 1255)
     Shower = Room("Shower", "M", 442, 61, 92, 122)
 
     Living = Room("Living", "I", 0, 0)
-    Living1Deviation = Deviation(1255, 1255, 1255, 1255)
     Living1 = Room("Living1", "M", 932, 286, 502, 501)
-
-    Living2Deviation = Deviation(1255, 1255, 1255, 1255)
     Living2 = Room("Living1", "M", 1034, 698, 299, 324)
 
-    KitchenDeviation = Deviation(1255, 1255, 1255, 1255)
     Kitchen = Room("Kitchen", "M", 694, 704, 352, 310)
 
     Hall = Corridor("Hall", "I", 0, 0)
-    Corridor1Deviation = Deviation(1255, 1255, 1255, 1255)
     Corridor1 = Corridor("Corridor1", "M", 355, 492, 96, 210)
-
-    Corridor2Deviation = Deviation(1255, 1255, 1255, 1255)
     Corridor2 = Corridor("Corridor2", "M", 497, 461, 189, 148)
-
-    Corridor3Deviation = Deviation(1255, 1255, 1255, 1255)
     Corridor3 = Corridor("Corridor3", "M", 512, 358, 101, 60)
-
-    Corridor4Deviation = Deviation(1255, 1255, 1255, 1255)
     Corridor4 = Corridor("Corridor4", "M", 630, 461, 77, 148)
 
     OfficeCdoor = Door("Office door", "M", 301, 549, 12, 77)
