@@ -298,8 +298,12 @@ if __name__ == '__main__':
                     #         EdgesGf.runStatus = "Idle"
                     #     else
                     #         EdgesGf.edgePointer = EdgesGf.edgePointer + 1
-                    #         EdgesGf.runStatus = "Turn"
-
+                    #         if no turn necessary
+                    #            send command Encounter reset
+                    #            PQueue.put("C@S_29_")
+                    #            EdgesGf.runStatus = "Run"
+                    #         else
+                    #             EdgesGf.runStatus = "Turn"
                     # if runStatus == "Run"
                     #     actualize robot position
                     #     encounter rounds * 0.058433611 cm / round
