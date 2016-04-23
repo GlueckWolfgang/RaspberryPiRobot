@@ -142,6 +142,9 @@ class ProcessStatusAndMeasuredValue:
                     # delete robot position
                     MQueue.put("M@robotPosition_delete")
 
+                    # save bearing values to csv file
+                    MQueue.put("BF@")
+
                 # transition from manual or set bearing to target move is allowed
                 elif status[1] == "21"\
                 and (operationModeManual.stStatus == 1
@@ -158,6 +161,9 @@ class ProcessStatusAndMeasuredValue:
                     CQueue.put(statusO.stDescription + ": " + "1")
                     # delete robot position
                     MQueue.put("M@robotPosition_delete")
+
+                    # save bearing values to csv file
+                    MQueue.put("BF@")
 
                 # transition from target move or manual to setBearing is allowed
                 elif (operationModeTargetMove.stStatus == 1

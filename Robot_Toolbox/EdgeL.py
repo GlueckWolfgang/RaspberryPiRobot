@@ -14,8 +14,8 @@ class EdgeL:
         self.list = []                # list of position edges
         self.stack = []
         self.buffer = []
-        self.path = []                # list of edges at robot position for setting bearing
-        self.edgeList = []
+        self.path = []
+        self.edgeList = []            # list of edges at robot position for setting bearing
         self.startPosition = None
         self.targetPosition = None
         self.robotPositionX = 0

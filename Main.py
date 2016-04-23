@@ -6,6 +6,7 @@
 ###############################################################################
 import multiprocessing as mp
 import threading
+import csv
 
 from Robot_Toolbox.MeasuredValueL import *
 from Robot_Toolbox.StatusL import *
@@ -394,9 +395,9 @@ if __name__ == '__main__':
                         if len(EdgesGf.edgeList) > 0:
                             EdgesGf.robotPositionX = EdgesGf.edgeList[0].fromP.x
                             EdgesGf.robotPositionY = EdgesGf.edgeList[0].fromP.y
-                            for i in range (0, len(EdgesGf.edgeList)):
+                            for i in range(0, len(EdgesGf.edgeList)):
                                 edge = EdgesGf.edgeList[i]
-                                if edge.relativeAngle ==0:
+                                if edge.relativeAngle == 0:
                                     PQueue.put("S@Set N: 1")
                                 elif edge.relativeAngle == 900:
                                     PQueue.put("S@Set E: 1")
@@ -404,6 +405,23 @@ if __name__ == '__main__':
                                     PQueue.put("S@Set S: 1")
                                 elif edge.relativeAngle == 2700:
                                     PQueue.put("S@Set W: 1")
+            elif result.find("BF@") == 0:
+                # save bearing values to csv file
+                with open('data/bearing/bearing.csv', 'w', newline='') as f:
+                    writer = csv.writer(f)
+                    writer.writerow(["Room",
+                                     "FromP.x",
+                                     "FromP.y",
+                                     "RelativeAngle",
+                                     "Bearing"])
+                    for Edge in EdgesGf.list:
+                        daten = ([Edge.fromP.inRegion.name,
+                                  str(Edge.fromP.x),
+                                  str(Edge.fromP.y),
+                                  str(Edge.relativeAngle),
+                                  str(Edge.bearing)])
+                        writer.writerow(daten)
+                    f.close()
 
             else:
                 print("Process main: Unknown message at MQueue: " + result)
