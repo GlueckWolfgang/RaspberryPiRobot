@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ###############################################################################
 # Class Prozess status and measured value
-# Version:  2016.04.15
+# Version:  2016.04.23
 #
 # PQueue             = queue to listen
 # AQueue.............= process Audio queue
@@ -80,6 +80,11 @@ class ProcessStatusAndMeasuredValue:
                 status = Message.split("_")
                 operationModeManual = StatusList.getStatusByNumber(19)
                 operationModeTargetMove = StatusList.getStatusByNumber(21)
+                operationModeSetBearing = StatusList.getStatusByNumber(30)
+                setN = StatusList.getStatusByNumber(32)
+                setS = StatusList.getStatusByNumber(33)
+                setW = StatusList.getStatusByNumber(34)
+                setE = StatusList.getStatusByNumber(35)
                 startEndposition = StatusList.getStatusByNumber(24)
                 tag = StatusList.getStatusByNumber(25)
                 run = StatusList.getStatusByNumber(26)
@@ -93,11 +98,15 @@ class ProcessStatusAndMeasuredValue:
                 if status[0] == "mouse":
                     if operationModeTargetMove.stStatus == 1\
                     and run != 1:
-                        # mouse click allowed
+                        # mouse click allowed for start end position and tag
                         if startEndposition.stStatus == 1:
                             MQueue.put("M@startEndposition_" + status[1] +"_" + status[2] + "_" + status[3])
                         elif tag.stStatus == 1:
                             MQueue.put("M@tag_" + status[1] +"_" + status[2] + "_" + status[3])
+
+                    elif operationModeSetBearing.stStatus == 1:
+                        # mouse click allowed for robot position
+                        MQueue.put("M@robotPosition_" + status[1] + "_" +status[2] + "_" + status [3])
 
                 # status[0] == "S"
                 # stop is always allowed
@@ -110,20 +119,51 @@ class ProcessStatusAndMeasuredValue:
                 # manual is allowed always
                 elif status[1] == "19":
                     operationModeTargetMove.stStatus = 0
+                    operationModeSetBearing.stStatus = 0
                     startEndposition.stStatus = 0
                     tag.stStatus = 0
                     run.stStatus = 0
+                    setN.stStatus = 0
+                    setS.stStatus = 0
+                    setW.stStatus = 0
+                    setE.stStatus = 0
                     operationModeManual.stStatus = 1
                     # Stop command
                     statusO = StatusList.getStatusByNumber(3)
                     CQueue.put(statusO.stDescription + ": " + "1")
+                    # delete robot position
+                    MQueue.put("M@robotPosition_delete")
 
-
-                # transition from manual to target move is allowed
+                # transition from manual or set bearing to target move is allowed
                 elif status[1] == "21"\
-                and operationModeManual.stStatus == 1:
+                and (operationModeManual.stStatus == 1
+                or operationModeSetBearing.stStatus == 1):
                     operationModeManual.stStatus = 0
+                    operationModeSetBearing.stStatus = 0
+                    setN.stStatus = 0
+                    setS.stStatus = 0
+                    setW.stStatus = 0
+                    setE.stStatus = 0
                     operationModeTargetMove.stStatus = 1
+                    # Stop command
+                    statusO = StatusList.getStatusByNumber(3)
+                    CQueue.put(statusO.stDescription + ": " + "1")
+                    # delete robot position
+                    MQueue.put("M@robotPosition_delete")
+
+                # transition from target move or manual to setBearing is allowed
+                elif (operationModeTargetMove.stStatus == 1
+                or operationModeManual.stStatus == 1)\
+                and status[1] == "30":
+                    # Set Bearing
+                    operationModeManual.stStatus = 0
+                    operationModeTargetMove.stStatus = 0
+                    operationModeSetBearing.stStatus = 1
+                    # Stop command
+                    statusO = StatusList.getStatusByNumber(3)
+                    CQueue.put(statusO.stDescription + ": " + "1")
+                    # delete robot position
+                    MQueue.put("M@robotPosition_delete")
 
                 # Robot align, Steering left steering right and steering ahead
                 # only allowed if Forward slow or Forward half or Forward full

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ###############################################################################
 # Raspberry Robot Program
-# Version: 2016_04_18
+# Version: 2016_04_23
 # Creator: Wolfgang Glück
 ###############################################################################
 import multiprocessing as mp
@@ -298,7 +298,7 @@ if __name__ == '__main__':
                     #         EdgesGf.runStatus = "Idle"
                     #     else
                     #         EdgesGf.edgePointer = EdgesGf.edgePointer + 1
-                    #         if no turn necessary
+                    #         if no turn necessary  (edge.bearing - actualAngle) >-2 & < +2
                     #            send command Encounter reset
                     #            PQueue.put("C@S_29_")
                     #            EdgesGf.runStatus = "Run"
@@ -366,6 +366,34 @@ if __name__ == '__main__':
                     if EdgesGf.path != []:
                         EdgesGf.robotPositionX = EdgesGf.path[0].fromP.x
                         EdgesGf.robotPositionY = EdgesGf.path[0].fromP.y
+
+                elif variant[0] == "robotPosition":
+                    if variant[1] == "delete":
+                        EdgesGf.robotPositionX = 0
+                        EdgesGf.robotPositionY = 0
+
+                    else:
+                        # set robot position and activate buttons according to found edges
+                        edgeList = EdgesGf.getEdgesFromPosition(PositionsGf.findPosition(int(variant[2]) * Scale, int(variant[3]) * Scale))
+                        PQueue.put("S@Set N: 0")
+                        PQueue.put("S@Set E: 0")
+                        PQueue.put("S@Set S: 0")
+                        PQueue.put("S@Set W: 0")
+                        print("EdgeList length: ", str(len(edgeList)))
+
+                        if len(edgeList) > 0:
+                            EdgesGf.robotPositionX = edgeList[0].fromP.x
+                            EdgesGf.robotPositionY = edgeList[0].fromP.y
+                            for i in range (0, len(edgeList)):
+                                edge = edgeList[i]
+                                if edge.relativeAngle ==0:
+                                    PQueue.put("S@Set N: 1")
+                                elif edge.relativeAngle == 900:
+                                    PQueue.put("S@Set E: 1")
+                                elif edge.relativeAngle == 1800:
+                                    PQueue.put("S@Set S: 1")
+                                elif edge.relativeAngle == 2700:
+                                    PQueue.put("S@Set W: 1")
 
             else:
                 print("Process main: Unknown message at MQueue: " + result)

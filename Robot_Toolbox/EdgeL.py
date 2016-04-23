@@ -1,12 +1,13 @@
 # -*- coding: utf-8 -*-
 ###############################################################################
 # Class of EdgeL
-# Version:  2016.04.12
+# Version:  2016.04.23
 #
 #
 ###############################################################################
 import copy
 from Robot_Toolbox.Edge import *
+
 
 class EdgeL:
     def __init__(self):
@@ -45,6 +46,13 @@ class EdgeL:
                 return self.list[i]
                 break
         return None
+
+    def getEdgesFromPosition(self, position):
+        edgeList = []
+        for i in range(0, len(self.list)):
+            if self.list[i].fromP == position:
+                edgeList.append(self.list[i])
+        return edgeList
 
     def generateEdges(self, Positions, Relations):
         Positions.reset()                 # clear done tag

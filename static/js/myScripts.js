@@ -111,6 +111,36 @@ $(document).ready(function(){
                           console.log("Run click.");
                           Send('Map/S_26_Ec');
                      }));
+
+    $(document).on("click", '#S_30_Ec', (function(event) {
+    console.log("Set Bearing click.");
+    Send('Map/S_30_Ec');
+                     }));
+    
+    $(document).on("click", '#S_31_Ec', (function(event) {
+    console.log("Robot Position click.");
+    Send('Map/S_31_Ec');
+                     }));
+                     
+    $(document).on("click", '#S_32_Ec', (function(event) {
+    console.log("Set N click.");
+    Send('Map/S_32_Ec');
+                     }));
+                     
+    $(document).on("click", '#S_33_Ec', (function(event) {
+    console.log("Set S click.");
+    Send('Map/S_33_Ec');
+                     }));
+                     
+    $(document).on("click", '#S_34_Ec', (function(event) {
+    console.log("Set W click.");
+    Send('Map/S_34_Ec');
+                     }));
+                     
+    $(document).on("click", '#S_35_Ec', (function(event) {
+    console.log("Set E click.");
+    Send('Map/S_35_Ec');
+                     }));
                      
     $("#tabs").on("tabsload", (function(event,ui) {
         if (ui.panel.attr("id")==='ui-id-3') {
