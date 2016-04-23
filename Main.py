@@ -331,6 +331,17 @@ if __name__ == '__main__':
                 # robot position required
                 WMQueue.put(EdgesGf.transformRobotPositionToCanvasRect(Scale))
 
+            elif result.find("SB@") == 0:
+                # set bearing
+                result = result.replace("SB@", "")
+                relativeAngle = int(result)
+                # get actualAngle
+                PQueue.put("MM@13")
+                actualAngle = int(SMQueue.get())
+                for i in range (0,len(EdgesGf.edgeList)):
+                    if EdgesGf.edgeList[i].relativeAngle == relativeAngle:
+                        EdgesGf.edgeList[i].bearing = actualAngle
+
             elif result.find("M@") == 0:
                 # Mouse click received
                 result = result.replace("M@", "")
@@ -374,18 +385,17 @@ if __name__ == '__main__':
 
                     else:
                         # set robot position and activate buttons according to found edges
-                        edgeList = EdgesGf.getEdgesFromPosition(PositionsGf.findPosition(int(variant[2]) * Scale, int(variant[3]) * Scale))
+                        EdgesGf.edgeList = EdgesGf.getEdgesFromPosition(PositionsGf.findPosition(int(variant[2]) * Scale, int(variant[3]) * Scale))
                         PQueue.put("S@Set N: 0")
                         PQueue.put("S@Set E: 0")
                         PQueue.put("S@Set S: 0")
                         PQueue.put("S@Set W: 0")
-                        print("EdgeList length: ", str(len(edgeList)))
 
-                        if len(edgeList) > 0:
-                            EdgesGf.robotPositionX = edgeList[0].fromP.x
-                            EdgesGf.robotPositionY = edgeList[0].fromP.y
-                            for i in range (0, len(edgeList)):
-                                edge = edgeList[i]
+                        if len(EdgesGf.edgeList) > 0:
+                            EdgesGf.robotPositionX = EdgesGf.edgeList[0].fromP.x
+                            EdgesGf.robotPositionY = EdgesGf.edgeList[0].fromP.y
+                            for i in range (0, len(EdgesGf.edgeList)):
+                                edge = EdgesGf.edgeList[i]
                                 if edge.relativeAngle ==0:
                                     PQueue.put("S@Set N: 1")
                                 elif edge.relativeAngle == 900:

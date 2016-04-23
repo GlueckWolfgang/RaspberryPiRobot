@@ -69,10 +69,18 @@ class ProcessStatusAndMeasuredValue:
                 WPQueue.put(output)
 
             elif Message.find("MS@") == 0:
+                # get stStatus by number
                 Message = Message.replace("MS@", "")
                 statusNo = int(Message)
                 status = StatusList.getStatusByNumber(statusNo)
                 SMQueue.put(str(status.stStatus))
+
+            elif Message.find("MM@") == 0:
+                # get value from measured value by number
+                Message = Message.replace("MM@", "")
+                mvNo = int(Message)
+                measuredValue = MeasuredValueList.getMeasuredValueByNumber(mvNo)
+                SMQueue.put(str(int(measuredValue.value * 10)))
 
             elif Message.find("C@") == 0:
                 # Manual command to be sent with interlocking conditions
@@ -214,6 +222,29 @@ class ProcessStatusAndMeasuredValue:
                     statusO = StatusList.getStatusByNumber(int(status[1]))
                     CQueue.put(statusO.stDescription)
 
+                elif operationModeSetBearing.stStatus == 1\
+                and(status[1] == "32"):
+                    # Set N
+                    MQueue.put("SB@0")
+                    PQueue.put("S@Set N: 0")
+
+                elif operationModeSetBearing.stStatus == 1\
+                and(status[1] == "33"):
+                    # Set S
+                    MQueue.put("SB@1800")
+                    PQueue.put("S@Set S: 0")
+
+                elif operationModeSetBearing.stStatus == 1\
+                and(status[1] == "34"):
+                    # Set W
+                    MQueue.put("SB@2700")
+                    PQueue.put("S@Set W: 0")
+
+                elif operationModeSetBearing.stStatus == 1\
+                and(status[1] == "35"):
+                    # Set E
+                    MQueue.put("SB@900")
+                    PQueue.put("S@Set E: 0")
 
                 # other driving commands allowed if operation mode is manual
                 elif operationModeManual.stStatus == 1\

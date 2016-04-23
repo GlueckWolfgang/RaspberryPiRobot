@@ -14,7 +14,8 @@ class EdgeL:
         self.list = []                # list of position edges
         self.stack = []
         self.buffer = []
-        self.path = []
+        self.path = []                # list of edges at robot position for setting bearing
+        self.edgeList = []
         self.startPosition = None
         self.targetPosition = None
         self.robotPositionX = 0
@@ -24,6 +25,7 @@ class EdgeL:
         self.robotSquareColor = "#0000FF"
         self.runStatus = "Idle"
         self.edgepointer = 0
+
 
     def putStack(self, element):
         self.stack.append(element)
