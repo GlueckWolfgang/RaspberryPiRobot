@@ -1,11 +1,13 @@
 # -*- coding: utf-8 -*-
 ###############################################################################
 # Class of EdgeL
-# Version:  2016.04.23
+# Version:  2016.04.24
 #
 #
 ###############################################################################
 import copy
+import csv
+import os
 from Robot_Toolbox.Edge import *
 
 
@@ -55,6 +57,36 @@ class EdgeL:
             if self.list[i].fromP == position:
                 edgeList.append(self.list[i])
         return edgeList
+
+    def saveBearing(self):
+        with open('data/bearing/bearing.csv', 'w', newline='') as f:
+            writer = csv.writer(f)
+            writer.writerow(["Room",
+                             "FromP.x",
+                             "FromP.y",
+                             "RelativeAngle",
+                             "Bearing"])
+            for Edge in self.list:
+                daten = ([Edge.fromP.inRegion.name,
+                          str(Edge.fromP.x),
+                          str(Edge.fromP.y),
+                          str(Edge.relativeAngle),
+                          str(Edge.bearing)])
+                writer.writerow(daten)
+            f.close()
+        return
+
+    def reloadBearing(self):
+        if os.path.isfile('data/bearing/bearing.csv'):
+            with open('data/bearing/bearing.csv', newline='') as f:
+                reader = csv.reader(f)
+                i = 0
+                for row in reader:
+                    if row[0] != "Room":
+                        self.list[i].bearing = int(row[4])
+                        i += 1
+            f.close()
+        return
 
     def generateEdges(self, Positions, Relations):
         Positions.reset()                 # clear done tag

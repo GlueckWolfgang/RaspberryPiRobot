@@ -6,7 +6,6 @@
 ###############################################################################
 import multiprocessing as mp
 import threading
-import csv
 
 from Robot_Toolbox.MeasuredValueL import *
 from Robot_Toolbox.StatusL import *
@@ -221,6 +220,7 @@ if __name__ == '__main__':
     ###########################################################################
     EdgesGf = EdgeL()
     EdgesGf.generateEdges(PositionsGf, Relations)
+    EdgesGf.reloadBearing()
     canvasLine = EdgesGf.transformEdgesToCanvasLine("All", Scale)
 
     # Endless loop of main program
@@ -407,21 +407,7 @@ if __name__ == '__main__':
                                     PQueue.put("S@Set W: 1")
             elif result.find("BF@") == 0:
                 # save bearing values to csv file
-                with open('data/bearing/bearing.csv', 'w', newline='') as f:
-                    writer = csv.writer(f)
-                    writer.writerow(["Room",
-                                     "FromP.x",
-                                     "FromP.y",
-                                     "RelativeAngle",
-                                     "Bearing"])
-                    for Edge in EdgesGf.list:
-                        daten = ([Edge.fromP.inRegion.name,
-                                  str(Edge.fromP.x),
-                                  str(Edge.fromP.y),
-                                  str(Edge.relativeAngle),
-                                  str(Edge.bearing)])
-                        writer.writerow(daten)
-                    f.close()
+                EdgesGf.saveBearing()
 
             else:
                 print("Process main: Unknown message at MQueue: " + result)
