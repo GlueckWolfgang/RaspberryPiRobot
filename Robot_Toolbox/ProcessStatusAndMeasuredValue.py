@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ###############################################################################
 # Class Prozess status and measured value
-# Version:  2016.04.23
+# Version:  2016.04.28
 #
 # PQueue             = queue to listen
 # AQueue.............= process Audio queue
@@ -35,6 +35,10 @@ class ProcessStatusAndMeasuredValue:
                 Message = Message.replace("MV@", "")
                 # Put measured value
                 MeasuredValueList.putValue(Message, AQueue, LQueue, MQueue)
+
+            elif Message.find("I@") == 0:
+                # mirrored command
+                MQueue.put(Message)
 
             elif Message.find("R@Panel") == 0:
                 # request for data (Panel.html)
@@ -80,7 +84,7 @@ class ProcessStatusAndMeasuredValue:
                 Message = Message.replace("MM@", "")
                 mvNo = int(Message)
                 measuredValue = MeasuredValueList.getMeasuredValueByNumber(mvNo)
-                SMQueue.put(str(int(measuredValue.value * 10)))
+                SMQueue.put(str(measuredValue.value))
 
             elif Message.find("C@") == 0:
                 # Manual command to be sent with interlocking conditions
@@ -225,6 +229,12 @@ class ProcessStatusAndMeasuredValue:
                 elif operationModeTargetMove.stStatus == 1\
                 and(status[1] == "29"):
                     # Encounter reset
+                    statusO = StatusList.getStatusByNumber(int(status[1]))
+                    CQueue.put(statusO.stDescription)
+
+                elif operationModeTargetMove.stStatus == 1\
+                and(status[1] == "5"):
+                    # Forward slow
                     statusO = StatusList.getStatusByNumber(int(status[1]))
                     CQueue.put(statusO.stDescription)
 

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ###############################################################################
 # Class of PositionL
-# Version:  2016.04.18
+# Version:  2016.04.28
 #
 #
 ###############################################################################
@@ -638,10 +638,10 @@ class PositionL:
     def findPosition(self, x, y):
         position = None
         for i in range(0, len(self.list)):
-            if x > (self.list[i].x - 7)\
-            and x < (self.list[i].x + 7)\
-            and y > (self.list[i].y - 7)\
-            and y < (self.list[i].y + 7):
+            if x > (self.list[i].x - 14)\
+            and x < (self.list[i].x + 14)\
+            and y > (self.list[i].y - 14)\
+            and y < (self.list[i].y + 14):
                 # Position found +- 7 cm
                 position = self.list[i]
                 break

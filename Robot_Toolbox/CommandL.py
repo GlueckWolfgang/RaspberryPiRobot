@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ###############################################################################
 # Class of command list
-# Version:  2016.02.16
+# Version:  2016.04.29
 ###############################################################################
 from Robot_Toolbox.Command import *
 
@@ -22,7 +22,7 @@ class CommandL:
     def sendCommandByNumber(self, coNumber, coValue):
         if int(coNumber) < len(self.list):        # list must not be empty
             CommandO = self.getCommandByNumber(coNumber)
-            Command = CommandO.coDescription + ": " + coValue
+            Command = CommandO.coDescription + ": " + coValue + "\n"
             return Command
         else:
             return None
@@ -42,9 +42,9 @@ class CommandL:
         return None
 
     def generateCommandList(self):
-        CommandO = Command(0, "Stop")
+        CommandO = Command(0, "Stop")                    # Main process
         self.putCommand(CommandO)
-        CommandO = Command(1, "Forward slow")
+        CommandO = Command(1, "Forward slow")            # Main process
         self.putCommand(CommandO)
         CommandO = Command(2, "Forward half")
         self.putCommand(CommandO)
@@ -66,9 +66,9 @@ class CommandL:
         self.putCommand(CommandO)
         CommandO = Command(11, "Wlan ready")             # Main?
         self.putCommand(CommandO)
-        CommandO = Command(12, "Encoder reset")          # Process Explore, TargetMove
+        CommandO = Command(12, "Encoder reset")          # Process Explore, TargetMove, Main
         self.putCommand(CommandO)
-        CommandO = Command(13, "Amplifier")              # ProcessAudio
+        CommandO = Command(13, "Amplifier")              # Process Audio
         self.putCommand(CommandO)
         CommandO = Command(14, "Align")                  # Process Explore, TargetMove
         self.putCommand(CommandO)

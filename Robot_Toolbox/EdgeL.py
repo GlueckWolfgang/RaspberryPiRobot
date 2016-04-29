@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ###############################################################################
 # Class of EdgeL
-# Version:  2016.04.24
+# Version:  2016.04.29
 #
 #
 ###############################################################################
@@ -13,11 +13,11 @@ from Robot_Toolbox.Edge import *
 
 class EdgeL:
     def __init__(self):
-        self.list = []                # list of position edges
+        self.list = []                # list of all position edges
+        self.path = []                # list of edges for path
+        self.edgeList = []            # list of edges at robot position for setting bearing
         self.stack = []
         self.buffer = []
-        self.path = []
-        self.edgeList = []            # list of edges at robot position for setting bearing
         self.startPosition = None
         self.targetPosition = None
         self.robotPositionX = 0
@@ -26,8 +26,7 @@ class EdgeL:
         self.robotSquareHeight = 30
         self.robotSquareColor = "#0000FF"
         self.runStatus = "Idle"
-        self.edgepointer = 0
-
+        self.edgePointer = 0
 
     def putStack(self, element):
         self.stack.append(element)
@@ -65,15 +64,17 @@ class EdgeL:
                              "FromP.x",
                              "FromP.y",
                              "RelativeAngle",
-                             "Bearing"])
+                             "Bearing",
+                             "Weight"])
             for Edge in self.list:
                 daten = ([Edge.fromP.inRegion.name,
                           str(Edge.fromP.x),
                           str(Edge.fromP.y),
                           str(Edge.relativeAngle),
-                          str(Edge.bearing)])
+                          str(Edge.bearing),
+                          str(Edge.weight)])
                 writer.writerow(daten)
-            f.close()
+            # f.close(), done implicit by with
         return
 
     def reloadBearing(self):
@@ -85,7 +86,7 @@ class EdgeL:
                     if row[0] != "Room":
                         self.list[i].bearing = int(row[4])
                         i += 1
-            f.close()
+                # f.close(), done implicit by with
         return
 
     def generateEdges(self, Positions, Relations):

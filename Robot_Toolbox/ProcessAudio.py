@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ###############################################################################
 # Class Process Audio
-# Version:  2016.01.09
+# Version:  2016.04.29
 # CQueue    for sending commands like amplifier on/off
 # MQueue    Can be used for fault messages
 #           (I@anyString can be sent)
@@ -13,26 +13,25 @@ import pyglet
 
 
 class ProcessAudio:
+    def __init__(self):
+        self.amplifier = False
 
     def __str__(self):
         nachricht = "Audio process"
         return nachricht
 
     def Run(self, MQueue, AQueue, CQueue, CommandList):
-        global amplifier
-        amplifier = False
 
         def play_next(*args):
-            global amplifier
-
             if not AQueue.empty():
                 # switch on amplifier
-                if amplifier is False:
+                if not self.amplifier:
                     CQueue.put(CommandList.sendCommandByNumber(13, "1"))
-                    amplifier = True
+                    self.amplifier = True
 
                 # get order from AQueue
                 Audio = AQueue.get()
+
                 # play pieep (0)
                 url = "data/CG/0.mp3"
                 clip0 = pyglet.media.load(url, streaming=False)
@@ -43,7 +42,7 @@ class ProcessAudio:
 
                 if Audio.aType == "MV":
                     # play description text for measured value according to no
-                    url = "data/MV/" + Audio.aNumber+ ".mp3"
+                    url = "data/MV/" + Audio.aNumber + ".mp3"
                     # MQueue.put("I@Clip1URL: " + url)
                     clip1 = pyglet.media.load(url, streaming=False)
                     player.queue(clip1)
@@ -85,10 +84,10 @@ class ProcessAudio:
                     player.play()
 
             if not player.playing\
-            and amplifier is True:
+            and self.amplifier:
                 # switch off amplifier and save energy
                 CQueue.put(CommandList.sendCommandByNumber(13, "0"))
-                amplifier = False
+                self.amplifier = False
 
             return
 
@@ -98,5 +97,5 @@ class ProcessAudio:
         AQueue.put(Audio("Peep only", "0", True, "1", "0"))
 
         # call pyglet process and timer
-        pyglet.clock.schedule_interval(play_next, 1.0)
+        pyglet.clock.schedule_interval(play_next, 2.0)
         pyglet.app.run()  # returns only over timer

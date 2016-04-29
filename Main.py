@@ -1,11 +1,12 @@
 # -*- coding: utf-8 -*-
 ###############################################################################
 # Raspberry Robot Program
-# Version: 2016_04_23
+# Version: 2016_04_29
 # Creator: Wolfgang Glück
 ###############################################################################
 import multiprocessing as mp
 import threading
+import time
 
 from Robot_Toolbox.MeasuredValueL import *
 from Robot_Toolbox.StatusL import *
@@ -24,8 +25,6 @@ from Robot_Toolbox.Neighbour import *
 from Robot_Toolbox.Relation import *
 from Robot_Toolbox.PositionL import *
 from Robot_Toolbox.EdgeL import *
-
-
 
 
 ###############################################################################
@@ -96,7 +95,7 @@ if __name__ == '__main__':
     # First floor is empty
     FirstFloor = Region("First floor", "I", 0, 0)
 
-    Office = Room("Office", "M",148, 684, 295, 472)
+    Office = Room("Office", "M", 148, 684, 295, 472)
 
     Parents = Room("Parents", "I", 0, 0)
     Parents1 = Room("Parents1", "M", 210, 186, 349, 372)
@@ -205,7 +204,7 @@ if __name__ == '__main__':
     ###########################################################################
 
     PositionsGf = PositionL()
-    Base = Position(78, 684)
+    Base = Position(90, 684)
     Base.r = 5
     Base.inRegion = Office
     Base.localSouthSideOf = Office
@@ -214,7 +213,6 @@ if __name__ == '__main__':
     PositionsGf.generatePositions(Relations, GroundFloor, Door)
     PositionsGf.generatePositions(Relations, GroundFloor, Room)
     PositionsGf.generatePositions(Relations, GroundFloor, Corridor)
-
 
     # Define edges
     ###########################################################################
@@ -240,11 +238,12 @@ if __name__ == '__main__':
                 and EdgesGf.startPosition != EdgesGf.targetPosition:
                     EdgesGf.edgePointer = 0
                     EdgesGf.runStatus = "Turn"
+                    forwardSlowActive = False
                     print("Start run sequence")
 
             elif result.find("CB@") == 0:
                 # 200 ms timer call back
-
+                # *************************************************************
                 # read stati
                 PQueue.put("MS@" + str(4))
                 #    emergency stop
@@ -259,57 +258,105 @@ if __name__ == '__main__':
                     PQueue.put("S@Run: 0")
 
                 if EdgesGf.runStatus == "Turn":
+                    # *********************************************************
                     # set turn finished to 0 (status will be set to 1 via Arduino)
                     PQueue.put("S@Turn finished: 0")
 
                     # angle absolute = (deviation from north (Region) + edge angle relative) % 3600
-                    edge = EdgesGf.path[EdgesGf.edgepointer]
+                    edge = EdgesGf.path[EdgesGf.edgePointer]
 
                     # send command turn slow to angle
                     PQueue.put("C@S_28_" + str(edge.bearing))
                     EdgesGf.runStatus = "Wait for turn has finished"
                     print("Turn ", str(edge.bearing))
 
-                elif EdgesGf.runStatus == "Wait for turn has finished":
+                if EdgesGf.runStatus == "Wait for turn has finished":
+                    # *********************************************************
                     # get turn finished
                     PQueue.put("MS@" + str(0))
                     turnFinished = int(SMQueue.get())
                     if turnFinished == 1:
-                        # send command Encounter reset
-                        PQueue.put("C@S_29_")
+                        # send command encoder reset
+                        CQueue.put(CommandList.sendCommandByNumber(12, "1"))
                         EdgesGf.runStatus = "Run"
+                        forwardSlowActive = False
                     print("Wait for turn has finished")
 
-                elif EdgesGf.runStatus == "Run":
-                    # get measured value distance front
-                    # SMQueue.get()
-                    # if rest distance has an obstruction
-                    #     send stop command
-                    #     put tag to target position
-                    #     set start position to actual position
-                    #     set robot position to actual position
-                    #     calculate new path
-                    #     EdgesGf.edgePointer = 0
-                    #     EdgesGf.runStatus = "Turn"
+                if EdgesGf.runStatus == "Run":
+                    # *********************************************************
+                    # get measured value distanceFront
+                    PQueue.put("MM@20")
+                    distanceFront = int(SMQueue.get())
+                    # get measured value encoderPulses right
+                    PQueue.put("MM@2")
+                    encoderPulses = int(SMQueue.get())
+                    # calculate passed distance
+                    passedDistance = int(encoderPulses * 0.058433611)
+                    # get actual edge
+                    edge = EdgesGf.path[EdgesGf.edgePointer]
 
-                    # if target position of edge reached
-                    #     send stop command
-                    #     if target achieved or not reachable
-                    #         reset run command
-                    #         EdgesGf.runStatus = "Idle"
-                    #     else
-                    #         EdgesGf.edgePointer = EdgesGf.edgePointer + 1
-                    #         if no turn necessary  (edge.bearing - actualAngle) >-2 & < +2
-                    #            send command Encounter reset
-                    #            PQueue.put("C@S_29_")
-                    #            EdgesGf.runStatus = "Run"
-                    #         else
-                    #             EdgesGf.runStatus = "Turn"
-                    # if runStatus == "Run"
-                    #     actualize robot position
-                    #     encounter rounds * 0.058433611 cm / round
-                    #     forward slow command
+                    # actualize robot position
+                    if edge.relativeAngle == 0:
+                        EdgesGf.robotPositionY = edge.fromP.y - passedDistance
+                        EdgesGf.robotPositionX = edge.fromP.x
+                    elif edge.relativeAngle == 180:
+                        EdgesGf.robotPositionY = edge.fromP.y + passedDistance
+                        EdgesGf.robotPositionX = edge.fromP.x
+                    elif edge.relativeAngle == 270:
+                        EdgesGf.robotPositionX = edge.fromP.x - passedDistance
+                        EdgesGf.robotPositionY = edge.fromP.y
+                    elif edge.relativeAngle == 90:
+                        EdgesGf.robotPositionX = edge.fromP.x + passedDistance
+                        EdgesGf.robotPositionY = edge.fromP.y
+
+                    if distanceFront < (edge.weight - passedDistance):
+                        # restDistance has an obstruction
+                        # (works only for static obstructions)
+                        # send stop command
+                        CQueue.put(CommandList.sendCommandByNumber(0, "1"))
+                        forwardSlowActive = False
+                        print("Obstruction ahead: Distance ", str(distanceFront), "to go ", str(edge.weight - passedDistance))
+                        #     put tag to target position
+                        #     set start position to actual position
+                        #     set robot position to actual position
+                        #     calculate new path
+                        #     EdgesGf.edgePointer = 0
+                        #     EdgesGf.runStatus = "Turn"
+
+                    elif (edge.weight - passedDistance - 4) <= 0:
+                        # Edge toP achieved
+                        # send stop command
+                        CQueue.put(CommandList.sendCommandByNumber(0, "1"))
+                        forwardSlowActive = False
+                        # send command encoder reset
+                        CQueue.put(CommandList.sendCommandByNumber(12, "1"))
+                        print("Edge toP achieved: weight - passedDistance = ", str(edge.weight - passedDistance))
+                        # wait 0.5s for Arduino has been sent new values for encoders
+                        time.sleep(0.5)
+
+                        if (EdgesGf.edgePointer + 1) == len(EdgesGf.path):
+                            # target achieved
+                            PQueue.put("S@Run: 0")
+                            EdgesGf.runStatus = "Idle"
+                            print("Target achieved: EdgePointer ", str(EdgesGf.edgePointer), "lenPath: ", str(len(EdgesGf.path)))
+                        else:
+                            # next edge
+                            EdgesGf.edgePointer = EdgesGf.edgePointer + 1
+                            print("Next edge")
+                            # if turn is necessary
+                            if edge.relativeAngle != EdgesGf.path[EdgesGf.edgePointer].relativeAngle:
+                                EdgesGf.runStatus = "Turn"
+                    else:
+                        if not forwardSlowActive\
+                        and EdgesGf.runStatus == "Run":
+                            CQueue.put(CommandList.sendCommandByNumber(1, "1"))
+                            # store forwardSlowActice
+                            forwardSlowActive = True
+                            print("Forward slow")
+
                     print("Run")
+
+
 
             elif result.find("R@") == 0:
                 # map data required
@@ -338,8 +385,8 @@ if __name__ == '__main__':
                 relativeAngle = int(result)
                 # get actualAngle
                 PQueue.put("MM@13")
-                actualAngle = int(SMQueue.get())
-                for i in range (0,len(EdgesGf.edgeList)):
+                actualAngle = int(float(SMQueue.get()) * 10)
+                for i in range(0, len(EdgesGf.edgeList)):
                     if EdgesGf.edgeList[i].relativeAngle == relativeAngle:
                         EdgesGf.edgeList[i].bearing = actualAngle
 
