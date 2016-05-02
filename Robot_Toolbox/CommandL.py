@@ -66,11 +66,11 @@ class CommandL:
         self.putCommand(CommandO)
         CommandO = Command(11, "Wlan ready")             # Main?
         self.putCommand(CommandO)
-        CommandO = Command(12, "Encoder reset")          # Process Explore, TargetMove, Main
+        CommandO = Command(12, "Encoder reset")          # Process Main
         self.putCommand(CommandO)
         CommandO = Command(13, "Amplifier")              # Process Audio
         self.putCommand(CommandO)
-        CommandO = Command(14, "Align")                  # Process Explore, TargetMove
+        CommandO = Command(14, "Align")                  # Process StatusAndMeasuredValue
         self.putCommand(CommandO)
         CommandO = Command(15, "Turn slow to")           # Main process
         self.putCommand(CommandO)

@@ -66,7 +66,7 @@ if __name__ == '__main__':
 
     processList = [mp.Process(target=USBProcess.Run, args=(MQueue, CQueue, PQueue)),
                    mp.Process(target=AudioProcess.Run, args=(MQueue, AQueue, CQueue, CommandList)),
-                   mp.Process(target=STAndMVProcess.Run, args=(PQueue, AQueue, LQueue, MQueue, WPQueue, CQueue, SMQueue, StatusList, MeasuredValueList)),
+                   mp.Process(target=STAndMVProcess.Run, args=(PQueue, AQueue, LQueue, MQueue, WPQueue, CQueue, SMQueue, StatusList, MeasuredValueList, CommandList)),
                    mp.Process(target=AlarmProcess.Run, args=(LQueue, MQueue, WLQueue, AlarmList)),
                    mp.Process(target=WebserverProcess.Run, args=(WLQueue, WPQueue, WMQueue,MQueue, LQueue, PQueue))]
 
