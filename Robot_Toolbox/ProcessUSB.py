@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ###############################################################################
 # Class Process USB
-# Version: 2016_04_28
+# Version: 2016_04_30
 #
 # Please note, that the CQueue will only operate after a message has been
 # received from MQueue or at least after timeout (100ms).
@@ -51,7 +51,7 @@ class ProcessUSB:
                     PQueue.put(result)
 
                 # get command from CQueue
-                while not CQueue.empty():
+                if not CQueue.empty():
                     command = bytes(CQueue.get(), encoding="UTF-8")
                     # Send command to USB interface
                     self.ser.write(command)

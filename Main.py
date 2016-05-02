@@ -299,17 +299,17 @@ if __name__ == '__main__':
                     if edge.relativeAngle == 0:
                         EdgesGf.robotPositionY = edge.fromP.y - passedDistance
                         EdgesGf.robotPositionX = edge.fromP.x
-                    elif edge.relativeAngle == 180:
+                    elif edge.relativeAngle == 1800:
                         EdgesGf.robotPositionY = edge.fromP.y + passedDistance
                         EdgesGf.robotPositionX = edge.fromP.x
-                    elif edge.relativeAngle == 270:
+                    elif edge.relativeAngle == 2700:
                         EdgesGf.robotPositionX = edge.fromP.x - passedDistance
                         EdgesGf.robotPositionY = edge.fromP.y
-                    elif edge.relativeAngle == 90:
+                    elif edge.relativeAngle == 900:
                         EdgesGf.robotPositionX = edge.fromP.x + passedDistance
                         EdgesGf.robotPositionY = edge.fromP.y
 
-                    if distanceFront < (edge.weight - passedDistance):
+                    if distanceFront < (edge.weight - passedDistance - 4):
                         # restDistance has an obstruction
                         # (works only for static obstructions)
                         # send stop command
@@ -323,14 +323,14 @@ if __name__ == '__main__':
                         #     EdgesGf.edgePointer = 0
                         #     EdgesGf.runStatus = "Turn"
 
-                    elif (edge.weight - passedDistance - 4) <= 0:
+                    if (edge.weight - passedDistance - 4) <= 0:
                         # Edge toP achieved
                         # send stop command
                         CQueue.put(CommandList.sendCommandByNumber(0, "1"))
                         forwardSlowActive = False
                         # send command encoder reset
                         CQueue.put(CommandList.sendCommandByNumber(12, "1"))
-                        print("Edge toP achieved: weight - passedDistance = ", str(edge.weight - passedDistance))
+                        print("Edge toP achieved: weight - passedDistance = ", str(edge.weight - passedDistance - 4))
                         # wait 0.5s for Arduino has been sent new values for encoders
                         time.sleep(0.5)
 
@@ -338,7 +338,7 @@ if __name__ == '__main__':
                             # target achieved
                             PQueue.put("S@Run: 0")
                             EdgesGf.runStatus = "Idle"
-                            print("Target achieved: EdgePointer ", str(EdgesGf.edgePointer), "lenPath: ", str(len(EdgesGf.path)))
+                            print("Target achieved")
                         else:
                             # next edge
                             EdgesGf.edgePointer = EdgesGf.edgePointer + 1
@@ -346,17 +346,13 @@ if __name__ == '__main__':
                             # if turn is necessary
                             if edge.relativeAngle != EdgesGf.path[EdgesGf.edgePointer].relativeAngle:
                                 EdgesGf.runStatus = "Turn"
-                    else:
-                        if not forwardSlowActive\
-                        and EdgesGf.runStatus == "Run":
-                            CQueue.put(CommandList.sendCommandByNumber(1, "1"))
-                            # store forwardSlowActice
-                            forwardSlowActive = True
-                            print("Forward slow")
 
+                    if not forwardSlowActive\
+                    and EdgesGf.runStatus == "Run":
+                        CQueue.put(CommandList.sendCommandByNumber(1, "1"))
+                        # store forwardSlowActice
+                        forwardSlowActive = True
                     print("Run")
-
-
 
             elif result.find("R@") == 0:
                 # map data required

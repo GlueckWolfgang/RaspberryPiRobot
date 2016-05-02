@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ###############################################################################
 # Class Prozess webserver
-# Version:  2016.04.08
+# Version:  2016.04.30
 #
 ###############################################################################
 import tornado.ioloop
@@ -19,7 +19,7 @@ class ProcessWebserver:
                 self.MQueue = db
 
             def get(self, url):
-                self.MQueue.put("I@Mainhandler url: " + url)
+                # self.MQueue.put("I@Mainhandler url: " + url)
                 siteUrl = url
 
                 # handle html sources
@@ -32,7 +32,7 @@ class ProcessWebserver:
 
             # deliver static files to page
             def get(self, url):
-                self.MQueue.put("I@Static Handler: " + url)
+                # self.MQueue.put("I@Static Handler: " + url)
                 if url.endswith(".png")\
                 or url.endswith(".ico")\
                 or url.endswith(".jpg")\
@@ -66,7 +66,7 @@ class ProcessWebserver:
                 self.WMQueue = db[5]
 
             def get(self, url):
-                self.MQueue.put("I@ AjaxHandler " + url)
+                # self.MQueue.put("I@ AjaxHandler " + url)
                 if url.startswith("Alarmlist"):
                     if url.endswith("/data"):
                         # acquire data
@@ -139,7 +139,7 @@ class ProcessWebserver:
                     self.write("Error 404: File '{}' not Found.".format(url))
 
         self.settings = {
-            "debug": True}
+            "debug": False}
 
         def make_app():
             return tornado.web.Application([
