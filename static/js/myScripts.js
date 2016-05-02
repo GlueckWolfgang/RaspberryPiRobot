@@ -144,8 +144,8 @@ $(document).ready(function(){
                      
     $("#tabs").on("tabsload", (function(event,ui) {
         if (ui.panel.attr("id")==='ui-id-3') {
-            window.setTimeout( MapCanvasRectData(), 20 );
-            window.setTimeout( MapCanvasLineData(), 50 );
+            window.setTimeout( MapCanvasRectData(), 0 );
+            window.setTimeout( MapCanvasLineData(), 100 );
             
             // On mouse move over canvas show mouse position in real coordinates
             var canvas = document.getElementById('MousePosition');
@@ -186,10 +186,10 @@ $(document).ready(function(){
 // 1s cycle
 setInterval(function() {
     PanelData();
-    window.setTimeout(MapData(), 2);
-    setTimeout(MapCanvasCircleData(), 0);
+    window.setTimeout(MapData(), 0);
+    setTimeout(MapCanvasCircleData(), 50);
     MapCanvasPathData();
-    setTimeout(MapCanvasRobotData(), 50);
+    setTimeout(MapCanvasRobotData(), 100);
     console.log("1s cycle has been started");
 }, 1000);
 
