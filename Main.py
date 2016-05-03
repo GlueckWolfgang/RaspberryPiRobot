@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ###############################################################################
 # Raspberry Robot Program
-# Version: 2016_04_29
+# Version: 2016_05_203
 # Creator: Wolfgang Glück
 ###############################################################################
 import multiprocessing as mp
@@ -266,7 +266,7 @@ if __name__ == '__main__':
                     edge = EdgesGf.path[EdgesGf.edgePointer]
 
                     # send command turn slow to angle
-                    PQueue.put("C@S_28_" + str(edge.bearing))
+                    PQueue.put("C@S_15_" + str(edge.bearing))
                     EdgesGf.runStatus = "Wait for turn has finished"
                     print("Turn ", str(edge.bearing))
 
