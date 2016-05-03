@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ###############################################################################
 # Raspberry Robot Program
-# Version: 2016_05_203
+# Version: 2016_05_03
 # Creator: Wolfgang Glück
 ###############################################################################
 import multiprocessing as mp
@@ -291,7 +291,7 @@ if __name__ == '__main__':
                     PQueue.put("MM@2")
                     encoderPulses = int(SMQueue.get())
                     # calculate passed distance
-                    passedDistance = int(encoderPulses * 0.058433611)
+                    passedDistance = int(encoderPulses * 0.067)
                     # get actual edge
                     edge = EdgesGf.path[EdgesGf.edgePointer]
 
@@ -309,7 +309,7 @@ if __name__ == '__main__':
                         EdgesGf.robotPositionX = edge.fromP.x + passedDistance
                         EdgesGf.robotPositionY = edge.fromP.y
 
-                    if distanceFront < (edge.weight - passedDistance - 4):
+                    if distanceFront < (edge.weight - passedDistance):
                         # restDistance has an obstruction
                         # (works only for static obstructions)
                         # send stop command
