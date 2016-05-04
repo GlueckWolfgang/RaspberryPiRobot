@@ -220,6 +220,7 @@ if __name__ == '__main__':
     EdgesGf.generateEdges(PositionsGf, Relations)
     EdgesGf.reloadBearing()
     canvasLine = EdgesGf.transformEdgesToCanvasLine("All", Scale)
+    EdgesGf.runStatus = "Idle"
 
     # Endless loop of main program
     ###########################################################################
@@ -270,28 +271,53 @@ if __name__ == '__main__':
                     EdgesGf.runStatus = "Wait for turn has finished"
                     print("Turn ", str(edge.bearing))
 
-                if EdgesGf.runStatus == "Wait for turn has finished":
+                elif EdgesGf.runStatus == "Wait for turn has finished":
                     # *********************************************************
+                    print("Wait for turn has finished")
                     # get turn finished
                     PQueue.put("MS@" + str(0))
                     turnFinished = int(SMQueue.get())
                     if turnFinished == 1:
                         # send command encoder reset
-                        CQueue.put(CommandList.sendCommandByNumber(12, "1"))
+                        CQueue.put(CommandList.sendCommandByNumber("12", "1"))
                         EdgesGf.runStatus = "Run"
                         forwardSlowActive = False
-                    print("Wait for turn has finished")
+                        # wait 0.5s for Arduino has been sent new measured values
+                        time.sleep(0.5)
+                        # get measured value distanceFront
+                        print("Run")
+                        PQueue.put("MM@20")
+                        distanceFront = int(SMQueue.get())
+                        # get measured value encoderPulses right
+                        PQueue.put("MM@2")
+                        encoderPulses = int(SMQueue.get())
+                        # calculate passed distance
+                        passedDistance = int(encoderPulses * 0.065)
 
-                if EdgesGf.runStatus == "Run":
+                        if distanceFront < int(edge.weight):
+                            # Distance has an obstruction
+                            # send stop command
+                            CQueue.put(CommandList.sendCommandByNumber("0", "1"))
+                            forwardSlowActive = False
+                            print("Obstruction ahead: Distance ", str(distanceFront), "to go ", str(edge.weight - passedDistance))
+                            #     put tag to target position
+                            #     set start position to actual position
+                            #     set robot position to actual position
+                            #     calculate new path
+                            #     EdgesGf.edgePointer = 0
+                            #     EdgesGf.runStatus = "Turn"
+
+                elif EdgesGf.runStatus == "Run":
                     # *********************************************************
                     # get measured value distanceFront
+                    print("Run")
                     PQueue.put("MM@20")
                     distanceFront = int(SMQueue.get())
                     # get measured value encoderPulses right
                     PQueue.put("MM@2")
                     encoderPulses = int(SMQueue.get())
                     # calculate passed distance
-                    passedDistance = int(encoderPulses * 0.067)
+                    passedDistance = int(encoderPulses * 0.065)
                     # get actual edge
                     edge = EdgesGf.path[EdgesGf.edgePointer]
 
@@ -309,28 +335,14 @@ if __name__ == '__main__':
                         EdgesGf.robotPositionX = edge.fromP.x + passedDistance
                         EdgesGf.robotPositionY = edge.fromP.y
 
-                    if distanceFront < (edge.weight - passedDistance):
-                        # restDistance has an obstruction
-                        # (works only for static obstructions)
-                        # send stop command
-                        CQueue.put(CommandList.sendCommandByNumber(0, "1"))
-                        forwardSlowActive = False
-                        print("Obstruction ahead: Distance ", str(distanceFront), "to go ", str(edge.weight - passedDistance))
-                        #     put tag to target position
-                        #     set start position to actual position
-                        #     set robot position to actual position
-                        #     calculate new path
-                        #     EdgesGf.edgePointer = 0
-                        #     EdgesGf.runStatus = "Turn"
-
                     if (edge.weight - passedDistance - 4) <= 0:
                         # Edge toP achieved
                         # send stop command
-                        CQueue.put(CommandList.sendCommandByNumber(0, "1"))
+                        CQueue.put(CommandList.sendCommandByNumber("0", "1"))
                         forwardSlowActive = False
                         # send command encoder reset
-                        CQueue.put(CommandList.sendCommandByNumber(12, "1"))
-                        print("Edge toP achieved: weight - passedDistance = ", str(edge.weight - passedDistance - 4))
+                        CQueue.put(CommandList.sendCommandByNumber("12", "1"))
+                        print("Edge toP achieved: weight - passedDistance = ", str(edge.weight - passedDistance))
                         # wait 0.5s for Arduino has been sent new values for encoders
                         time.sleep(0.5)
 
@@ -349,10 +361,10 @@ if __name__ == '__main__':
 
                     if not forwardSlowActive\
                     and EdgesGf.runStatus == "Run":
-                        CQueue.put(CommandList.sendCommandByNumber(1, "1"))
+                        CQueue.put(CommandList.sendCommandByNumber("1", "1"))
                         # store forwardSlowActice
                         forwardSlowActive = True
-                    print("Run")
+
 
             elif result.find("R@") == 0:
                 # map data required

@@ -4,7 +4,7 @@
 # Version: 2015.02.16
 #
 # stNumber      = 1..n
-# stDescription = ("Turn slow 45 right!",..)
+# stDescription = ("Turn slow 45 right",..)
 #                 must be the same text as received from Arduino!
 # stAlert       = (True, False) True if status is an alert for alert list
 # stCg          = (True, False) True if status has komming/going character

@@ -125,7 +125,7 @@ class ProcessStatusAndMeasuredValue:
                 elif status[1] == "3":
                     run.stStatus = 0
                     # send stop command
-                    CQueue.put(CommandList.sendCommandByNumber(0, "1"))
+                    CQueue.put(CommandList.sendCommandByNumber("0", "1"))
 
                 # change operation mode
                 # manual is allowed always
@@ -141,7 +141,7 @@ class ProcessStatusAndMeasuredValue:
                     setE.stStatus = 0
                     operationModeManual.stStatus = 1
                     # Stop command
-                    CQueue.put(CommandList.sendCommandByNumber(0, "1"))
+                    CQueue.put(CommandList.sendCommandByNumber("0", "1"))
                     # delete robot position
                     MQueue.put("M@robotPosition_delete")
 
@@ -160,7 +160,7 @@ class ProcessStatusAndMeasuredValue:
                     setE.stStatus = 0
                     operationModeTargetMove.stStatus = 1
                     # Stop command
-                    CQueue.put(CommandList.sendCommandByNumber(0, "1"))
+                    CQueue.put(CommandList.sendCommandByNumber("0", "1"))
                     # delete robot position
                     MQueue.put("M@robotPosition_delete")
 
@@ -176,7 +176,7 @@ class ProcessStatusAndMeasuredValue:
                     operationModeTargetMove.stStatus = 0
                     operationModeSetBearing.stStatus = 1
                     # Stop command
-                    CQueue.put(CommandList.sendCommandByNumber(0, "1"))
+                    CQueue.put(CommandList.sendCommandByNumber("0", "1"))
                     # delete robot position
                     MQueue.put("M@robotPosition_delete")
 
@@ -190,7 +190,8 @@ class ProcessStatusAndMeasuredValue:
                 and (forwardSlow.stStatus == 1
                 or forwardHalf.stStatus == 1
                 or forwardFull.stStatus == 1):
-                    CQueue.put(CommandList.sendCommandByNumber(int(status[1]), "1"))
+                    statusO = StatusList.getStatusbyNumber(int(status[1]))
+                    CQueue.put(CommandList.sendCommandByName(statusO.stDescription, "1"))
 
                 # Start end position allowed if operation mode is target move
                 elif operationModeTargetMove.stStatus == 1\
@@ -219,17 +220,7 @@ class ProcessStatusAndMeasuredValue:
                 elif operationModeTargetMove.stStatus == 1\
                 and(status[1] == "15"):
                     # turn slow to
-                    CQueue.put(CommandList.sendCommandByNumber(int(status[1]), status[2]))
-
-                elif operationModeTargetMove.stStatus == 1\
-                and(status[1] == "29"):
-                    # Encounter reset
-                    CQueue.put(CommandList.sendCommandByNumber(int(status[1]), "1"))
-
-                elif operationModeTargetMove.stStatus == 1\
-                and(status[1] == "5"):
-                    # Forward slow
-                    CQueue.put(CommandList.sendCommandByNumber(int(status[1]), "1"))
+                    CQueue.put(CommandList.sendCommandByNumber(status[1], status[2]))
 
                 elif operationModeSetBearing.stStatus == 1\
                 and(status[1] == "32"):
@@ -257,16 +248,25 @@ class ProcessStatusAndMeasuredValue:
 
                 # other driving commands allowed if operation mode is manual
                 elif operationModeManual.stStatus == 1\
-                    and(status[1] != "19"
+                    and(status[1] != "8"
+                    or status[1] != "9"
+                    or status[1] != "14"
+                    or status[1] != "15"
+                    or status[1] != "19"
                     or status[1] != "21"
                     or status[1] != "22"
                     or status[1] != "23"
-                    or status[1] != "8"
-                    or status[1] != "9"
                     or status[1] != "24"
                     or status[1] != "25"
-                    or status[1] != "26"):
-                        CQueue.put(CommandList.sendCommandByNumber(int(status[1]), "1"))
+                    or status[1] != "26"
+                    or status[1] != "28"
+                    or status[1] != "30"
+                    or status[1] != "32"
+                    or status[1] != "33"
+                    or status[1] != "34"
+                    or status[1] != "35"):
+                        statusO = StatusList.getStatusByNumber(int(status[1]))
+                        CQueue.put(CommandList.sendCommandByName(statusO.stDescription, "1"))
 
             else:
                 MQueue.put("I@Process status and measured value: Unknown message at PQueue: " + Message)

@@ -27,6 +27,10 @@ class CommandL:
         else:
             return None
 
+    def sendCommandByName(self, coDescription, coValue):
+        Command = coDescription + ": " + coValue + "\n"
+        return Command
+
     def getCommandByNumber(self, coNumber):
         if int(coNumber) < len(self.list):        # list must not be empty
             return self.list[int(coNumber)]
@@ -64,14 +68,14 @@ class CommandL:
         self.putCommand(CommandO)
         CommandO = Command(10, "Turn slow 90 right")
         self.putCommand(CommandO)
-        CommandO = Command(11, "Wlan ready")             # Main?
+        CommandO = Command(11, "Wlan ready")             # Process Main?
         self.putCommand(CommandO)
         CommandO = Command(12, "Encoder reset")          # Process Main
         self.putCommand(CommandO)
         CommandO = Command(13, "Amplifier")              # Process Audio
         self.putCommand(CommandO)
-        CommandO = Command(14, "Align")                  # Process StatusAndMeasuredValue
+        CommandO = Command(14, "Align")         # Process StatusAndMeasuredValue
         self.putCommand(CommandO)
-        CommandO = Command(15, "Turn slow to")           # Main process
+        CommandO = Command(15, "Turn slow to")  # Process StatusAndMeasuredValue
         self.putCommand(CommandO)
         return
