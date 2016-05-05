@@ -190,7 +190,7 @@ class ProcessStatusAndMeasuredValue:
                 and (forwardSlow.stStatus == 1
                 or forwardHalf.stStatus == 1
                 or forwardFull.stStatus == 1):
-                    statusO = StatusList.getStatusbyNumber(int(status[1]))
+                    statusO = StatusList.getStatusByNumber(int(status[1]))
                     CQueue.put(CommandList.sendCommandByName(statusO.stDescription, "1"))
 
                 # Start end position allowed if operation mode is target move
