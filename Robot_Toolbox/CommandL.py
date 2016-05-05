@@ -19,17 +19,15 @@ class CommandL:
         self.list.append(Command)            # index = coNumber
         return
 
-    def sendCommandByNumber(self, coNumber, coValue):
+    def sendCommandByNumber(self, coNumber, coValue, CQueue):
         if int(coNumber) < len(self.list):        # list must not be empty
             CommandO = self.getCommandByNumber(coNumber)
-            Command = CommandO.coDescription + ": " + coValue + "\n"
-            return Command
-        else:
-            return None
+            CQueue.put(CommandO.coDescription + ": " + coValue + "\n")
+            return
 
-    def sendCommandByName(self, coDescription, coValue):
-        Command = coDescription + ": " + coValue + "\n"
-        return Command
+    def sendCommandByName(self, coDescription, coValue, CQueue):
+        CQueue.put(coDescription + ": " + coValue + "\n")
+        return
 
     def getCommandByNumber(self, coNumber):
         if int(coNumber) < len(self.list):        # list must not be empty

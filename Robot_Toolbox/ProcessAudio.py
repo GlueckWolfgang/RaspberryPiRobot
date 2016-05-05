@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ###############################################################################
 # Class Process Audio
-# Version:  2016.04.29
+# Version:  2016.05.05
 # CQueue    for sending commands like amplifier on/off
 # MQueue    Can be used for fault messages
 #           (I@anyString can be sent)
@@ -26,7 +26,7 @@ class ProcessAudio:
             if not AQueue.empty():
                 # switch on amplifier
                 if not self.amplifier:
-                    CQueue.put(CommandList.sendCommandByNumber(13, "1"))
+                    CommandList.sendCommandByNumber(13, "1", CQueue)
                     self.amplifier = True
 
                 # get order from AQueue
@@ -86,7 +86,7 @@ class ProcessAudio:
             if not player.playing\
             and self.amplifier:
                 # switch off amplifier and save energy
-                CQueue.put(CommandList.sendCommandByNumber(13, "0"))
+                CommandList.sendCommandByNumber(13, "0", CQueue)
                 self.amplifier = False
 
             return

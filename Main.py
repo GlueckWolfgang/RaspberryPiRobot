@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ###############################################################################
 # Raspberry Robot Program
-# Version: 2016_05_03
+# Version: 2016_05_05
 # Creator: Wolfgang Glück
 ###############################################################################
 import multiprocessing as mp
@@ -279,7 +279,7 @@ if __name__ == '__main__':
                     turnFinished = int(SMQueue.get())
                     if turnFinished == 1:
                         # send command encoder reset
-                        CQueue.put(CommandList.sendCommandByNumber("12", "1"))
+                        CommandList.sendCommandByNumber("12", "1", CQueue)
                         EdgesGf.runStatus = "Run"
                         forwardSlowActive = False
                         # wait 0.5s for Arduino has been sent new measured values
@@ -297,7 +297,7 @@ if __name__ == '__main__':
                         if distanceFront < int(edge.weight):
                             # Distance has an obstruction
                             # send stop command
-                            CQueue.put(CommandList.sendCommandByNumber("0", "1"))
+                            CommandList.sendCommandByNumber("0", "1", CQueue)
                             forwardSlowActive = False
                             print("Obstruction ahead: Distance ", str(distanceFront), "to go ", str(edge.weight - passedDistance))
                             #     put tag to target position
@@ -338,10 +338,10 @@ if __name__ == '__main__':
                     if (edge.weight - passedDistance - 4) <= 0:
                         # Edge toP achieved
                         # send stop command
-                        CQueue.put(CommandList.sendCommandByNumber("0", "1"))
+                        CommandList.sendCommandByNumber("0", "1", CQueue)
                         forwardSlowActive = False
                         # send command encoder reset
-                        CQueue.put(CommandList.sendCommandByNumber("12", "1"))
+                        CommandList.sendCommandByNumber("12", "1", CQueue)
                         print("Edge toP achieved: weight - passedDistance = ", str(edge.weight - passedDistance))
                         # wait 0.5s for Arduino has been sent new values for encoders
                         time.sleep(0.5)
@@ -361,7 +361,8 @@ if __name__ == '__main__':
 
                     if not forwardSlowActive\
                     and EdgesGf.runStatus == "Run":
-                        CQueue.put(CommandList.sendCommandByNumber("1", "1"))
+                        # send Forward slow command
+                        CommandList.sendCommandByNumber("1", "1", CQueue)
                         # store forwardSlowActice
                         forwardSlowActive = True
 
