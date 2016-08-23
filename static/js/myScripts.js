@@ -145,7 +145,7 @@ $(document).ready(function(){
     $("#tabs").on("tabsload", (function(event,ui) {
         if (ui.panel.attr("id")==='ui-id-3') {
             window.setTimeout( MapCanvasRectData(), 0 );
-            window.setTimeout( MapCanvasLineData(), 100 );
+            window.setTimeout( MapCanvasLineData(), 500 );
             
             // On mouse move over canvas show mouse position in real coordinates
             var canvas = document.getElementById('MousePosition');

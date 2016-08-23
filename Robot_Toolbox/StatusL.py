@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ###############################################################################
 # Class of status list
-# Version:  2016.04.15
+# Version:  2016.08.23
 ###############################################################################
 from Robot_Toolbox.Status import *
 from Robot_Toolbox.Alarm import *
@@ -244,5 +244,11 @@ class StatusL:
         StatusO = Status(34, "Set W", False, True)
         self.putStatus(StatusO)
         StatusO = Status(35, "Set E", False, True)
+        self.putStatus(StatusO)
+        StatusO = Status(36, "Turn slow 180 left", False, True)
+        self.putStatus(StatusO)
+        StatusO = Status(37, "Turn slow 90 left B", False, True)
+        self.putStatus(StatusO)
+        StatusO = Status(38, "Turn slow 90 left V", False, True)
         self.putStatus(StatusO)
         return

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ###############################################################################
-# Raspberry Robot Program
-# Version: 2016_05_05
+# Raspberry Robot Program V3
+# Version: 2016_08_19
 # Creator: Wolfgang Glück
 ###############################################################################
 import multiprocessing as mp
@@ -262,8 +262,6 @@ if __name__ == '__main__':
                     # *********************************************************
                     # set turn finished to 0 (status will be set to 1 via Arduino)
                     PQueue.put("S@Turn finished: 0")
-
-                    # angle absolute = (deviation from north (Region) + edge angle relative) % 3600
                     edge = EdgesGf.path[EdgesGf.edgePointer]
 
                     # send command turn slow to angle
@@ -316,8 +314,8 @@ if __name__ == '__main__':
                     # get measured value encoderPulses right
                     PQueue.put("MM@2")
                     encoderPulses = int(SMQueue.get())
-                    # calculate passed distance
-                    passedDistance = int(encoderPulses * 0.065)
+                    # calculate passed distance (360 pulses/rotation on 8.5cm diameter wheel)
+                    passedDistance = int(encoderPulses * 0.023333)
                     # get actual edge
                     edge = EdgesGf.path[EdgesGf.edgePointer]
 

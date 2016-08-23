@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ###############################################################################
 # Class of Measured Value List
-# Version:  2016.04.07
+# Version:  2016.06.08
 ###############################################################################
 from Robot_Toolbox.MeasuredValue import *
 from Robot_Toolbox.Alarm import *
@@ -176,7 +176,7 @@ class MeasuredValueL:
         self.putMeasuredValue(MValue)
         MValue = MeasuredValue(2, "Actual value", "Integer", "cm", "EncRt", False, False)
         self.putMeasuredValue(MValue)
-        MValue = MeasuredValue(3, "Actual value", "Float", "V", "Battery 9V", False, True)
+        MValue = MeasuredValue(3, "Actual value", "Float", "V", "Battery 12V", False, True)
         self.putMeasuredValue(MValue)
         MValue = MeasuredValue(4, "Actual value", "Float", "V", "Battery 7V", False, True)
         self.putMeasuredValue(MValue)
