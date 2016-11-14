@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ###############################################################################
 # Class of command list
-# Version:  2016.04.29
+# Version:  2016.11.14
 ###############################################################################
 from Robot_Toolbox.Command import *
 
@@ -75,5 +75,9 @@ class CommandL:
         CommandO = Command(14, "Align")         # Process StatusAndMeasuredValue
         self.putCommand(CommandO)
         CommandO = Command(15, "Turn slow to")  # Process StatusAndMeasuredValue
+        self.putCommand(CommandO)
+        CommandO = Command(16, "Backward slow")
+        self.putCommand(CommandO)
+        CommandO = Command(17, "Turn slow 180 left") # Process StatusAndMeasuredValue
         self.putCommand(CommandO)
         return

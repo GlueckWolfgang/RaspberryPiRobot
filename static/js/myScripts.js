@@ -142,6 +142,11 @@ $(document).ready(function(){
     Send('Map/S_35_Ec');
                      }));
                      
+    $(document).on("click", '#S_36_Ec', (function(event) {
+    console.log("Set E click.");
+    Send('Panel/S_36_Ec');
+                     }));
+                     
     $("#tabs").on("tabsload", (function(event,ui) {
         if (ui.panel.attr("id")==='ui-id-3') {
             window.setTimeout( MapCanvasRectData(), 0 );

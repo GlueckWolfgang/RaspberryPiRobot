@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ###############################################################################
 # Class Prozess status and measured value
-# Version:  2016.05.05
+# Version:  2016.11.14
 #
 # PQueue             = queue to listen
 # AQueue.............= process Audio queue
@@ -266,6 +266,7 @@ class ProcessStatusAndMeasuredValue:
                     or status[1] != "34"
                     or status[1] != "35"):
                         statusO = StatusList.getStatusByNumber(int(status[1]))
+                        # MQueue.put("I@Command: " + statusO.stDescription)
                         CommandList.sendCommandByName(statusO.stDescription, "1", CQueue)
 
             else:

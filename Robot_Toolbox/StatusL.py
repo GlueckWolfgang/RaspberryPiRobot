@@ -251,4 +251,6 @@ class StatusL:
         self.putStatus(StatusO)
         StatusO = Status(38, "Turn slow 90 left V", False, True)
         self.putStatus(StatusO)
+        StatusO = Status(39, "Backward slow", False, True)
+        self.putStatus(StatusO)
         return

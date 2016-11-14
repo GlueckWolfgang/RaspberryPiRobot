@@ -15,7 +15,7 @@ from Robot_Toolbox.Corridor import *
 class PositionL:
     def __init__(self):
         self.list = []
-        self.dwr = 51.0    # wall distance room(42cm furniture + 19cm Robot)
+        self.dwr = 51.0    # wall distance room(32cm furniture + 19cm Robot)
         self.dwc = 40.0    # wall distance corridor
 
 
